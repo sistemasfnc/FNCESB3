@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd9" filename="HostServicioSelector.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd1" filename="HostServicioSelector0.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd4" filename="HostServicioSelector1.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd7" filename="HostServicioSelector2.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd2" filename="HostServicioSelector3.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd8" filename="HostServicioSelector4.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd0" filename="HostServicioSelector5.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd6" filename="HostServicioSelector6.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd5" filename="HostServicioSelector7.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?wsdl" filename="ServicioSelector.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd3" filename="HostServicioSelector8.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

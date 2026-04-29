@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.UbicacionGeografica" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.UbicacionGeografica" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="TimeZoneWeb">
+    <xs:sequence>
+      <xs:element name="_x003C_IdReferenciaZona_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element name="_x003C_Id_x003E_k__BackingField" type="xs:short" />
+      <xs:element name="_x003C_Nombre_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element name="_x003C_UtcOffSetDST_x003E_k__BackingField" type="xs:boolean" />
+      <xs:element name="_x003C_UtcOffSetMinutos_x003E_k__BackingField" type="xs:short" />
+      <xs:element name="_x003C_UtcOffSet_x003E_k__BackingField" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeZoneWeb" nillable="true" type="tns:TimeZoneWeb" />
+  <xs:complexType name="Ciudad">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" type="xs:int" />
+      <xs:element minOccurs="0" name="CodigoAlterno" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodigoAlterno2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Departamento" nillable="true" type="tns:Departamento" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Ciudad" nillable="true" type="tns:Ciudad" />
+  <xs:complexType name="Departamento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Departamento" nillable="true" type="tns:Departamento" />
+</xs:schema>

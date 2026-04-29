@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:tns="http://190.144.73.250:9090/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://190.144.73.250:9090/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://190.144.73.250:9090/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GenerateTurn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="oRequest" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateTurnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateTurnResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sdocumenttype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sdocument" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="suser" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="spassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatientResult" type="tns:Digiturno5" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Digiturno5">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="oPatient" type="tns:PatientCiel" />
+          <s:element minOccurs="0" maxOccurs="1" name="oResult" type="tns:Result" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PatientCiel">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="iplan" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="iunit" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="iattendance" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="sfirstname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ssecondname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sfirstsurname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ssecondsurname" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Result">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="iresult" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="smessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPatientAppointments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sdocumenttype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sdocument" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="suser" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="spassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatientAppointmentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatientAppointmentsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePaymentAppointment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="scode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sidappointment" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="svalue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="suser" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="spassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePaymentAppointmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdatePaymentAppointmentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAppointmentsForPrograms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="iyear" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="imonth" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAppointmentsForProgramsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAppointmentsForProgramsResult" type="tns:ArrayOfServintePatient" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfServintePatient">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServintePatient" nillable="true" type="tns:ServintePatient" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServintePatient">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="idPaciente" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sdocumenttype" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sdocument" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sfirstname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ssecondname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ssurname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ssecondsurname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sgender" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="dbirthdate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="sbornplace" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="smaritalstatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sphone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sneighborhood" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="surbanzone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sjob" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="saddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="smail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="safiliation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="slevel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scellphone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="snation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scity" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="iid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="scovid1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scovid2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scityname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sagreementcode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="spolicy" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sissuingentity" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ssourcecountry" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="lappointments" type="tns:ArrayOfInspiraCita" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfInspiraCita">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InspiraCita" nillable="true" type="tns:InspiraCita" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InspiraCita">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sappointment" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ientry" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="sattentiontype" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sservicetype" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sagreementtype" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scie10" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sservicegroup" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sagreement" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sagreementname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sratename" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sunit" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sthird" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="stemplate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scostcenter" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="srate" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ddate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="sauthorization" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="splan" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="lservices" type="tns:ArrayOfServiceRequest" />
+          <s:element minOccurs="0" maxOccurs="1" name="suser" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scontract" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfServiceRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceRequest" nillable="true" type="tns:ServiceRequest" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServiceRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="idCargo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="srate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sconcept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scostcenter" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sauthorization" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sservice" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="iqty" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ivalue" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="idiscount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="bbilleable" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="bisprocedure" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="sservicename" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RecieveTurn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sTurnResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecieveTurnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RecieveTurnResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTimeDistribution">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sCost" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iMonth" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="iYear" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTimeDistributionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTimeDistributionResult" type="tns:ArrayOfGeneric" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfGeneric">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Generic" nillable="true" type="tns:Generic" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Generic">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="iid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="sname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sfilter" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="dtDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="sextra1" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="dextra2" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CallPatient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sRoom" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPatient" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sTurn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sDocumentType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sDocument" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sIsUpdate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFloor" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CallPatientResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateInspiraObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="linspiratemporal" type="tns:ArrayOfInspiraTemporal" />
+            <s:element minOccurs="0" maxOccurs="1" name="sobject" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInspiraTemporal">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InspiraTemporal" nillable="true" type="tns:InspiraTemporal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InspiraTemporal">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="lconsecutivo" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="scod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="snombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sparametro1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sparametro2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="stabla" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="iparametro3" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="iid" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="cactivo" type="s1:char" />
+          <s:element minOccurs="1" maxOccurs="1" name="isincronizado" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="santerior" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="iedicion" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="dfecha" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="soperacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sid" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateInspiraObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateInspiraObjectResult" type="tns:ArrayOfInspiraTemporal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateProductsByRate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ltarifaProductos" type="tns:ArrayOfTarifaProducto" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTarifaProducto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TarifaProducto" nillable="true" type="tns:TarifaProducto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TarifaProducto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sproducto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="starifa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sconcepto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="scentro" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="dfecha" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ivalor" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="isincronizado" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="iedicion" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="iid" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateProductsByRateResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateCostcentersByUnit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lgeneric" type="tns:ArrayOfGeneric" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCostcentersByUnitResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateRatesByAgreement">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lTarifaEmpresa" type="tns:ArrayOfInspiraTemporal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateRatesByAgreementResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateDiscountsByRate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ldescuentoTarifa" type="tns:ArrayOfInspiraTemporal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDiscountsByRateResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sDocument" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sDocumentType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="aResponse" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateAccountResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTodayPatients">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sPatients" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTodayPatientsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTodayPatientsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GenerateTurnSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateTurn" />
+  </wsdl:message>
+  <wsdl:message name="GenerateTurnSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateTurnResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatient" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatientResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientAppointmentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatientAppointments" />
+  </wsdl:message>
+  <wsdl:message name="GetPatientAppointmentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatientAppointmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePaymentAppointmentSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePaymentAppointment" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePaymentAppointmentSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePaymentAppointmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAppointmentsForProgramsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAppointmentsForPrograms" />
+  </wsdl:message>
+  <wsdl:message name="GetAppointmentsForProgramsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAppointmentsForProgramsResponse" />
+  </wsdl:message>
+  <wsdl:message name="RecieveTurnSoapIn">
+    <wsdl:part name="parameters" element="tns:RecieveTurn" />
+  </wsdl:message>
+  <wsdl:message name="RecieveTurnSoapOut">
+    <wsdl:part name="parameters" element="tns:RecieveTurnResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTimeDistributionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTimeDistribution" />
+  </wsdl:message>
+  <wsdl:message name="GetTimeDistributionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTimeDistributionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CallPatientSoapIn">
+    <wsdl:part name="parameters" element="tns:CallPatient" />
+  </wsdl:message>
+  <wsdl:message name="CallPatientSoapOut">
+    <wsdl:part name="parameters" element="tns:CallPatientResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateInspiraObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateInspiraObject" />
+  </wsdl:message>
+  <wsdl:message name="UpdateInspiraObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateInspiraObjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateProductsByRateSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateProductsByRate" />
+  </wsdl:message>
+  <wsdl:message name="UpdateProductsByRateSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateProductsByRateResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCostcentersByUnitSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCostcentersByUnit" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCostcentersByUnitSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCostcentersByUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateRatesByAgreementSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateRatesByAgreement" />
+  </wsdl:message>
+  <wsdl:message name="UpdateRatesByAgreementSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateRatesByAgreementResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDiscountsByRateSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateDiscountsByRate" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDiscountsByRateSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateDiscountsByRateResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateAccount" />
+  </wsdl:message>
+  <wsdl:message name="UpdateAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTodayPatientsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTodayPatients" />
+  </wsdl:message>
+  <wsdl:message name="GetTodayPatientsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTodayPatientsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSDigiturnoSoap">
+    <wsdl:operation name="GenerateTurn">
+      <wsdl:input message="tns:GenerateTurnSoapIn" />
+      <wsdl:output message="tns:GenerateTurnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatient">
+      <wsdl:input message="tns:GetPatientSoapIn" />
+      <wsdl:output message="tns:GetPatientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatientAppointments">
+      <wsdl:input message="tns:GetPatientAppointmentsSoapIn" />
+      <wsdl:output message="tns:GetPatientAppointmentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePaymentAppointment">
+      <wsdl:input message="tns:UpdatePaymentAppointmentSoapIn" />
+      <wsdl:output message="tns:UpdatePaymentAppointmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAppointmentsForPrograms">
+      <wsdl:input message="tns:GetAppointmentsForProgramsSoapIn" />
+      <wsdl:output message="tns:GetAppointmentsForProgramsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecieveTurn">
+      <wsdl:input message="tns:RecieveTurnSoapIn" />
+      <wsdl:output message="tns:RecieveTurnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeDistribution">
+      <wsdl:input message="tns:GetTimeDistributionSoapIn" />
+      <wsdl:output message="tns:GetTimeDistributionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CallPatient">
+      <wsdl:input message="tns:CallPatientSoapIn" />
+      <wsdl:output message="tns:CallPatientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInspiraObject">
+      <wsdl:input message="tns:UpdateInspiraObjectSoapIn" />
+      <wsdl:output message="tns:UpdateInspiraObjectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProductsByRate">
+      <wsdl:input message="tns:UpdateProductsByRateSoapIn" />
+      <wsdl:output message="tns:UpdateProductsByRateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCostcentersByUnit">
+      <wsdl:input message="tns:UpdateCostcentersByUnitSoapIn" />
+      <wsdl:output message="tns:UpdateCostcentersByUnitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRatesByAgreement">
+      <wsdl:input message="tns:UpdateRatesByAgreementSoapIn" />
+      <wsdl:output message="tns:UpdateRatesByAgreementSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDiscountsByRate">
+      <wsdl:input message="tns:UpdateDiscountsByRateSoapIn" />
+      <wsdl:output message="tns:UpdateDiscountsByRateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccount">
+      <wsdl:input message="tns:UpdateAccountSoapIn" />
+      <wsdl:output message="tns:UpdateAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTodayPatients">
+      <wsdl:input message="tns:GetTodayPatientsSoapIn" />
+      <wsdl:output message="tns:GetTodayPatientsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSDigiturnoSoap" type="tns:WSDigiturnoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GenerateTurn">
+      <soap:operation soapAction="http://190.144.73.250:9090/GenerateTurn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatient">
+      <soap:operation soapAction="http://190.144.73.250:9090/GetPatient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatientAppointments">
+      <soap:operation soapAction="http://190.144.73.250:9090/GetPatientAppointments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePaymentAppointment">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdatePaymentAppointment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppointmentsForPrograms">
+      <soap:operation soapAction="http://190.144.73.250:9090/GetAppointmentsForPrograms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecieveTurn">
+      <soap:operation soapAction="http://190.144.73.250:9090/RecieveTurn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeDistribution">
+      <soap:operation soapAction="http://190.144.73.250:9090/GetTimeDistribution" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CallPatient">
+      <soap:operation soapAction="http://190.144.73.250:9090/CallPatient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateInspiraObject">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdateInspiraObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProductsByRate">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdateProductsByRate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCostcentersByUnit">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdateCostcentersByUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRatesByAgreement">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdateRatesByAgreement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDiscountsByRate">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdateDiscountsByRate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccount">
+      <soap:operation soapAction="http://190.144.73.250:9090/UpdateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTodayPatients">
+      <soap:operation soapAction="http://190.144.73.250:9090/GetTodayPatients" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSDigiturno">
+    <wsdl:port name="WSDigiturnoSoap" binding="tns:WSDigiturnoSoap">
+      <soap:address location="http://localhost:8082/WSDigiturno.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

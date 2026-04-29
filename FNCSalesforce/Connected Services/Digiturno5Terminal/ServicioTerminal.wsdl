@@ -1,0 +1,2328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ServicioTerminal" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:ProtectionToken>
+              <wsp:Policy>
+                <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                  <wsp:Policy>
+                    <sp:RequireDerivedKeys />
+                    <sp:BootstrapPolicy>
+                      <wsp:Policy>
+                        <sp:SignedParts>
+                          <sp:Body />
+                          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+                        </sp:SignedParts>
+                        <sp:EncryptedParts>
+                          <sp:Body />
+                        </sp:EncryptedParts>
+                        <sp:SymmetricBinding>
+                          <wsp:Policy>
+                            <sp:ProtectionToken>
+                              <wsp:Policy>
+                                <sp:SpnegoContextToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                                  <wsp:Policy>
+                                    <sp:RequireDerivedKeys />
+                                  </wsp:Policy>
+                                </sp:SpnegoContextToken>
+                              </wsp:Policy>
+                            </sp:ProtectionToken>
+                            <sp:AlgorithmSuite>
+                              <wsp:Policy>
+                                <sp:Basic256 />
+                              </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                              <wsp:Policy>
+                                <sp:Strict />
+                              </wsp:Policy>
+                            </sp:Layout>
+                            <sp:IncludeTimestamp />
+                            <sp:EncryptSignature />
+                            <sp:OnlySignEntireHeadersAndBody />
+                          </wsp:Policy>
+                        </sp:SymmetricBinding>
+                        <sp:Wss11>
+                          <wsp:Policy />
+                        </sp:Wss11>
+                        <sp:Trust10>
+                          <wsp:Policy>
+                            <sp:MustSupportIssuedTokens />
+                            <sp:RequireClientEntropy />
+                            <sp:RequireServerEntropy />
+                          </wsp:Policy>
+                        </sp:Trust10>
+                      </wsp:Policy>
+                    </sp:BootstrapPolicy>
+                  </wsp:Policy>
+                </sp:SecureConversationToken>
+              </wsp:Policy>
+            </sp:ProtectionToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+            <sp:EncryptSignature />
+            <sp:OnlySignEntireHeadersAndBody />
+          </wsp:Policy>
+        </sp:SymmetricBinding>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_AtenderServicio_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_AtenderServicio_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_AtenderServicio_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CalificarServicio_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CalificarServicio_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CalificarServicio_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CambiarEstadoServicio_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CambiarEstadoServicio_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CambiarEstadoServicio_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CancelarTurno_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CancelarTurno_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CancelarTurno_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CancelarTurnoIpTerminal_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CancelarTurnoIpTerminal_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CancelarTurnoIpTerminal_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CrearYAtenderTurnoXIp_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CrearYAtenderTurnoXIp_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_CrearYAtenderTurnoXIp_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_FinalizarServicio_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_FinalizarTurnoIpTerminal_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_FinalizarTurnoIpTerminal_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_FinalizarTurnoIpTerminal_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NuevaTransaccion_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NuevaTransaccion_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NuevaTransaccion_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NuevaTransaccionTerminalIP_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NuevaTransaccionTerminalIP_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NuevaTransaccionTerminalIP_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerOficinas_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerOficinas_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerOficinas_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerServicioAAtender_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerServicioAAtender_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerServicioAAtender_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerServiciosXTurno_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerServiciosXTurno_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerServiciosXTurno_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTablerosXOficina_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTablerosXOficina_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTablerosXOficina_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnoAAtender_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnoAAtender_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnoAAtender_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnoActualXServidor_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnoActualXServidor_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnoActualXServidor_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnosXEnte_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnosXEnte_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ObtenerTurnosXEnte_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_PruebaServicioTerminal_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_PruebaServicioTerminal_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_PruebaServicioTerminal_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ReclasificaTurno_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ReclasificaTurno_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_ReclasificaTurno_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_SuspenderServicio_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_SuspenderServicio_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_SuspenderServicio_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_TransferirIPTerminal_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_TransferirIPTerminal_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_TransferirIPTerminal_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_TurnoDistraido_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_TurnoDistraido_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_TurnoDistraido_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_WCFFaultExcepcionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.UbicacionGeografica" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Tableros" />
+      <xsd:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServicioTerminal_AtenderServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:AtenderServicio" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_AtenderServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AtenderServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_AtenderServicio_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q1:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CalificarServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:CalificarServicio" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CalificarServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CalificarServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CalificarServicio_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q2:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CambiarEstadoServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoServicio" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CambiarEstadoServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CambiarEstadoServicio_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q3:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CancelarTurno_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelarTurno" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CancelarTurno_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelarTurnoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CancelarTurno_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q4:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CancelarTurnoIpTerminal_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelarTurnoIpTerminal" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CancelarTurnoIpTerminal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelarTurnoIpTerminalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CancelarTurnoIpTerminal_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q5:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CrearYAtenderTurnoXIp_InputMessage">
+    <wsdl:part name="parameters" element="tns:CrearYAtenderTurnoXIp" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CrearYAtenderTurnoXIp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CrearYAtenderTurnoXIpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_CrearYAtenderTurnoXIp_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q6:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_FinalizarServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinalizarServicio" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_FinalizarTurnoIpTerminal_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinalizarTurnoIpTerminal" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_FinalizarTurnoIpTerminal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FinalizarTurnoIpTerminalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_FinalizarTurnoIpTerminal_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q7:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NuevaTransaccion_InputMessage">
+    <wsdl:part name="parameters" element="tns:NuevaTransaccion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NuevaTransaccion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NuevaTransaccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NuevaTransaccion_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q8:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NuevaTransaccionTerminalIP_InputMessage">
+    <wsdl:part name="parameters" element="tns:NuevaTransaccionTerminalIP" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NuevaTransaccionTerminalIP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NuevaTransaccionTerminalIPResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NuevaTransaccionTerminalIP_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q9:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerOficinas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerOficinas" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerOficinas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerOficinasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerOficinas_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q10:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerServicioAAtender_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerServicioAAtender" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerServicioAAtender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerServicioAAtenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerServicioAAtender_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q11:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerServiciosXTurno_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerServiciosXTurno" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerServiciosXTurno_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerServiciosXTurnoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerServiciosXTurno_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q12:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTablerosXOficina_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTablerosXOficina" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTablerosXOficina_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTablerosXOficinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTablerosXOficina_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q13:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnoAAtender_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTurnoAAtender" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnoAAtender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTurnoAAtenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnoAAtender_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q14:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnoActualXServidor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTurnoActualXServidor" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnoActualXServidor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTurnoActualXServidorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnoActualXServidor_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q15:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnosXEnte_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTurnosXEnte" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnosXEnte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTurnosXEnteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ObtenerTurnosXEnte_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q16:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_PruebaServicioTerminal_InputMessage">
+    <wsdl:part name="parameters" element="tns:PruebaServicioTerminal" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_PruebaServicioTerminal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PruebaServicioTerminalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_PruebaServicioTerminal_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q17:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ReclasificaTurno_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReclasificaTurno" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ReclasificaTurno_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReclasificaTurnoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_ReclasificaTurno_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q18:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_SuspenderServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:SuspenderServicio" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_SuspenderServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SuspenderServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_SuspenderServicio_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q19:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_TransferirIPTerminal_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransferirIPTerminal" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_TransferirIPTerminal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferirIPTerminalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_TransferirIPTerminal_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q20:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_TurnoDistraido_InputMessage">
+    <wsdl:part name="parameters" element="tns:TurnoDistraido" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_TurnoDistraido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TurnoDistraidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_TurnoDistraido_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q21:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarEstadoDeTurnoEnTerminal" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificarEstadoDeTurnoEnTerminalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_WCFFaultExcepcionFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" name="detail" element="q22:WCFFaultExcepcion" />
+  </wsdl:message>
+  <wsdl:portType name="IServicioTerminal">
+    <wsdl:operation name="AtenderServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/AtenderServicio" message="tns:IServicioTerminal_AtenderServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/AtenderServicioResponse" message="tns:IServicioTerminal_AtenderServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/AtenderServicioWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_AtenderServicio_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CalificarServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/CalificarServicio" message="tns:IServicioTerminal_CalificarServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/CalificarServicioResponse" message="tns:IServicioTerminal_CalificarServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/CalificarServicioWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_CalificarServicio_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstadoServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/CambiarEstadoServicio" message="tns:IServicioTerminal_CambiarEstadoServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/CambiarEstadoServicioResponse" message="tns:IServicioTerminal_CambiarEstadoServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/CambiarEstadoServicioWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_CambiarEstadoServicio_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelarTurno">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/CancelarTurno" message="tns:IServicioTerminal_CancelarTurno_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/CancelarTurnoResponse" message="tns:IServicioTerminal_CancelarTurno_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/CancelarTurnoWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_CancelarTurno_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelarTurnoIpTerminal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/CancelarTurnoIpTerminal" message="tns:IServicioTerminal_CancelarTurnoIpTerminal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/CancelarTurnoIpTerminalResponse" message="tns:IServicioTerminal_CancelarTurnoIpTerminal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/CancelarTurnoIpTerminalWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_CancelarTurnoIpTerminal_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CrearYAtenderTurnoXIp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/CrearYAtenderTurnoXIp" message="tns:IServicioTerminal_CrearYAtenderTurnoXIp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/CrearYAtenderTurnoXIpResponse" message="tns:IServicioTerminal_CrearYAtenderTurnoXIp_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/CrearYAtenderTurnoXIpWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_CrearYAtenderTurnoXIp_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/FinalizarServicio" message="tns:IServicioTerminal_FinalizarServicio_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarTurnoIpTerminal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/FinalizarTurnoIpTerminal" message="tns:IServicioTerminal_FinalizarTurnoIpTerminal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/FinalizarTurnoIpTerminalResponse" message="tns:IServicioTerminal_FinalizarTurnoIpTerminal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/FinalizarTurnoIpTerminalWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_FinalizarTurnoIpTerminal_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NuevaTransaccion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/NuevaTransaccion" message="tns:IServicioTerminal_NuevaTransaccion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/NuevaTransaccionResponse" message="tns:IServicioTerminal_NuevaTransaccion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/NuevaTransaccionWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_NuevaTransaccion_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NuevaTransaccionTerminalIP">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/NuevaTransaccionTerminalIP" message="tns:IServicioTerminal_NuevaTransaccionTerminalIP_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/NuevaTransaccionTerminalIPResponse" message="tns:IServicioTerminal_NuevaTransaccionTerminalIP_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/NuevaTransaccionTerminalIPWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_NuevaTransaccionTerminalIP_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOficinas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerOficinas" message="tns:IServicioTerminal_ObtenerOficinas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerOficinasResponse" message="tns:IServicioTerminal_ObtenerOficinas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerOficinasWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerOficinas_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerServicioAAtender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerServicioAAtender" message="tns:IServicioTerminal_ObtenerServicioAAtender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerServicioAAtenderResponse" message="tns:IServicioTerminal_ObtenerServicioAAtender_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerServicioAAtenderWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerServicioAAtender_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerServiciosXTurno">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerServiciosXTurno" message="tns:IServicioTerminal_ObtenerServiciosXTurno_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerServiciosXTurnoResponse" message="tns:IServicioTerminal_ObtenerServiciosXTurno_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerServiciosXTurnoWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerServiciosXTurno_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTablerosXOficina">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTablerosXOficina" message="tns:IServicioTerminal_ObtenerTablerosXOficina_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTablerosXOficinaResponse" message="tns:IServicioTerminal_ObtenerTablerosXOficina_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTablerosXOficinaWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerTablerosXOficina_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnoAAtender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnoAAtender" message="tns:IServicioTerminal_ObtenerTurnoAAtender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnoAAtenderResponse" message="tns:IServicioTerminal_ObtenerTurnoAAtender_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnoAAtenderWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerTurnoAAtender_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnoActualXServidor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnoActualXServidor" message="tns:IServicioTerminal_ObtenerTurnoActualXServidor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnoActualXServidorResponse" message="tns:IServicioTerminal_ObtenerTurnoActualXServidor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnoActualXServidorWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerTurnoActualXServidor_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnosXEnte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnosXEnte" message="tns:IServicioTerminal_ObtenerTurnosXEnte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnosXEnteResponse" message="tns:IServicioTerminal_ObtenerTurnosXEnte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ObtenerTurnosXEnteWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ObtenerTurnosXEnte_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PruebaServicioTerminal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/PruebaServicioTerminal" message="tns:IServicioTerminal_PruebaServicioTerminal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/PruebaServicioTerminalResponse" message="tns:IServicioTerminal_PruebaServicioTerminal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/PruebaServicioTerminalWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_PruebaServicioTerminal_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReclasificaTurno">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/ReclasificaTurno" message="tns:IServicioTerminal_ReclasificaTurno_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/ReclasificaTurnoResponse" message="tns:IServicioTerminal_ReclasificaTurno_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/ReclasificaTurnoWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_ReclasificaTurno_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SuspenderServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/SuspenderServicio" message="tns:IServicioTerminal_SuspenderServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/SuspenderServicioResponse" message="tns:IServicioTerminal_SuspenderServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/SuspenderServicioWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_SuspenderServicio_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransferirIPTerminal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/TransferirIPTerminal" message="tns:IServicioTerminal_TransferirIPTerminal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/TransferirIPTerminalResponse" message="tns:IServicioTerminal_TransferirIPTerminal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/TransferirIPTerminalWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_TransferirIPTerminal_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TurnoDistraido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/TurnoDistraido" message="tns:IServicioTerminal_TurnoDistraido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/TurnoDistraidoResponse" message="tns:IServicioTerminal_TurnoDistraido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/TurnoDistraidoWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_TurnoDistraido_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificarEstadoDeTurnoEnTerminal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioTerminal/NotificarEstadoDeTurnoEnTerminal" message="tns:IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioTerminal/NotificarEstadoDeTurnoEnTerminalResponse" message="tns:IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioTerminal/NotificarEstadoDeTurnoEnTerminalWCFFaultExcepcionFault" name="WCFFaultExcepcionFault" message="tns:IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_WCFFaultExcepcionFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IServicioTerminal" type="tns:IServicioTerminal">
+    <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AtenderServicio">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/AtenderServicio" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_AtenderServicio_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_AtenderServicio_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_AtenderServicio_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalificarServicio">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/CalificarServicio" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CalificarServicio_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CalificarServicio_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CalificarServicio_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstadoServicio">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/CambiarEstadoServicio" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CambiarEstadoServicio_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CambiarEstadoServicio_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CambiarEstadoServicio_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CancelarTurno">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/CancelarTurno" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CancelarTurno_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CancelarTurno_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CancelarTurno_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CancelarTurnoIpTerminal">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/CancelarTurnoIpTerminal" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CancelarTurnoIpTerminal_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CancelarTurnoIpTerminal_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CancelarTurnoIpTerminal_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CrearYAtenderTurnoXIp">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/CrearYAtenderTurnoXIp" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CrearYAtenderTurnoXIp_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CrearYAtenderTurnoXIp_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_CrearYAtenderTurnoXIp_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarServicio">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/FinalizarServicio" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_FinalizarServicio_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarTurnoIpTerminal">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/FinalizarTurnoIpTerminal" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_FinalizarTurnoIpTerminal_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_FinalizarTurnoIpTerminal_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_FinalizarTurnoIpTerminal_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NuevaTransaccion">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/NuevaTransaccion" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NuevaTransaccion_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NuevaTransaccion_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NuevaTransaccion_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NuevaTransaccionTerminalIP">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/NuevaTransaccionTerminalIP" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NuevaTransaccionTerminalIP_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NuevaTransaccionTerminalIP_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NuevaTransaccionTerminalIP_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOficinas">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerOficinas" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerOficinas_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerOficinas_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerOficinas_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerServicioAAtender">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerServicioAAtender" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerServicioAAtender_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerServicioAAtender_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerServicioAAtender_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerServiciosXTurno">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerServiciosXTurno" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerServiciosXTurno_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerServiciosXTurno_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerServiciosXTurno_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTablerosXOficina">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTablerosXOficina" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTablerosXOficina_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTablerosXOficina_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTablerosXOficina_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnoAAtender">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTurnoAAtender" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnoAAtender_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnoAAtender_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnoAAtender_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnoActualXServidor">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTurnoActualXServidor" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnoActualXServidor_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnoActualXServidor_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnoActualXServidor_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnosXEnte">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTurnosXEnte" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnosXEnte_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnosXEnte_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ObtenerTurnosXEnte_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PruebaServicioTerminal">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/PruebaServicioTerminal" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_PruebaServicioTerminal_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_PruebaServicioTerminal_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_PruebaServicioTerminal_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReclasificaTurno">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/ReclasificaTurno" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ReclasificaTurno_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ReclasificaTurno_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_ReclasificaTurno_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SuspenderServicio">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/SuspenderServicio" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_SuspenderServicio_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_SuspenderServicio_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_SuspenderServicio_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TransferirIPTerminal">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/TransferirIPTerminal" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_TransferirIPTerminal_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_TransferirIPTerminal_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_TransferirIPTerminal_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TurnoDistraido">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/TurnoDistraido" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_TurnoDistraido_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_TurnoDistraido_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_TurnoDistraido_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarEstadoDeTurnoEnTerminal">
+      <soap12:operation soapAction="http://tempuri.org/IServicioTerminal/NotificarEstadoDeTurnoEnTerminal" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IServicioTerminal_NotificarEstadoDeTurnoEnTerminal_WCFFaultExcepcionFault_Fault" />
+        <soap12:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IServicioTerminal" type="tns:IServicioTerminal">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AtenderServicio">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/AtenderServicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalificarServicio">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/CalificarServicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstadoServicio">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/CambiarEstadoServicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CancelarTurno">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/CancelarTurno" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CancelarTurnoIpTerminal">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/CancelarTurnoIpTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CrearYAtenderTurnoXIp">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/CrearYAtenderTurnoXIp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarServicio">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/FinalizarServicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarTurnoIpTerminal">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/FinalizarTurnoIpTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NuevaTransaccion">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/NuevaTransaccion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NuevaTransaccionTerminalIP">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/NuevaTransaccionTerminalIP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOficinas">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerOficinas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerServicioAAtender">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerServicioAAtender" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerServiciosXTurno">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerServiciosXTurno" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTablerosXOficina">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTablerosXOficina" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnoAAtender">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTurnoAAtender" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnoActualXServidor">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTurnoActualXServidor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTurnosXEnte">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ObtenerTurnosXEnte" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PruebaServicioTerminal">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/PruebaServicioTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReclasificaTurno">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/ReclasificaTurno" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SuspenderServicio">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/SuspenderServicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TransferirIPTerminal">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/TransferirIPTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TurnoDistraido">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/TurnoDistraido" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarEstadoDeTurnoEnTerminal">
+      <soap:operation soapAction="http://tempuri.org/IServicioTerminal/NotificarEstadoDeTurnoEnTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="WCFFaultExcepcionFault">
+        <soap:fault use="literal" name="WCFFaultExcepcionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServicioTerminal">
+    <wsdl:port name="WSHttpBinding_IServicioTerminal" binding="tns:WSHttpBinding_IServicioTerminal">
+      <soap12:address location="http://192.168.101.40:9092/HostServicioTerminal.svc/ws" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://192.168.101.40:9092/HostServicioTerminal.svc/ws</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Spn>host/VALI.fnc.neumologica.org</Spn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IServicioTerminal" binding="tns:BasicHttpBinding_IServicioTerminal">
+      <soap:address location="http://192.168.101.40:9092/HostServicioTerminal.svc/basic" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="TipoVideoAtencion">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PresencialVirtual" />
+      <xs:enumeration value="VirtualVirtual" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TipoVideoAtencion" nillable="true" type="tns:TipoVideoAtencion" />
+</xs:schema>

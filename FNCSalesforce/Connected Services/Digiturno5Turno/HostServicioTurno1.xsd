@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" />
+  <xs:element name="ActualizarEstado">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="turno" nillable="true" type="q1:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarEstadoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="ActualizarEstadoResult" nillable="true" type="q2:Resultado" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AsignarTurno">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="usuario" nillable="true" type="q3:Usuario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AsignarTurnoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="AsignarTurnoResult" nillable="true" type="q4:TurnoKiosco" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BalancearTurno">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idEnteApoyo" type="xs:short" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="enteSistema" type="q5:EntesDelSistema.Tipo" />
+        <xs:element minOccurs="0" name="idJornada" type="xs:int" />
+        <xs:element minOccurs="0" name="nombreSPPrioridad" nillable="true" type="xs:string" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="modoEjecucion" type="q6:ModoEjecucion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BalancearTurnoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="BalancearTurnoResult" nillable="true" type="q7:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

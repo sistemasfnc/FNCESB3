@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="f0744ca9-15e4-443b-ba2c-70f2280a3676" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.101.40:8812/HostServicioSelector.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="HostServicioSelector4.xsd" MetadataType="Schema" ID="8d6a9449-a2c5-46b0-a18b-0b9804539902" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd2" />
+    <MetadataFile FileName="HostServicioSelector5.xsd" MetadataType="Schema" ID="fe9f8cfc-306a-4886-9405-553eec3279d0" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd8" />
+    <MetadataFile FileName="HostServicioSelector9.xsd" MetadataType="Schema" ID="ef39c255-ae5a-49dd-a503-bb4140c010fb" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd3" />
+    <MetadataFile FileName="HostServicioSelector1.xsd" MetadataType="Schema" ID="48bf2a59-1ce4-4227-ae81-a9217cd49e91" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServicioSelector.wsdl" MetadataType="Wsdl" ID="30d78011-d7ad-4c8d-ac59-774721609942" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?wsdl" />
+    <MetadataFile FileName="HostServicioSelector6.xsd" MetadataType="Schema" ID="b613c76f-078b-45a9-a06a-9aec6569f8dc" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd0" />
+    <MetadataFile FileName="HostServicioSelector7.xsd" MetadataType="Schema" ID="1455c49d-f43f-4814-8170-54ce10f593a6" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd6" />
+    <MetadataFile FileName="HostServicioSelector8.xsd" MetadataType="Schema" ID="97e0ad89-4380-44b6-85ec-1e4dc16350ae" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd5" />
+    <MetadataFile FileName="HostServicioSelector3.xsd" MetadataType="Schema" ID="e6a7015b-4e63-49d4-b3d5-5fb2327bbbc8" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd7" />
+    <MetadataFile FileName="HostServicioSelector2.xsd" MetadataType="Schema" ID="084ff24e-ce48-4045-896a-eb6b78bb81c6" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd4" />
+    <MetadataFile FileName="HostServicioSelector.xsd" MetadataType="Schema" ID="a3868ea3-822a-453b-9812-4328f9bbff8e" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd9" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

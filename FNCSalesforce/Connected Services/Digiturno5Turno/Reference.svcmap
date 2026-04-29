@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="7c3b67c0-3d3c-47e6-9128-94cfeed32733" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.101.40:8812/HostServicioTurno.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServicioTurnos.wsdl" MetadataType="Wsdl" ID="d2623305-7a57-4e82-af48-35c464ab09cc" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?wsdl" />
+    <MetadataFile FileName="HostServicioTurno.xsd" MetadataType="Schema" ID="fcf92738-1c0d-4803-9c68-3d2d619c98ee" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd1" />
+    <MetadataFile FileName="HostServicioTurno1.xsd" MetadataType="Schema" ID="2b38d800-16bc-4028-b225-bf695fd6b96a" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd0" />
+    <MetadataFile FileName="HostServicioTurno2.xsd" MetadataType="Schema" ID="13b4ba3a-a741-400f-8c3c-0adbcebaa2a6" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd3" />
+    <MetadataFile FileName="HostServicioTurno3.xsd" MetadataType="Schema" ID="1cb7ac34-9ce1-442b-99c5-91c12ed5dc36" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd2" />
+    <MetadataFile FileName="HostServicioTurno4.xsd" MetadataType="Schema" ID="e17abec0-60ed-48e8-8b54-7bfa6a689d9c" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd5" />
+    <MetadataFile FileName="HostServicioTurno5.xsd" MetadataType="Schema" ID="8d130661-2c46-4e6d-895f-d985278fa82f" SourceId="1" SourceUrl="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

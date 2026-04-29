@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" />
+  <xs:complexType name="ContratoServicio">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="Cola" nillable="true" type="q1:ContratoCola" />
+      <xs:element minOccurs="0" name="EsTransferido" type="xs:boolean" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="EstadoServicio" type="q2:Servicio.TipoEstadoServicio" />
+      <xs:element minOccurs="0" name="Grupo" nillable="true" type="tns:ContratoGrupo" />
+      <xs:element minOccurs="0" name="HoraCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdTurno" type="xs:int" />
+      <xs:element minOccurs="0" name="NumeroDeLlamados" type="xs:int" />
+      <xs:element minOccurs="0" name="Observaciones" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sala" nillable="true" type="tns:ContratoSala" />
+      <xs:element minOccurs="0" name="TerminalAtencion" nillable="true" type="tns:ContratoTerminal" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="UsuarioCliente" nillable="true" type="q3:UsuarioClienteWS" />
+      <xs:element minOccurs="0" name="VideoAtencion" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoServicio" nillable="true" type="tns:ContratoServicio" />
+  <xs:complexType name="ContratoGrupo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdSala" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Terminales" nillable="true" type="tns:ArrayOfContratoTerminal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoGrupo" nillable="true" type="tns:ContratoGrupo" />
+  <xs:complexType name="ArrayOfContratoTerminal">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContratoTerminal" nillable="true" type="tns:ContratoTerminal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContratoTerminal" nillable="true" type="tns:ArrayOfContratoTerminal" />
+  <xs:complexType name="ContratoTerminal">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdGrupo" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tipo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoTerminal" nillable="true" type="tns:ContratoTerminal" />
+  <xs:complexType name="ContratoSala">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Grupos" nillable="true" type="tns:ArrayOfContratoGrupo" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdOficina" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoSala" nillable="true" type="tns:ContratoSala" />
+  <xs:complexType name="ArrayOfContratoGrupo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContratoGrupo" nillable="true" type="tns:ContratoGrupo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContratoGrupo" nillable="true" type="tns:ArrayOfContratoGrupo" />
+  <xs:complexType name="ContratoTurno">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Estado" type="xs:int" />
+      <xs:element minOccurs="0" name="HoraCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdCola" type="xs:int" />
+      <xs:element minOccurs="0" name="IdServicioActual" type="xs:int" />
+      <xs:element minOccurs="0" name="IdTerminal" type="xs:int" />
+      <xs:element minOccurs="0" name="NombreCola" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Oficina" nillable="true" type="tns:ContratoOficina" />
+      <xs:element minOccurs="0" name="Servicios" nillable="true" type="tns:ArrayOfContratoServicio" />
+      <xs:element minOccurs="0" name="TiempoPromedioColaEspera" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TiqueteBytes" nillable="true" type="xs:base64Binary" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="UsuarioCliente" nillable="true" type="q4:UsuarioClienteWS" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoTurno" nillable="true" type="tns:ContratoTurno" />
+  <xs:complexType name="ContratoOficina">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdElementoGeografico" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Salas" nillable="true" type="tns:ArrayOfContratoSala" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoOficina" nillable="true" type="tns:ContratoOficina" />
+  <xs:complexType name="ArrayOfContratoSala">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContratoSala" nillable="true" type="tns:ContratoSala" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContratoSala" nillable="true" type="tns:ArrayOfContratoSala" />
+  <xs:complexType name="ArrayOfContratoServicio">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContratoServicio" nillable="true" type="tns:ContratoServicio" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContratoServicio" nillable="true" type="tns:ArrayOfContratoServicio" />
+</xs:schema>

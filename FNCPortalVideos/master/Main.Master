@@ -1,0 +1,25 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="FNCPortalVideos.master.Main" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Sistema de pacientes para descarga de videos - Fundación Neumológica Colombiana</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <link href="css/styles.css" rel='stylesheet' type='text/css' />
+    </asp:ContentPlaceHolder>    
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+         <asp:UpdateProgress ID="UpdateProgress1" runat="server">
+            <ProgressTemplate>                    
+            </ProgressTemplate>
+        </asp:UpdateProgress>       
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

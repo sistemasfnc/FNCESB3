@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Enumeracion" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Base" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioTurno.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Turno">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Enumeracion" minOccurs="0" name="Estado" type="q1:EstadoTurno" />
+      <xs:element minOccurs="0" name="Grupo" nillable="true" type="tns:Grupo" />
+      <xs:element minOccurs="0" name="IdTransaccion" type="xs:int" />
+      <xs:element minOccurs="0" name="IdTurno" type="xs:int" />
+      <xs:element minOccurs="0" name="NumeroTurno" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Oficina" nillable="true" type="tns:Oficina" />
+      <xs:element minOccurs="0" name="Sala" nillable="true" type="tns:Sala" />
+      <xs:element minOccurs="0" name="TiempoDesplazamientoSegundos" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Turno" nillable="true" type="tns:Turno" />
+  <xs:complexType name="Grupo">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Base" base="q2:Basica">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Grupo" nillable="true" type="tns:Grupo" />
+  <xs:complexType name="Oficina">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Base" base="q3:Basica">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Oficina" nillable="true" type="tns:Oficina" />
+  <xs:complexType name="Sala">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Base" base="q4:Basica">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Sala" nillable="true" type="tns:Sala" />
+  <xs:complexType name="Resultado">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Exitoso" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Mensaje" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Resultado" nillable="true" type="tns:Resultado" />
+  <xs:complexType name="Usuario">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Enumeracion" minOccurs="0" name="Estado" type="q5:EstadoUsuario" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
+  <xs:complexType name="TurnoKiosco">
+    <xs:sequence>
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador.Enumeracion" minOccurs="0" name="Estado" type="q6:EstadoTurnoKiosco" />
+      <xs:element minOccurs="0" name="EstadoMensaje" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Kiosco" nillable="true" type="tns:Kiosco" />
+      <xs:element minOccurs="0" name="Turno" nillable="true" type="tns:Turno" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TurnoKiosco" nillable="true" type="tns:TurnoKiosco" />
+  <xs:complexType name="Kiosco">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Activo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DescripcionNoOperativo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DireccionEnSala" type="xs:int" />
+      <xs:element minOccurs="0" name="DireccionIP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstadoActualKiosco" type="tns:EstadoKiosco" />
+      <xs:element minOccurs="0" name="Extension" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FechaActualizacionEstado" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Habilitado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdServidorVideoAtencion" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sala" nillable="true" type="tns:Sala" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Kiosco" nillable="true" type="tns:Kiosco" />
+  <xs:simpleType name="EstadoKiosco">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Libre" />
+      <xs:enumeration value="Ocupado" />
+      <xs:enumeration value="Bloqueado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EstadoKiosco" nillable="true" type="tns:EstadoKiosco" />
+  <xs:simpleType name="ModoEjecucion">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Previo">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Posterior">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ModoEjecucion" nillable="true" type="tns:ModoEjecucion" />
+</xs:schema>

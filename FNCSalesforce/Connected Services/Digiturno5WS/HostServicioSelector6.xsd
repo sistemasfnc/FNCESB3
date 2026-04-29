@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Agendamiento" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Campos" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" />
+  <xs:import schemaLocation="http://192.168.101.40:8812/HostServicioSelector.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="CrearTurno">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idOficina" type="xs:int" />
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="enteSistema" type="q1:EntesDelSistema.Tipo" />
+        <xs:element minOccurs="0" name="idDestino" type="xs:int" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="colas" nillable="true" type="q2:ArrayOfCola" />
+        <xs:element minOccurs="0" name="sintetizadorVoz" type="xs:boolean" />
+        <xs:element minOccurs="0" name="observaciones" nillable="true" type="xs:string" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="cliente" nillable="true" type="q3:UsuarioClienteWS" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="imprimeTiquete" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="CrearTurnoResult" nillable="true" type="q4:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoCita">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="enteSistema" type="q5:EntesDelSistema.Tipo" />
+        <xs:element minOccurs="0" name="idDestino" type="xs:int" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="colas" nillable="true" type="q6:ArrayOfCola" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Agendamiento" minOccurs="0" name="cita" nillable="true" type="q7:Cita" />
+        <xs:element minOccurs="0" name="sintetizadorVoz" type="xs:boolean" />
+        <xs:element minOccurs="0" name="observaciones" nillable="true" type="xs:string" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="cliente" nillable="true" type="q8:UsuarioClienteWS" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="imprimeTiquete" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoCitaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="CrearTurnoCitaResult" nillable="true" type="q9:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoSimple">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="enteSistema" type="q10:EntesDelSistema.Tipo" />
+        <xs:element minOccurs="0" name="idDestino" type="xs:int" />
+        <xs:element minOccurs="0" name="idCola" type="xs:int" />
+        <xs:element minOccurs="0" name="sintetizadorVoz" type="xs:boolean" />
+        <xs:element minOccurs="0" name="observaciones" nillable="true" type="xs:string" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="cliente" nillable="true" type="q11:UsuarioClienteWS" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="imprimeTiquete" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoSimpleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="CrearTurnoSimpleResult" nillable="true" type="q12:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoConCampoAdicional">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="enteSistema" type="q13:EntesDelSistema.Tipo" />
+        <xs:element minOccurs="0" name="idDestino" type="xs:int" />
+        <xs:element minOccurs="0" name="idCola" type="xs:int" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Agendamiento" minOccurs="0" name="cita" nillable="true" type="q14:Cita" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Campos" minOccurs="0" name="campos" nillable="true" type="q15:ArrayOfCampoExterno" />
+        <xs:element minOccurs="0" name="sintetizadorVoz" type="xs:boolean" />
+        <xs:element minOccurs="0" name="observaciones" nillable="true" type="xs:string" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="cliente" nillable="true" type="q16:UsuarioClienteWS" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="imprimeTiquete" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoConCampoAdicionalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="CrearTurnoConCampoAdicionalResult" nillable="true" type="q17:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoSelectorFisico">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element minOccurs="0" name="idBoton" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoSelectorFisicoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="CrearTurnoSelectorFisicoResult" nillable="true" type="q18:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoIpSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ipSelector" nillable="true" type="xs:string" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="enteSistema" type="q19:EntesDelSistema.Tipo" />
+        <xs:element minOccurs="0" name="idDestino" type="xs:int" />
+        <xs:element minOccurs="0" name="idCola" type="xs:int" />
+        <xs:element minOccurs="0" name="sintetizadorVoz" type="xs:boolean" />
+        <xs:element minOccurs="0" name="observaciones" nillable="true" type="xs:string" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="cliente" nillable="true" type="q20:UsuarioClienteWS" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="imprimeTiquete" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoIpSelectorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" minOccurs="0" name="CrearTurnoIpSelectorResult" nillable="true" type="q21:ContratoTurno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoObjeto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" minOccurs="0" name="nuevoTurno" nillable="true" type="q22:ContratoNuevoTurno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearTurnoObjetoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="CrearTurnoObjetoResult" nillable="true" type="q23:Turno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarConteo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idCola" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="idRespuesta" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="idNodo" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarConteoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerarConteoResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarConteoIPSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ipSelector" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idCola" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="idRespuesta" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="idNodo" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarConteoIPSelectorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerarConteoIPSelectorResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerColasXSelectorXJornada">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element minOccurs="0" name="idJornada" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerColasXSelectorXJornadaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerColasXSelectorXJornadaResult" nillable="true" type="q24:ArrayOfCola" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerColasXSelectorXJornadaActual">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerColasXSelectorXJornadaActualResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerColasXSelectorXJornadaActualResult" nillable="true" type="q25:ArrayOfCola" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerColasXSelectorXJornadaSimplificado">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element minOccurs="0" name="idJornada" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerColasXSelectorXJornadaSimplificadoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerColasXSelectorXJornadaSimplificadoResult" nillable="true" type="q26:ArrayOfContratoCola" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerGruposDeSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerGruposDeSelectorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerGruposDeSelectorResult" nillable="true" type="q27:ArrayOfGrupo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerJerarquia">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerJerarquiaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerJerarquiaResult" nillable="true" type="q28:Nodo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerOficinasSistema">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerOficinasSistemaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerOficinasSistemaResult" nillable="true" type="q29:ArrayOfOficina" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSalasDeSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSalasDeSelectorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerSalasDeSelectorResult" nillable="true" type="q30:ArrayOfSala" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSelectoresXOficina">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idOficina" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSelectoresXOficinaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerSelectoresXOficinaResult" nillable="true" type="q31:ArrayOfSelector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSelectorXId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSelectorXIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerSelectorXIdResult" nillable="true" type="q32:Selector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerServidoresDeSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerServidoresDeSelectorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerServidoresDeSelectorResult" nillable="true" type="q33:ArrayOfServidor" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerTiposIdentificacion">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerTiposIdentificacionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerTiposIdentificacionResult" nillable="true" type="q34:ArrayOfTiposDocumento" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PruebaServicioSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="parametro" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PruebaServicioSelectorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PruebaServicioSelectorResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CerrarSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idMotivo" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CerrarSelectorResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSelectoresXUsuario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSelectoresXUsuarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="ObtenerSelectoresXUsuarioResult" nillable="true" type="q35:ArrayOfSelector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AbrirSelector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSelector" type="xs:int" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="usuario" nillable="true" type="q36:Usuario" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" minOccurs="0" name="motivo" nillable="true" type="q37:Motivo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AbrirSelectorResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerFechasAgenda">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.WCF" minOccurs="0" name="nuevoTurno" nillable="true" type="q38:ContratoNuevoTurno" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerFechasAgendaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ObtenerFechasAgendaResult" nillable="true" type="q39:ArrayOfdateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

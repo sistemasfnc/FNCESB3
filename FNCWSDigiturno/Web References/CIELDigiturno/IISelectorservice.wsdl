@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:ns2="urn:USoapOcupacion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:ns5="urn:USoapLineasTiquete" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns8="urn:UsoapVALIDAUSUARIO" xmlns:ns3="urn:USoapTablero" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns9="urn:" xmlns:ns11="urn:USoapLoginUsuario" xmlns:ns7="urn:USoapMaestroDeClientes" xmlns:ns4="urn:USoapElemento" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns10="urn:USoapListaJerarquia" xmlns:ns1="urn:UsoapTURNO" xmlns:ns6="urn:USoapDatosUsuarioSelector" name="IISelectorservice" targetNamespace="http://tempuri.org/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns="urn:UsoapTURNO" targetNamespace="urn:UsoapTURNO">
+      <xs:complexType name="TSoapTURNO">
+        <xs:sequence>
+          <xs:element name="UNIGUID" type="xs:string" />
+          <xs:element name="UNITURNO" type="xs:string" />
+          <xs:element name="IMPRIMIR" type="xs:boolean" />
+          <xs:element name="HORASOLICITUD" type="xs:string" />
+          <xs:element name="SALA" type="xs:string" />
+          <xs:element name="USUARIOEMISOR" type="xs:string" />
+          <xs:element name="HARDWARERECEPTOR" type="xs:string" />
+          <xs:element name="OBSERVACIONES" type="xs:string" />
+          <xs:element name="SELECTOR" type="xs:string" />
+          <xs:element name="COLA" type="xs:string" />
+          <xs:element name="TURNO" type="xs:string" />
+          <xs:element name="CLIENTE" type="xs:string" />
+          <xs:element name="IDCLIENTE" type="xs:string" />
+          <xs:element name="NOMBRE" type="xs:string" />
+          <xs:element name="PRIORIDAD" type="xs:string" />
+          <xs:element name="TIPOID" type="xs:string" />
+          <xs:element name="ERROR" type="xs:string" />
+          <xs:element name="MODO" type="xs:string" />
+          <xs:element name="AREA" type="xs:string" />
+          <xs:element name="TIPOCLIENTE" type="xs:string" />
+          <xs:element name="SERVICIO" type="xs:string" />
+          <xs:element name="SUBSERVICIO" type="xs:string" />
+          <xs:element name="USUARIORECEPTOR" type="xs:string" />
+          <xs:element name="TURNOUSUARIO" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapOcupacion" targetNamespace="urn:USoapOcupacion">
+      <xs:complexType name="TSoapOcupacionArray">
+        <xs:complexContent mixed="false">
+          <xs:restriction base="soapenc:Array">
+            <xs:sequence />
+            <xs:attribute xmlns:n1="http://schemas.xmlsoap.org/wsdl/" n1:arrayType="ns2:TSoapOcupacion[]" ref="soapenc:arrayType" />
+          </xs:restriction>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="TSoapOcupacion">
+        <xs:sequence>
+          <xs:element name="SALA" type="xs:string" />
+          <xs:element name="OCUPACION" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapTablero" targetNamespace="urn:USoapTablero">
+      <xs:complexType name="TSoapTableros">
+        <xs:sequence>
+          <xs:element name="SoapArray" type="ns3:TSoapTableroArray" />
+          <xs:element name="SECONDS" type="xs:int" />
+          <xs:element name="ERROR" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TSoapTableroArray">
+        <xs:complexContent mixed="false">
+          <xs:restriction base="soapenc:Array">
+            <xs:sequence />
+            <xs:attribute xmlns:n1="http://schemas.xmlsoap.org/wsdl/" n1:arrayType="ns3:TSoapTablero[]" ref="soapenc:arrayType" />
+          </xs:restriction>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="TSoapTablero">
+        <xs:sequence>
+          <xs:element name="TURNO" type="xs:string" />
+          <xs:element name="CODCLIENTE" type="xs:string" />
+          <xs:element name="IDCLIENTE" type="xs:string" />
+          <xs:element name="NOMBRE" type="xs:string" />
+          <xs:element name="TIPOID" type="xs:string" />
+          <xs:element name="SALA" type="xs:string" />
+          <xs:element name="HARDWARERECEPTOR" type="xs:string" />
+          <xs:element name="COLA" type="xs:string" />
+          <xs:element name="HORASOLICITUD" type="xs:string" />
+          <xs:element name="HORALLAMADO" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapElemento" targetNamespace="urn:USoapElemento">
+      <xs:complexType name="TSoapElementos">
+        <xs:sequence>
+          <xs:element name="SoapArray" type="ns4:TSoapElementoArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TSoapElementoArray">
+        <xs:complexContent mixed="false">
+          <xs:restriction base="soapenc:Array">
+            <xs:sequence />
+            <xs:attribute xmlns:n1="http://schemas.xmlsoap.org/wsdl/" n1:arrayType="ns4:TSoapElemento[]" ref="soapenc:arrayType" />
+          </xs:restriction>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="TSoapElemento">
+        <xs:sequence>
+          <xs:element name="CODIGO" type="xs:string" />
+          <xs:element name="NOMBRE" type="xs:string" />
+          <xs:element name="TIPOELEMENTO" type="xs:string" />
+          <xs:element name="COD_SALA" type="xs:string" />
+          <xs:element name="NOMBRE_SALA" type="xs:string" />
+          <xs:element name="COD_OFICINA" type="xs:string" />
+          <xs:element name="NOMBRE_OFICINA" type="xs:string" />
+          <xs:element name="TIPO_CLIENTE" type="xs:string" />
+          <xs:element name="TIEMPO_ESPERA" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapLineasTiquete" targetNamespace="urn:USoapLineasTiquete">
+      <xs:complexType name="TSoapLineasTiquete">
+        <xs:sequence>
+          <xs:element name="FuenteDobleLinea4" type="xs:boolean" />
+          <xs:element name="FuenteDobleLinea5" type="xs:boolean" />
+          <xs:element name="FuenteDobleLinea6" type="xs:boolean" />
+          <xs:element name="ImprimirLinea4" type="xs:boolean" />
+          <xs:element name="ImprimirLinea5" type="xs:boolean" />
+          <xs:element name="ImprimirLinea6" type="xs:boolean" />
+          <xs:element name="Linea1" type="xs:string" />
+          <xs:element name="Linea2" type="xs:string" />
+          <xs:element name="Linea3" type="xs:string" />
+          <xs:element name="Linea4" type="xs:string" />
+          <xs:element name="Linea5" type="xs:string" />
+          <xs:element name="Linea6" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapDatosUsuarioSelector" targetNamespace="urn:USoapDatosUsuarioSelector">
+      <xs:complexType name="TSoapDatosUsuarioSelector">
+        <xs:sequence>
+          <xs:element name="COD_OFICINA" type="xs:string" />
+          <xs:element name="COD_SALA" type="xs:string" />
+          <xs:element name="COD_Selector" type="xs:string" />
+          <xs:element name="COD_USUARIO" type="xs:string" />
+          <xs:element name="DIRECCION_SELECTOR" type="xs:int" />
+          <xs:element name="NOMBRE_SALA" type="xs:string" />
+          <xs:element name="NOMBRE_OFICINA" type="xs:string" />
+          <xs:element name="NOMBRE_Selector" type="xs:string" />
+          <xs:element name="NOMBRE_USUARIO" type="xs:string" />
+          <xs:element name="COD_JORNADA" type="xs:string" />
+          <xs:element name="NOMBRE_JORNADA" type="xs:string" />
+          <xs:element name="ESTADO_SELECTOR" type="xs:string" />
+          <xs:element name="NOMBRE_SERVIDOR" type="xs:string" />
+          <xs:element name="MOTIVOPENDIEnte" type="xs:boolean" />
+          <xs:element name="LICENCIA" type="xs:string" />
+          <xs:element name="ERROR" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapMaestroDeClientes" targetNamespace="urn:USoapMaestroDeClientes">
+      <xs:complexType name="TSoapMaestroDeClientes">
+        <xs:sequence>
+          <xs:element name="ID" type="xs:string" />
+          <xs:element name="NOMBRE" type="xs:string" />
+          <xs:element name="ID_STATUS" type="xs:string" />
+          <xs:element name="CEDULA" type="xs:string" />
+          <xs:element name="EMPRESA" type="xs:string" />
+          <xs:element name="VIP" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:UsoapVALIDAUSUARIO" targetNamespace="urn:UsoapVALIDAUSUARIO">
+      <xs:complexType name="TsoapVALIDAUSUARIO">
+        <xs:sequence>
+          <xs:element name="MSNERROR" type="xs:string" />
+          <xs:element name="BOORESULT" type="xs:boolean" />
+          <xs:element name="NOMBRE" type="xs:string" />
+          <xs:element name="CODIGO" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:" targetNamespace="urn:">
+      <xs:simpleType name="UTF8String">
+        <xs:restriction base="xs:string" />
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapListaJerarquia" targetNamespace="urn:USoapListaJerarquia">
+      <xs:complexType name="TSoapListaJerarquia">
+        <xs:sequence>
+          <xs:element name="strCodigoCola" type="xs:string" />
+          <xs:element name="strNombreCola" type="xs:string" />
+          <xs:element name="strTipoElementos" type="xs:string" />
+          <xs:element name="SoapArray" type="ns4:TSoapElementoArray" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns="urn:USoapLoginUsuario" targetNamespace="urn:USoapLoginUsuario">
+      <xs:complexType name="TSoapArregloLoginsUsuarios">
+        <xs:complexContent mixed="false">
+          <xs:restriction base="soapenc:Array">
+            <xs:sequence />
+            <xs:attribute xmlns:n1="http://schemas.xmlsoap.org/wsdl/" n1:arrayType="ns11:TSoapLoginUsuario[]" ref="soapenc:arrayType" />
+          </xs:restriction>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="TSoapLoginUsuario">
+        <xs:sequence>
+          <xs:element name="strCodigoGuid" type="xs:string" />
+          <xs:element name="strIPMaquina" type="xs:string" />
+          <xs:element name="strNombreMaquina" type="xs:string" />
+          <xs:element name="strOficina" type="xs:string" />
+          <xs:element name="strSala" type="xs:string" />
+          <xs:element name="strUsuario" type="xs:string" />
+          <xs:element name="strUsuariosOficina" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="GeneraTurno0Request">
+    <part name="pSOAPTurno" type="ns1:TSoapTURNO" />
+  </message>
+  <message name="GeneraTurno0Response">
+    <part name="return" type="ns1:TSoapTURNO" />
+  </message>
+  <message name="GeneraTurnoCIEL1Request">
+    <part name="pSOAPTurno" type="ns1:TSoapTURNO" />
+    <part name="bolPrioridadPreferencial" type="xs:boolean" />
+    <part name="strNombrePrioridadPreferencial" type="xs:string" />
+    <part name="strInformacion" type="xs:string" />
+  </message>
+  <message name="GeneraTurnoCIEL1Response">
+    <part name="bolPrioridadPreferencial" type="xs:boolean" />
+    <part name="strNombrePrioridadPreferencial" type="xs:string" />
+    <part name="strInformacion" type="xs:string" />
+    <part name="return" type="ns1:TSoapTURNO" />
+  </message>
+  <message name="ActivaTurno2Request">
+    <part name="uniCodigo" type="xs:string" />
+    <part name="strSala" type="xs:string" />
+    <part name="strUsuario" type="xs:string" />
+  </message>
+  <message name="ActivaTurno2Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="EliminaTurno3Request">
+    <part name="uniCodigo" type="xs:string" />
+    <part name="strSala" type="xs:string" />
+  </message>
+  <message name="EliminaTurno3Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="DevOcupacion4Request" />
+  <message name="DevOcupacion4Response">
+    <part name="return" type="ns2:TSoapOcupacionArray" />
+  </message>
+  <message name="DevTurnosADesp5Request">
+    <part name="uniCodigo" type="xs:string" />
+  </message>
+  <message name="DevTurnosADesp5Response">
+    <part name="return" type="ns3:TSoapTableros" />
+  </message>
+  <message name="Helloword6Request" />
+  <message name="Helloword6Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="DevElementosDigiturno7Request">
+    <part name="intElemento" type="xs:int" />
+  </message>
+  <message name="DevElementosDigiturno7Response">
+    <part name="return" type="ns4:TSoapElementos" />
+  </message>
+  <message name="BroadcastMsg8Request">
+    <part name="MessageText" type="xs:string" />
+    <part name="MessagesServerDateTime" type="xs:string" />
+  </message>
+  <message name="BroadcastMsg8Response" />
+  <message name="DevColasSelectorJornadaActual9Request">
+    <part name="strSelector" type="xs:string" />
+  </message>
+  <message name="DevColasSelectorJornadaActual9Response">
+    <part name="return" type="ns4:TSoapElementos" />
+  </message>
+  <message name="DevLogoComoBytes10Request">
+    <part name="strSelector" type="xs:string" />
+  </message>
+  <message name="DevLogoComoBytes10Response">
+    <part name="return" type="xs:base64Binary" />
+  </message>
+  <message name="DevFechaHoraServidor11Request" />
+  <message name="DevFechaHoraServidor11Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="DevLineasTiquete12Request">
+    <part name="strSelector" type="xs:string" />
+  </message>
+  <message name="DevLineasTiquete12Response">
+    <part name="return" type="ns5:TSoapLineasTiquete" />
+  </message>
+  <message name="ImprimeTurno13Request">
+    <part name="uniCodigo" type="xs:string" />
+    <part name="strSelector" type="xs:string" />
+    <part name="strNumeroTransaccion" type="xs:string" />
+    <part name="strAplicacionCliente" type="xs:string" />
+    <part name="strTurnoUsuario" type="xs:string" />
+    <part name="strUsuarioReceptor" type="xs:string" />
+  </message>
+  <message name="ImprimeTurno13Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="DevCodigoJornadaActualSala14Request">
+    <part name="strCodigoSala" type="xs:string" />
+  </message>
+  <message name="DevCodigoJornadaActualSala14Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="CreaActivaEImprimeCita15Request">
+    <part name="pSOAPTurno" type="ns1:TSoapTURNO" />
+    <part name="strUsuario" type="xs:string" />
+    <part name="strSelector" type="xs:string" />
+    <part name="strNumeroTransaccion" type="xs:string" />
+    <part name="strAplicacionCliente" type="xs:string" />
+    <part name="strTurnoUsuario" type="xs:string" />
+    <part name="strUsuarioReceptor" type="xs:string" />
+  </message>
+  <message name="CreaActivaEImprimeCita15Response">
+    <part name="return" type="ns1:TSoapTURNO" />
+  </message>
+  <message name="CancelaCita16Request">
+    <part name="strCodigo" type="xs:string" />
+    <part name="strCodigoUsuario" type="xs:string" />
+    <part name="strCodigoSala" type="xs:string" />
+  </message>
+  <message name="CancelaCita16Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="RetornaTurnoActualTerminal17Request">
+    <part name="strCodigoTerminal" type="xs:string" />
+  </message>
+  <message name="RetornaTurnoActualTerminal17Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="ActualizaTransaccion18Request">
+    <part name="strCodigoTerminal" type="xs:string" />
+    <part name="strCodigoTurno" type="xs:string" />
+    <part name="Cod_OrdenServicio" type="xs:string" />
+    <part name="Cli_DocId" type="xs:string" />
+    <part name="Cli_Nombre" type="xs:string" />
+    <part name="Cli_Telefono" type="xs:string" />
+  </message>
+  <message name="ActualizaTransaccion18Response">
+    <part name="return" type="xs:int" />
+  </message>
+  <message name="SetEstadoTurnoTerminal19Request">
+    <part name="strCodigoTurno" type="xs:string" />
+    <part name="Cli_DocId" type="xs:string" />
+    <part name="Accion" type="xs:int" />
+  </message>
+  <message name="SetEstadoTurnoTerminal19Response">
+    <part name="return" type="xs:int" />
+  </message>
+  <message name="DevEstadoTurno20Request">
+    <part name="strCodigoTurno" type="xs:string" />
+  </message>
+  <message name="DevEstadoTurno20Response">
+    <part name="return" type="xs:int" />
+  </message>
+  <message name="AbreSelector21Request">
+    <part name="strCodUsuario" type="xs:string" />
+    <part name="strPass" type="xs:string" />
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="AbreSelector21Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="ns6:TSoapDatosUsuarioSelector" />
+  </message>
+  <message name="AbreSelectorEnMaquina22Request">
+    <part name="strCodUsuario" type="xs:string" />
+    <part name="strPass" type="xs:string" />
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strNombreMaquina" type="xs:string" />
+    <part name="strDireccionIP" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="AbreSelectorEnMaquina22Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="ns6:TSoapDatosUsuarioSelector" />
+  </message>
+  <message name="CierraSesionSelector23Request">
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="CierraSesionSelector23Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="CierraSelector24Request">
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strGuidMotivoCierre" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="CierraSelector24Response">
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="DevEstadoSelector25Request">
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="DevEstadoSelector25Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="TestSelector26Request">
+    <part name="strTexto" type="xs:string" />
+  </message>
+  <message name="TestSelector26Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="sacalisColasPorMaestros27Request">
+    <part name="strSelector" type="xs:string" />
+    <part name="strValida" type="xs:string" />
+    <part name="booValida" type="xs:boolean" />
+  </message>
+  <message name="sacalisColasPorMaestros27Response">
+    <part name="return" type="ns4:TSoapElementoArray" />
+  </message>
+  <message name="buscaDatosMaestros28Request">
+    <part name="strCodValida" type="xs:string" />
+    <part name="strError" type="xs:string" />
+  </message>
+  <message name="buscaDatosMaestros28Response">
+    <part name="strError" type="xs:string" />
+    <part name="return" type="ns7:TSoapMaestroDeClientes" />
+  </message>
+  <message name="ValidaUsuariosis29Request">
+    <part name="strUsuario" type="xs:string" />
+    <part name="strPassw" type="xs:string" />
+  </message>
+  <message name="ValidaUsuariosis29Response">
+    <part name="return" type="ns8:TsoapVALIDAUSUARIO" />
+  </message>
+  <message name="DevElementosFiltrados30Request">
+    <part name="strIDFiltro" type="xs:string" />
+    <part name="strCodfiltro" type="xs:string" />
+    <part name="strError" type="xs:string" />
+  </message>
+  <message name="DevElementosFiltrados30Response">
+    <part name="strError" type="xs:string" />
+    <part name="return" type="ns4:TSoapElementos" />
+  </message>
+  <message name="DevMotivosCierre31Request">
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="DevMotivosCierre31Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="ns4:TSoapElementos" />
+  </message>
+  <message name="DevXMLJerarquia32Request">
+    <part name="intProfundidad" type="xs:int" />
+  </message>
+  <message name="DevXMLJerarquia32Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="DevColaPorElementosJerarquia33Request">
+    <part name="strCodigoArea" type="xs:string" />
+    <part name="strCodigoTipoCliente" type="xs:string" />
+    <part name="strCodigoServicio" type="xs:string" />
+    <part name="strCodigoSubservicio" type="xs:string" />
+  </message>
+  <message name="DevColaPorElementosJerarquia33Response">
+    <part name="return" type="ns4:TSoapElemento" />
+  </message>
+  <message name="DevPrioridadDefectoCola34Request">
+    <part name="strCodigoSelector" type="xs:string" />
+    <part name="strCodigoCola" type="xs:string" />
+  </message>
+  <message name="DevPrioridadDefectoCola34Response">
+    <part name="return" type="ns4:TSoapElemento" />
+  </message>
+  <message name="strTestString35Request" />
+  <message name="strTestString35Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="strTestWideString36Request" />
+  <message name="strTestWideString36Response">
+    <part name="return" type="xs:string" />
+  </message>
+  <message name="strTestUTf8String37Request" />
+  <message name="strTestUTf8String37Response">
+    <part name="return" type="ns9:UTF8String" />
+  </message>
+  <message name="DevuelveJerarquiaSelector38Request">
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strCodigoArea" type="xs:string" />
+    <part name="strCodigoTipoCliente" type="xs:string" />
+    <part name="strCodigoServicio" type="xs:string" />
+    <part name="strCodigoSubservicio" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="DevuelveJerarquiaSelector38Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="ns10:TSoapListaJerarquia" />
+  </message>
+  <message name="DevuelveJerarquiaSelectorColas39Request">
+    <part name="strCodSelector" type="xs:string" />
+    <part name="strCodigoArea" type="xs:string" />
+    <part name="strCodigoTipoCliente" type="xs:string" />
+    <part name="strCodigoServicio" type="xs:string" />
+    <part name="strCodigoSubservicio" type="xs:string" />
+    <part name="strInfo" type="xs:string" />
+  </message>
+  <message name="DevuelveJerarquiaSelectorColas39Response">
+    <part name="strInfo" type="xs:string" />
+    <part name="return" type="ns10:TSoapListaJerarquia" />
+  </message>
+  <message name="DevLoginsUsuarios40Request">
+    <part name="ExtError" type="xs:string" />
+  </message>
+  <message name="DevLoginsUsuarios40Response">
+    <part name="ExtError" type="xs:string" />
+    <part name="return" type="ns11:TSoapArregloLoginsUsuarios" />
+  </message>
+  <portType name="IISelector">
+    <operation name="GeneraTurno">
+      <input message="tns:GeneraTurno0Request" />
+      <output message="tns:GeneraTurno0Response" />
+    </operation>
+    <operation name="GeneraTurnoCIEL">
+      <input message="tns:GeneraTurnoCIEL1Request" />
+      <output message="tns:GeneraTurnoCIEL1Response" />
+    </operation>
+    <operation name="ActivaTurno">
+      <input message="tns:ActivaTurno2Request" />
+      <output message="tns:ActivaTurno2Response" />
+    </operation>
+    <operation name="EliminaTurno">
+      <input message="tns:EliminaTurno3Request" />
+      <output message="tns:EliminaTurno3Response" />
+    </operation>
+    <operation name="DevOcupacion">
+      <input message="tns:DevOcupacion4Request" />
+      <output message="tns:DevOcupacion4Response" />
+    </operation>
+    <operation name="DevTurnosADesp">
+      <input message="tns:DevTurnosADesp5Request" />
+      <output message="tns:DevTurnosADesp5Response" />
+    </operation>
+    <operation name="Helloword">
+      <input message="tns:Helloword6Request" />
+      <output message="tns:Helloword6Response" />
+    </operation>
+    <operation name="DevElementosDigiturno">
+      <input message="tns:DevElementosDigiturno7Request" />
+      <output message="tns:DevElementosDigiturno7Response" />
+    </operation>
+    <operation name="BroadcastMsg">
+      <input message="tns:BroadcastMsg8Request" />
+      <output message="tns:BroadcastMsg8Response" />
+    </operation>
+    <operation name="DevColasSelectorJornadaActual">
+      <input message="tns:DevColasSelectorJornadaActual9Request" />
+      <output message="tns:DevColasSelectorJornadaActual9Response" />
+    </operation>
+    <operation name="DevLogoComoBytes">
+      <input message="tns:DevLogoComoBytes10Request" />
+      <output message="tns:DevLogoComoBytes10Response" />
+    </operation>
+    <operation name="DevFechaHoraServidor">
+      <input message="tns:DevFechaHoraServidor11Request" />
+      <output message="tns:DevFechaHoraServidor11Response" />
+    </operation>
+    <operation name="DevLineasTiquete">
+      <input message="tns:DevLineasTiquete12Request" />
+      <output message="tns:DevLineasTiquete12Response" />
+    </operation>
+    <operation name="ImprimeTurno">
+      <input message="tns:ImprimeTurno13Request" />
+      <output message="tns:ImprimeTurno13Response" />
+    </operation>
+    <operation name="DevCodigoJornadaActualSala">
+      <input message="tns:DevCodigoJornadaActualSala14Request" />
+      <output message="tns:DevCodigoJornadaActualSala14Response" />
+    </operation>
+    <operation name="CreaActivaEImprimeCita">
+      <input message="tns:CreaActivaEImprimeCita15Request" />
+      <output message="tns:CreaActivaEImprimeCita15Response" />
+    </operation>
+    <operation name="CancelaCita">
+      <input message="tns:CancelaCita16Request" />
+      <output message="tns:CancelaCita16Response" />
+    </operation>
+    <operation name="RetornaTurnoActualTerminal">
+      <input message="tns:RetornaTurnoActualTerminal17Request" />
+      <output message="tns:RetornaTurnoActualTerminal17Response" />
+    </operation>
+    <operation name="ActualizaTransaccion">
+      <input message="tns:ActualizaTransaccion18Request" />
+      <output message="tns:ActualizaTransaccion18Response" />
+    </operation>
+    <operation name="SetEstadoTurnoTerminal">
+      <input message="tns:SetEstadoTurnoTerminal19Request" />
+      <output message="tns:SetEstadoTurnoTerminal19Response" />
+    </operation>
+    <operation name="DevEstadoTurno">
+      <input message="tns:DevEstadoTurno20Request" />
+      <output message="tns:DevEstadoTurno20Response" />
+    </operation>
+    <operation name="AbreSelector">
+      <input message="tns:AbreSelector21Request" />
+      <output message="tns:AbreSelector21Response" />
+    </operation>
+    <operation name="AbreSelectorEnMaquina">
+      <input message="tns:AbreSelectorEnMaquina22Request" />
+      <output message="tns:AbreSelectorEnMaquina22Response" />
+    </operation>
+    <operation name="CierraSesionSelector">
+      <input message="tns:CierraSesionSelector23Request" />
+      <output message="tns:CierraSesionSelector23Response" />
+    </operation>
+    <operation name="CierraSelector">
+      <input message="tns:CierraSelector24Request" />
+      <output message="tns:CierraSelector24Response" />
+    </operation>
+    <operation name="DevEstadoSelector">
+      <input message="tns:DevEstadoSelector25Request" />
+      <output message="tns:DevEstadoSelector25Response" />
+    </operation>
+    <operation name="TestSelector">
+      <input message="tns:TestSelector26Request" />
+      <output message="tns:TestSelector26Response" />
+    </operation>
+    <operation name="sacalisColasPorMaestros">
+      <input message="tns:sacalisColasPorMaestros27Request" />
+      <output message="tns:sacalisColasPorMaestros27Response" />
+    </operation>
+    <operation name="buscaDatosMaestros">
+      <input message="tns:buscaDatosMaestros28Request" />
+      <output message="tns:buscaDatosMaestros28Response" />
+    </operation>
+    <operation name="ValidaUsuariosis">
+      <input message="tns:ValidaUsuariosis29Request" />
+      <output message="tns:ValidaUsuariosis29Response" />
+    </operation>
+    <operation name="DevElementosFiltrados">
+      <input message="tns:DevElementosFiltrados30Request" />
+      <output message="tns:DevElementosFiltrados30Response" />
+    </operation>
+    <operation name="DevMotivosCierre">
+      <input message="tns:DevMotivosCierre31Request" />
+      <output message="tns:DevMotivosCierre31Response" />
+    </operation>
+    <operation name="DevXMLJerarquia">
+      <input message="tns:DevXMLJerarquia32Request" />
+      <output message="tns:DevXMLJerarquia32Response" />
+    </operation>
+    <operation name="DevColaPorElementosJerarquia">
+      <input message="tns:DevColaPorElementosJerarquia33Request" />
+      <output message="tns:DevColaPorElementosJerarquia33Response" />
+    </operation>
+    <operation name="DevPrioridadDefectoCola">
+      <input message="tns:DevPrioridadDefectoCola34Request" />
+      <output message="tns:DevPrioridadDefectoCola34Response" />
+    </operation>
+    <operation name="strTestString">
+      <input message="tns:strTestString35Request" />
+      <output message="tns:strTestString35Response" />
+    </operation>
+    <operation name="strTestWideString">
+      <input message="tns:strTestWideString36Request" />
+      <output message="tns:strTestWideString36Response" />
+    </operation>
+    <operation name="strTestUTf8String">
+      <input message="tns:strTestUTf8String37Request" />
+      <output message="tns:strTestUTf8String37Response" />
+    </operation>
+    <operation name="DevuelveJerarquiaSelector">
+      <input message="tns:DevuelveJerarquiaSelector38Request" />
+      <output message="tns:DevuelveJerarquiaSelector38Response" />
+    </operation>
+    <operation name="DevuelveJerarquiaSelectorColas">
+      <input message="tns:DevuelveJerarquiaSelectorColas39Request" />
+      <output message="tns:DevuelveJerarquiaSelectorColas39Response" />
+    </operation>
+    <operation name="DevLoginsUsuarios">
+      <input message="tns:DevLoginsUsuarios40Request" />
+      <output message="tns:DevLoginsUsuarios40Response" />
+    </operation>
+  </portType>
+  <binding name="IISelectorbinding" type="tns:IISelector">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="GeneraTurno">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#GeneraTurno" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="GeneraTurnoCIEL">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#GeneraTurnoCIEL" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="ActivaTurno">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#ActivaTurno" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="EliminaTurno">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#EliminaTurno" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevOcupacion">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevOcupacion" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevTurnosADesp">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevTurnosADesp" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="Helloword">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#Helloword" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevElementosDigiturno">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevElementosDigiturno" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="BroadcastMsg">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#BroadcastMsg" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevColasSelectorJornadaActual">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevColasSelectorJornadaActual" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevLogoComoBytes">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevLogoComoBytes" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevFechaHoraServidor">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevFechaHoraServidor" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevLineasTiquete">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevLineasTiquete" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="ImprimeTurno">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#ImprimeTurno" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevCodigoJornadaActualSala">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevCodigoJornadaActualSala" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="CreaActivaEImprimeCita">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#CreaActivaEImprimeCita" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="CancelaCita">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#CancelaCita" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="RetornaTurnoActualTerminal">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#RetornaTurnoActualTerminal" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="ActualizaTransaccion">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#ActualizaTransaccion" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="SetEstadoTurnoTerminal">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#SetEstadoTurnoTerminal" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevEstadoTurno">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevEstadoTurno" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="AbreSelector">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#AbreSelector" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="AbreSelectorEnMaquina">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#AbreSelectorEnMaquina" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="CierraSesionSelector">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#CierraSesionSelector" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="CierraSelector">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#CierraSelector" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevEstadoSelector">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevEstadoSelector" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="TestSelector">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#TestSelector" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="sacalisColasPorMaestros">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#sacalisColasPorMaestros" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="buscaDatosMaestros">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#buscaDatosMaestros" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="ValidaUsuariosis">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#ValidaUsuariosis" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevElementosFiltrados">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevElementosFiltrados" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevMotivosCierre">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevMotivosCierre" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevXMLJerarquia">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevXMLJerarquia" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevColaPorElementosJerarquia">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevColaPorElementosJerarquia" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevPrioridadDefectoCola">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevPrioridadDefectoCola" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="strTestString">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#strTestString" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="strTestWideString">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#strTestWideString" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="strTestUTf8String">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#strTestUTf8String" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevuelveJerarquiaSelector">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevuelveJerarquiaSelector" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevuelveJerarquiaSelectorColas">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevuelveJerarquiaSelectorColas" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="DevLoginsUsuarios">
+      <soap:operation soapAction="urn:ISelectorIntf-IISelector#DevLoginsUsuarios" style="rpc" />
+      <input>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:ISelectorIntf-IISelector" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="IISelectorservice">
+    <port name="IISelectorPort" binding="tns:IISelectorbinding">
+      <soap:address location="http://192.168.104.51:8886/soap/IISelector" />
+    </port>
+  </service>
+</definitions>

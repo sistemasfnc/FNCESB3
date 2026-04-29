@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.UbicacionGeografica" />
+  <xs:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://192.168.101.40:9092/HostServicioTerminal.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" />
+  <xs:complexType name="WCFFaultExcepcion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WCFFaultExcepcion" nillable="true" type="tns:WCFFaultExcepcion" />
+  <xs:simpleType name="Calificador.TipoCalificacion">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ninguna" />
+      <xs:enumeration value="PorServicio" />
+      <xs:enumeration value="PorTransfereciaYFindeAtencion" />
+      <xs:enumeration value="AlfinalDeLaAtencion" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Calificador.TipoCalificacion" nillable="true" type="tns:Calificador.TipoCalificacion" />
+  <xs:complexType name="ContratoCola">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdNodo" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContratoCola" nillable="true" type="tns:ContratoCola" />
+  <xs:simpleType name="Servicio.TipoEstadoServicio">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EnEspera">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Llamando">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Suspendido">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Distraido">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EnAtencion">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Cancelado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Finalizado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Abandonado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Transferido">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Servicio.TipoEstadoServicio" nillable="true" type="tns:Servicio.TipoEstadoServicio" />
+  <xs:complexType name="UsuarioClienteWS">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Actualizar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Barrio" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.UbicacionGeografica" minOccurs="0" name="Ciudad" nillable="true" type="q1:Ciudad" />
+      <xs:element minOccurs="0" name="Codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Direccion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Equivalencia" nillable="true" type="tns:EquivalenciaUsuarioCliente" />
+      <xs:element minOccurs="0" name="EstadoCliente" type="xs:int" />
+      <xs:element minOccurs="0" name="FechaActualizacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FechaAfiliacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FechaCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FechaNacimiento" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdCliente" type="xs:int" />
+      <xs:element minOccurs="0" name="IdEquivalencia" type="xs:int" />
+      <xs:element minOccurs="0" name="IdEstadoCliente" type="xs:int" />
+      <xs:element minOccurs="0" name="IdGenero" type="xs:int" />
+      <xs:element minOccurs="0" name="IdTipoIdentificacion" type="xs:int" />
+      <xs:element minOccurs="0" name="Identificacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImagenBase64" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LugarExpedicion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Origen" nillable="true" type="tns:OrigenUsuarioCliente" />
+      <xs:element minOccurs="0" name="Parametro1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Parametro2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Parametro3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimerApellido" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimerNombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RazonSocial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SegundoApellido" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SegundoNombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelefonoCelular" type="xs:long" />
+      <xs:element minOccurs="0" name="TelefonoResidencia" type="xs:long" />
+      <xs:element minOccurs="0" name="TelefonoTrabajo" type="xs:long" />
+      <xs:element minOccurs="0" name="TipoIdentificacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoIdentificacionUsuario" nillable="true" type="tns:TiposDocumento" />
+      <xs:element minOccurs="0" name="TipoSangre" type="tns:UsuarioCliente.TiposSangre" />
+      <xs:element minOccurs="0" name="TipoUsuario" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoUsuarioCliente" nillable="true" type="tns:TipoUsuarioCliente" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsuarioClienteWS" nillable="true" type="tns:UsuarioClienteWS" />
+  <xs:complexType name="EquivalenciaUsuarioCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Elemento" nillable="true" type="tns:Elemento" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EquivalenciaUsuarioCliente" nillable="true" type="tns:EquivalenciaUsuarioCliente" />
+  <xs:complexType name="Elemento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nivel" nillable="true" type="tns:Nivel" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TiempoControlAtencionValor" type="xs:long" />
+      <xs:element minOccurs="0" name="TiempoMaximoAtencionValor" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Elemento" nillable="true" type="tns:Elemento" />
+  <xs:complexType name="Nivel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Arbol" nillable="true" type="tns:Nodo" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Elementos" nillable="true" type="q2:ArrayOfKeyValueOfintElementoiTnqFSBQ" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LlaveSubrogada" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Nivel" nillable="true" type="tns:Nivel" />
+  <xs:complexType name="Nodo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cola" nillable="true" type="tns:Cola" />
+      <xs:element minOccurs="0" name="Elemento" nillable="true" type="tns:Elemento" />
+      <xs:element minOccurs="0" name="Estado" type="xs:boolean" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Hijos" nillable="true" type="q3:ArrayOfKeyValueOfintNodoiTnqFSBQ" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Nodo" nillable="true" type="tns:Nodo" />
+  <xs:complexType name="Cola">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CantidadMaximaServiciosEnEspera" type="xs:int" />
+      <xs:element minOccurs="0" name="CantidadMaximaTurnosXDia" type="xs:int" />
+      <xs:element minOccurs="0" name="CostoFijo" type="xs:double" />
+      <xs:element minOccurs="0" name="CostoVariable" type="xs:double" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estadistica" nillable="true" type="tns:Estadistica" />
+      <xs:element minOccurs="0" name="GrupoPersonalizado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IdNodo" type="xs:int" />
+      <xs:element minOccurs="0" name="LlaveSubrrogada" type="xs:int" />
+      <xs:element minOccurs="0" name="Nodo" nillable="true" type="tns:Nodo" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreAMostrar" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Numerador" nillable="true" type="tns:Numerador" />
+      <xs:element minOccurs="0" name="OtrosCostos" type="xs:double" />
+      <xs:element minOccurs="0" name="TiempoEstadisticas" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cola" nillable="true" type="tns:Cola" />
+  <xs:complexType name="Estadistica">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MediaAtencion" type="ser:duration" />
+      <xs:element minOccurs="0" name="MediaCalificacion" type="xs:float" />
+      <xs:element minOccurs="0" name="MediaEspera" type="ser:duration" />
+      <xs:element minOccurs="0" name="MediaLlamado" type="ser:duration" />
+      <xs:element minOccurs="0" name="TiempoPromedioEspera" type="ser:duration" />
+      <xs:element minOccurs="0" name="TurnosAbandonados" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnosDistraidos" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnosEnAtencion" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnosEnEspera" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnosSuspendidos" type="xs:int" />
+      <xs:element minOccurs="0" name="UltimoTurno" nillable="true" type="tns:Turno" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Estadistica" nillable="true" type="tns:Estadistica" />
+  <xs:complexType name="Turno">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExcepcionesGeneradasEnCreacion" nillable="true" type="tns:ArrayOfWCFFaultExcepcion" />
+      <xs:element minOccurs="0" name="HoraCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="InfoAdicionalTurno" nillable="true" type="tns:InfoAdicionalTurno" />
+      <xs:element minOccurs="0" name="Numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Selector" nillable="true" type="tns:Selector" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Servicios" nillable="true" type="q4:ArrayOfKeyValueOfintServicioiTnqFSBQ" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Turno" nillable="true" type="tns:Turno" />
+  <xs:complexType name="ArrayOfWCFFaultExcepcion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WCFFaultExcepcion" nillable="true" type="tns:WCFFaultExcepcion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWCFFaultExcepcion" nillable="true" type="tns:ArrayOfWCFFaultExcepcion" />
+  <xs:complexType name="InfoAdicionalTurno">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Celular" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnviaSMS" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IdInfoTurno" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InfoAdicionalTurno" nillable="true" type="tns:InfoAdicionalTurno" />
+  <xs:complexType name="Selector">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Activo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BalanceaEntreSalas" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BuscarCola" type="xs:int" />
+      <xs:element minOccurs="0" name="CamposAdicionales" type="xs:int" />
+      <xs:element minOccurs="0" name="CancelarTurno" type="xs:int" />
+      <xs:element minOccurs="0" name="ConImpresion" type="xs:int" />
+      <xs:element minOccurs="0" name="DatosUsuario" type="xs:int" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Distribucionentes" type="xs:int" />
+      <xs:element minOccurs="0" name="EstadisticasEntes" type="xs:int" />
+      <xs:element minOccurs="0" name="GeneraTurnosA" type="tns:EntesDelSistema.Tipo" />
+      <xs:element minOccurs="0" name="GenerarConteo" type="xs:int" />
+      <xs:element minOccurs="0" name="Habilitado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="InformacionAdicional" type="xs:int" />
+      <xs:element minOccurs="0" name="ModoDeTrabajo" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Oficina" nillable="true" type="tns:Oficina" />
+      <xs:element minOccurs="0" name="SinImpresion" type="xs:int" />
+      <xs:element minOccurs="0" name="Tipo" type="tns:Selector.TipoSelector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Selector" nillable="true" type="tns:Selector" />
+  <xs:simpleType name="EntesDelSistema.Tipo">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Deconocido" />
+      <xs:enumeration value="Oficina" />
+      <xs:enumeration value="Sala" />
+      <xs:enumeration value="Grupo" />
+      <xs:enumeration value="Servidor" />
+      <xs:enumeration value="Selector" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EntesDelSistema.Tipo" nillable="true" type="tns:EntesDelSistema.Tipo" />
+  <xs:complexType name="Oficina">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DistanciaMinimaGeneracionTurno" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TurnosPendientesNotificacionPrellamado" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Oficina" nillable="true" type="tns:Oficina" />
+  <xs:simpleType name="Selector.TipoSelector">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Virtual">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fisico">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Movil">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Selector.TipoSelector" nillable="true" type="tns:Selector.TipoSelector" />
+  <xs:complexType name="SelectorFisico">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Selector">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ColaXBoton" nillable="true" type="tns:ArrayOfColaBoton" />
+          <xs:element minOccurs="0" name="Direccion" type="xs:int" />
+          <xs:element minOccurs="0" name="IdRed" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SelectorFisico" nillable="true" type="tns:SelectorFisico" />
+  <xs:complexType name="ArrayOfColaBoton">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ColaBoton" nillable="true" type="tns:ColaBoton" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfColaBoton" nillable="true" type="tns:ArrayOfColaBoton" />
+  <xs:complexType name="ColaBoton">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Cola">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IdBoton" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ColaBoton" nillable="true" type="tns:ColaBoton" />
+  <xs:complexType name="Servicio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cola" nillable="true" type="tns:Cola" />
+      <xs:element minOccurs="0" name="ColaReclasificada" nillable="true" type="tns:Cola" />
+      <xs:element minOccurs="0" name="EsTransferido" type="xs:boolean" />
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EstadoServicios" nillable="true" type="q5:ArrayOfKeyValueOfintEstadoServicioiTnqFSBQ" />
+      <xs:element minOccurs="0" name="FechaEstimadaLlamado" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Grupo" nillable="true" type="tns:Grupo" />
+      <xs:element minOccurs="0" name="HoraCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="NumeroDeLlamados" type="xs:int" />
+      <xs:element minOccurs="0" name="Repeticiones" type="xs:int" />
+      <xs:element minOccurs="0" name="SalaActual" nillable="true" type="tns:Sala" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.Integrador" minOccurs="0" name="TipoVideoAtencion" type="q6:TipoVideoAtencion" />
+      <xs:element minOccurs="0" name="UsuarioDestino" nillable="true" type="tns:Usuario" />
+      <xs:element minOccurs="0" name="VideoAtencion" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Servicio" nillable="true" type="tns:Servicio" />
+  <xs:complexType name="EstadoServicio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EstadoDeServicio" type="tns:Servicio.TipoEstadoServicio" />
+      <xs:element minOccurs="0" name="Fin" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Inicio" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Servidor" nillable="true" type="tns:Servidor" />
+      <xs:element minOccurs="0" name="TotalTurnosXEstado" type="xs:int" />
+      <xs:element minOccurs="0" name="Usuario" nillable="true" type="tns:Usuario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EstadoServicio" nillable="true" type="tns:EstadoServicio" />
+  <xs:complexType name="Servidor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Calificar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ConsultaServiciosOficina" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DebeTerminarJerarquia" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DireccionDipSwitch" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="DireccionEnSala" type="xs:int" />
+      <xs:element minOccurs="0" name="EnUso" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Estadistica" nillable="true" type="tns:Estadistica" />
+      <xs:element minOccurs="0" name="EstadoDelServidor" type="tns:Servidor.EstadoServidor" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoCalificacion" type="tns:Calificador.TipoCalificacion" />
+      <xs:element minOccurs="0" name="TipoCalificador" nillable="true" type="tns:TipoCalificador" />
+      <xs:element minOccurs="0" name="Usuario" nillable="true" type="tns:Usuario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Servidor" nillable="true" type="tns:Servidor" />
+  <xs:simpleType name="Servidor.EstadoServidor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Libre">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Ocupado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Llamando">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Cerrado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Abierto">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Bloqueado">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Servidor.EstadoServidor" nillable="true" type="tns:Servidor.EstadoServidor" />
+  <xs:complexType name="TipoCalificador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion_en" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion_pt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoCalificador" nillable="true" type="tns:TipoCalificador" />
+  <xs:complexType name="Usuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Clave" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClavePregunta" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClaveRespuesta" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstaBloqueado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="FechaCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FormatoClave" type="xs:int" />
+      <xs:element minOccurs="0" name="MiembroDe" nillable="true" type="tns:ArrayOfPerfil" />
+      <xs:element minOccurs="0" name="NivelConsultaJerarquiaGeografica" nillable="true" type="tns:ArrayOfElementoGeografico" />
+      <xs:element minOccurs="0" name="NivelConsultaOficina" nillable="true" type="tns:ArrayOfOficina" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreAMostrar" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreAplicacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Oficina" nillable="true" type="tns:Oficina" />
+      <xs:element minOccurs="0" name="SamAccountName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Selectores" nillable="true" type="tns:ArrayOfSelector" />
+      <xs:element minOccurs="0" name="Servidores" nillable="true" type="tns:ArrayOfServidor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
+  <xs:complexType name="ArrayOfPerfil">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Perfil" nillable="true" type="tns:Perfil" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPerfil" nillable="true" type="tns:ArrayOfPerfil" />
+  <xs:complexType name="Perfil">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Perfil" nillable="true" type="tns:Perfil" />
+  <xs:complexType name="ArrayOfElementoGeografico">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ElementoGeografico" nillable="true" type="tns:ElementoGeografico" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfElementoGeografico" nillable="true" type="tns:ArrayOfElementoGeografico" />
+  <xs:complexType name="ElementoGeografico">
+    <xs:sequence>
+      <xs:element name="_x003C_AtributosElementoGeografico_x003E_k__BackingField" nillable="true" type="tns:ArrayOfAtributoGeografico" />
+      <xs:element name="_x003C_ElementoGeograficoPadre_x003E_k__BackingField" nillable="true" type="tns:ElementoGeografico" />
+      <xs:element name="_x003C_ElementosGeograficosHijos_x003E_k__BackingField" nillable="true" type="tns:ArrayOfElementoGeografico" />
+      <xs:element name="_x003C_EstadoSincronizacion_x003E_k__BackingField" type="ser:char" />
+      <xs:element name="_x003C_Id_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_LlaveSubrogada_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_NivelGeografico_x003E_k__BackingField" nillable="true" type="tns:NivelGeografico" />
+      <xs:element name="_x003C_NivelProfundidad_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_Nombre_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/CIEL.DigiturnoMega.Entidades.UbicacionGeografica" name="_x003C_TimeZoneWeb_x003E_k__BackingField" nillable="true" type="q7:TimeZoneWeb" />
+      <xs:element name="nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ElementoGeografico" nillable="true" type="tns:ElementoGeografico" />
+  <xs:complexType name="ArrayOfAtributoGeografico">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AtributoGeografico" nillable="true" type="tns:AtributoGeografico" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAtributoGeografico" nillable="true" type="tns:ArrayOfAtributoGeografico" />
+  <xs:complexType name="AtributoGeografico">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ElementoGeografico" nillable="true" type="tns:ElementoGeografico" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="NivelGeografico" nillable="true" type="tns:NivelGeografico" />
+      <xs:element minOccurs="0" name="TipoAtributoGeografico" nillable="true" type="tns:TipoAtributoGeografico" />
+      <xs:element minOccurs="0" name="Valor" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AtributoGeografico" nillable="true" type="tns:AtributoGeografico" />
+  <xs:complexType name="NivelGeografico">
+    <xs:sequence>
+      <xs:element name="_x003C_ElementosGeografico_x003E_k__BackingField" nillable="true" type="tns:ArrayOfElementoGeografico" />
+      <xs:element name="_x003C_Id_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_Nombre_x003E_k__BackingField" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NivelGeografico" nillable="true" type="tns:NivelGeografico" />
+  <xs:complexType name="TipoAtributoGeografico">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="NivelesAtriburo" nillable="true" type="tns:ArrayOfNivelGeografico" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoAtributoGeografico" nillable="true" type="tns:TipoAtributoGeografico" />
+  <xs:complexType name="ArrayOfNivelGeografico">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NivelGeografico" nillable="true" type="tns:NivelGeografico" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNivelGeografico" nillable="true" type="tns:ArrayOfNivelGeografico" />
+  <xs:complexType name="ArrayOfOficina">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Oficina" nillable="true" type="tns:Oficina" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOficina" nillable="true" type="tns:ArrayOfOficina" />
+  <xs:complexType name="ArrayOfSelector">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Selector" nillable="true" type="tns:Selector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSelector" nillable="true" type="tns:ArrayOfSelector" />
+  <xs:complexType name="ArrayOfServidor">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Servidor" nillable="true" type="tns:Servidor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServidor" nillable="true" type="tns:ArrayOfServidor" />
+  <xs:complexType name="Grupo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CantidadMaxima" type="xs:int" />
+      <xs:element minOccurs="0" name="CostoFijo" type="xs:double" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Multillamado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Servidores" nillable="true" type="q8:ArrayOfKeyValueOfintServidoriTnqFSBQ" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Grupo" nillable="true" type="tns:Grupo" />
+  <xs:complexType name="Sala">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CantidadDeLLamados" type="xs:int" />
+      <xs:element minOccurs="0" name="CostoFijo" type="xs:double" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstadoInicialServicioEstimadoLlamado" type="tns:Servicio.TipoEstadoServicio" />
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Grupos" nillable="true" type="q9:ArrayOfKeyValueOfintGrupoiTnqFSBQ" />
+      <xs:element minOccurs="0" name="HabilitarEstimadoLlamado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IndiceOcupacion" type="xs:float" />
+      <xs:element minOccurs="0" name="IntervaloEstimadoLlamado" nillable="true" type="ser:duration" />
+      <xs:element minOccurs="0" name="MaximoOcupacion" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OcupacionActual" type="xs:int" />
+      <xs:element minOccurs="0" name="Oficina" nillable="true" type="tns:Oficina" />
+      <xs:element minOccurs="0" name="PasoAutomaticoADistraido" type="xs:boolean" />
+      <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Tableros" nillable="true" type="q10:ArrayOfKeyValueOfintTableroiTnqFSBQ" />
+      <xs:element minOccurs="0" name="TiempoAbandono" type="ser:duration" />
+      <xs:element minOccurs="0" name="TiempoAutomaticoADistraido" type="ser:duration" />
+      <xs:element minOccurs="0" name="TiempoDeRellamado" type="ser:duration" />
+      <xs:element minOccurs="0" name="TiempoLimiteEstimadoLlamado" nillable="true" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Sala" nillable="true" type="tns:Sala" />
+  <xs:complexType name="Tablero">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Columnas" nillable="true" type="tns:ArrayOfColumna" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="MensajePorDefecto" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MostrarTurnosRecientesPorCola" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumeroFilas" type="xs:int" />
+      <xs:element minOccurs="0" name="PitoActivo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RotarContenido" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TiempoRotacion" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Tablero" nillable="true" type="tns:Tablero" />
+  <xs:complexType name="ArrayOfColumna">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Columna" nillable="true" type="tns:Columna" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfColumna" nillable="true" type="tns:ArrayOfColumna" />
+  <xs:complexType name="Columna">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Elementos" nillable="true" type="tns:ArrayOfElementoColumna" />
+      <xs:element minOccurs="0" name="Habilitada" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Orden" type="xs:int" />
+      <xs:element minOccurs="0" name="Titulo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Columna" nillable="true" type="tns:Columna" />
+  <xs:complexType name="ArrayOfElementoColumna">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ElementoColumna" nillable="true" type="tns:ElementoColumna" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfElementoColumna" nillable="true" type="tns:ArrayOfElementoColumna" />
+  <xs:complexType name="ElementoColumna">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColorRGB" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Formato" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ElementoColumna" nillable="true" type="tns:ElementoColumna" />
+  <xs:complexType name="TableroFisico">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Tablero">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="NumeroLineas" type="xs:int" />
+          <xs:element minOccurs="0" name="Red" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TableroFisico" nillable="true" type="tns:TableroFisico" />
+  <xs:complexType name="TableroGeneral">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TableroFisico">
+        <xs:sequence>
+          <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DireccionTablero" nillable="true" type="q11:ArrayOfint" />
+          <xs:element minOccurs="0" name="TiposTablero" type="tns:TableroFisico.TipoTablero" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TableroGeneral" nillable="true" type="tns:TableroGeneral" />
+  <xs:simpleType name="TableroFisico.TipoTablero">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Deconocido" />
+      <xs:enumeration value="AlfaNumerico" />
+      <xs:enumeration value="Numerico" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TableroFisico.TipoTablero" nillable="true" type="tns:TableroFisico.TipoTablero" />
+  <xs:complexType name="TableroWeb">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Tablero">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TipoRotacion" type="tns:TableroWeb.TiposRotaciones" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TableroWeb" nillable="true" type="tns:TableroWeb" />
+  <xs:simpleType name="TableroWeb.TiposRotaciones">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Individual" />
+      <xs:enumeration value="Grupo" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TableroWeb.TiposRotaciones" nillable="true" type="tns:TableroWeb.TiposRotaciones" />
+  <xs:complexType name="Numerador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Fin" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Inicio" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumeroActual" type="xs:int" />
+      <xs:element minOccurs="0" name="Prefijo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReiniciarAlCambioDeDia" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RellenarNumeroConCeros" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Numerador" nillable="true" type="tns:Numerador" />
+  <xs:complexType name="OrigenUsuarioCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdOrigenUsuarioCliente" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="NombreOrigen" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrigenUsuarioCliente" nillable="true" type="tns:OrigenUsuarioCliente" />
+  <xs:complexType name="TiposDocumento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpresionRegularIdentificacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoDocumento" type="xs:int" />
+      <xs:element minOccurs="0" name="NombreCorto" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumento_en" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumento_pt" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TiposDocumento" nillable="true" type="tns:TiposDocumento" />
+  <xs:simpleType name="UsuarioCliente.TiposSangre">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Desconocido" />
+      <xs:enumeration value="OP" />
+      <xs:enumeration value="ON" />
+      <xs:enumeration value="AP" />
+      <xs:enumeration value="AN" />
+      <xs:enumeration value="BP" />
+      <xs:enumeration value="BN" />
+      <xs:enumeration value="ABP" />
+      <xs:enumeration value="ABN" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UsuarioCliente.TiposSangre" nillable="true" type="tns:UsuarioCliente.TiposSangre" />
+  <xs:complexType name="TipoUsuarioCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" type="xs:short" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoUsuarioCliente" nillable="true" type="tns:TipoUsuarioCliente" />
+  <xs:complexType name="ArrayOfTablero">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Tablero" nillable="true" type="tns:Tablero" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTablero" nillable="true" type="tns:ArrayOfTablero" />
+  <xs:complexType name="ArrayOfTurno">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Turno" nillable="true" type="tns:Turno" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTurno" nillable="true" type="tns:ArrayOfTurno" />
+  <xs:simpleType name="Transferencia.Prioridad">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DePrimero">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PorHoraDeLlegada">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PorHoraDeTransferencia">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Transferencia.Prioridad" nillable="true" type="tns:Transferencia.Prioridad" />
+</xs:schema>
