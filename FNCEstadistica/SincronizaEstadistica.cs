@@ -22,9 +22,12 @@ namespace FNCEstadistica
         private Generic oSession { get; set; }
 
 
-        public SincronizaEstadistica()
+        public SincronizaEstadistica(bool needLogin = true)
         {
-            this.DoLogin();
+            if (needLogin)
+            {
+                this.DoLogin();
+            }
         }
 
         /// <summary>
@@ -693,23 +696,23 @@ namespace FNCEstadistica
             {
                 string[] columnas = new string[]
                 {
-                    item.IdAgenda          ?? string.Empty,
-                    Tools.ReplaceChars(item.NombreAgenda          ?? string.Empty),
-                    Tools.ReplaceChars(item.EspecialidadAgenda     ?? string.Empty),
-                    item.IdCentroCosto     ?? string.Empty,
-                    Tools.ReplaceChars(item.NombreCentroCosto      ?? string.Empty),
+                    item.IdAgenda ?? string.Empty,
+                    Tools.ReplaceChars(item.NombreAgenda ?? string.Empty),
+                    Tools.ReplaceChars(item.EspecialidadAgenda ?? string.Empty),
+                    item.IdCentroCosto ?? string.Empty,
+                    Tools.ReplaceChars(item.NombreCentroCosto ?? string.Empty),
                     item.IdConfiguracionHorario ?? string.Empty,
-                    Tools.ReplaceChars(item.NombreConfiguracion    ?? string.Empty),
-                    item.IdCategoria       ?? string.Empty,
-                    Tools.ReplaceChars(item.NombreCategoria        ?? string.Empty),
-                    Tools.ReplaceChars(item.TipoCategoria          ?? string.Empty),
-                    item.Fecha             ?? string.Empty,
-                    Tools.ReplaceChars(item.Dia                    ?? string.Empty),
-                    Tools.ReplaceChars(item.FranjaHoraria          ?? string.Empty),
-                    item.HoraInicioStr     ?? string.Empty,
-                    item.HoraFinStr        ?? string.Empty,
-                    item.HoraInicio        ?? string.Empty,
-                    item.HoraFin           ?? string.Empty,
+                    Tools.ReplaceChars(item.NombreConfiguracion ?? string.Empty),
+                    item.IdCategoria ?? string.Empty,
+                    Tools.ReplaceChars(item.NombreCategoria ?? string.Empty),
+                    Tools.ReplaceChars(item.TipoCategoria ?? string.Empty),
+                    item.Fecha ?? string.Empty,
+                    Tools.ReplaceChars(item.Dia ?? string.Empty),
+                    Tools.ReplaceChars(item.FranjaHoraria ?? string.Empty),
+                    item.HoraInicioStr ?? string.Empty,
+                    item.HoraFinStr ?? string.Empty,
+                    item.HoraInicio ?? string.Empty,
+                    item.HoraFin ?? string.Empty,
                     item.DuracionMinutos.ToString(),
                     item.EsHorarioPrincipal ? "1" : "0"
                 };
@@ -734,10 +737,7 @@ namespace FNCEstadistica
             DateTime desde = DateTime.Today.AddDays(-1);
             //DateTime hasta = ayer.AddMonths(6);
             DateTime hasta = ayer;
-
-            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
-                $"[INCREMENTAL] Rango: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
-
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[INCREMENTAL] Rango: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
             this.GenerateEspaciosVaciosAgenda(desde, hasta);
         }
 
@@ -764,19 +764,544 @@ namespace FNCEstadistica
             DateTime hastaFuturo = ayer.AddMonths(6);
 
             // ── Parte 1: Histórico ────────────────────────────────────────────
-            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
-                $"[INICIAL - Histórico] Rango: {inicioAnio:yyyy-MM-dd} → {cortePasado:yyyy-MM-dd}");
-
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[INICIAL - Histórico] Rango: {inicioAnio:yyyy-MM-dd} → {cortePasado:yyyy-MM-dd}");
             this.GenerateEspaciosVaciosAgenda(inicioAnio, cortePasado);
-
             // ── Parte 2: Rango móvil ──────────────────────────────────────────
             LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
                 $"[INICIAL - Rango móvil] Rango: {cortePasado:yyyy-MM-dd} → {hastaFuturo:yyyy-MM-dd}");
-
             //this.GenerateEspaciosVaciosAgenda(cortePasado, hastaFuturo);
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", "[INICIAL] Carga inicial completada.");
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // NUEVOS MÉTODOS — agregar dentro de la clase SincronizaEstadistica
+        // junto a los métodos GenerateEspaciosVaciosAgenda* existentes.
+        //
+        // CAMBIO RESPECTO A LA VERSIÓN ANTERIOR:
+        //   El endpoint ahora procesa UNA agenda por llamada (igual que espacios vacíos).
+        //   SincronizaEstadistica itera el catálogo y llama GetCapacidadPorAgenda()
+        //   por cada agenda + ventana de 7 días, exactamente igual que
+        //   GenerateEspaciosVaciosAgenda usa GetEspaciosVaciosPorAgenda.
+        //
+        // Requiere en Properties.Settings.Default:
+        //   CapacidadAgendaFile → ruta local del CSV  (ej: C:\integracion\capacidadagenda.csv)
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        /// <summary>
+        /// Descarga la capacidad de todas las agendas activas para el rango de fechas
+        /// indicado e inserta la información en Oracle.
+        ///
+        /// Flujo (mismo patrón que GenerateEspaciosVaciosAgenda):
+        ///
+        ///   PASO 1 — Login OAuth una sola vez.
+        ///   PASO 2 — Obtener catálogo de agendas con GetCatalogoAgendas().
+        ///   PASO 3 — Por cada agenda, llamar GetCapacidadPorAgenda() en ventanas
+        ///            de 7 días para respetar el timeout de 120 seg de Salesforce.
+        ///            Si una agenda o ventana falla, se loguea y se continúa.
+        ///   PASO 4 — Consolidar filas duplicadas en el límite entre ventanas.
+        ///   PASO 5 — WriteFile → UploadFile → BulkData.
+        /// </summary>
+        public void GenerateCapacidadAgenda(DateTime desde, DateTime hasta)
+        {            
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"Iniciando GenerateCapacidadAgenda: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
+
+            // ── PASO 1: Login OAuth una sola vez ──────────────────────────────────
+            Generic oRestSession = null;
+            using (SalesforceViaRestApi restApiLogin = new SalesforceViaRestApi())
+            {
+                restApiLogin.sLogingEndPoint = FNCEstadistica.Properties.Settings.Default.SalesforceURL;
+                restApiLogin.DoLogin(FNCEstadistica.Properties.Settings.Default.SalesforceUser, FNCEstadistica.Properties.Settings.Default.SalesforcePassword + FNCEstadistica.Properties.Settings.Default.SalesforceToken,
+                    FNCEstadistica.Properties.Settings.Default.SalesforceClient, FNCEstadistica.Properties.Settings.Default.SalesforceSecret);
+                oRestSession = restApiLogin.salesforceSession;
+            }
+
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"Login OAuth REST exitoso. Instance URL: {oRestSession.sname}");
+
+            // ── PASO 2: Catálogo de agendas ───────────────────────────────────────
+            List<SalesforceViaRestApi.AgendaInfo> agendas = new List<SalesforceViaRestApi.AgendaInfo>();
+
+            using (SalesforceViaRestApi restApi = new SalesforceViaRestApi())
+            {
+                restApi.salesforceSession = oRestSession;
+                agendas = restApi.GetCatalogoAgendas();
+            }
+
+            if (agendas == null || agendas.Count == 0)
+            {
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", "GenerateCapacidadAgenda: no se encontraron agendas activas.");
+                return;
+            }
+
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"Catálogo obtenido: {agendas.Count} agendas. Iniciando descarga de capacidad.");
+
+            // ── PASO 3: Por cada agenda, descargar en ventanas de 7 días ──────────
+            var acumulado = new List<SalesforceViaRestApi.FilaCapacidad>();
+            int totalAgendas = agendas.Count;
+            int agendaNum = 0;
+            foreach (SalesforceViaRestApi.AgendaInfo agenda in agendas)
+            {
+                agendaNum++;
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[{agendaNum}/{totalAgendas}] Agenda: {agenda.NombreAgenda} ({agenda.IdAgenda})");
+                DateTime inicioVentana = desde;
+                while (inicioVentana <= hasta)
+                {
+                    DateTime finVentana = inicioVentana.AddDays(6);
+                    if (finVentana > hasta) finVentana = hasta;
+
+                    try
+                    {
+                        List<SalesforceViaRestApi.FilaCapacidad> filasVentana =
+                            new List<SalesforceViaRestApi.FilaCapacidad>();
+
+                        using (SalesforceViaRestApi restApi = new SalesforceViaRestApi())
+                        {
+                            restApi.salesforceSession = oRestSession;
+                            filasVentana = restApi.GetCapacidadPorAgenda(
+                                agenda.IdAgenda, inicioVentana, finVentana);
+                        }
+
+                        if (filasVentana.Count > 0)
+                        {
+                            acumulado.AddRange(filasVentana);
+                            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                                $"  {inicioVentana:yyyy-MM-dd}→{finVentana:yyyy-MM-dd}: " +
+                                $"{filasVentana.Count} filas (total: {acumulado.Count})");
+                        }
+                    }
+                    catch (Exception exVentana)
+                    {
+                        LogError.WriteError("ServicioDescarga", "ServicioDescarga", exVentana);
+                        LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                            $"  Error en ventana {inicioVentana:yyyy-MM-dd}→{finVentana:yyyy-MM-dd} " +
+                            $"para {agenda.NombreAgenda}. Se continúa.");
+                    }
+
+                    inicioVentana = finVentana.AddDays(1);
+                }
+            }
+
+            if (acumulado.Count == 0)
+            {
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                    "GenerateCapacidadAgenda: ninguna fila encontrada en el rango.");
+                return;
+            }
+
+            // ── PASO 4: Consolidar filas duplicadas en el límite entre ventanas ───
+            List<SalesforceViaRestApi.FilaCapacidad> consolidado =
+                ConsolidarFilasCapacidad(acumulado);
 
             LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
-                "[INICIAL] Carga inicial completada.");
+                $"GenerateCapacidadAgenda: {consolidado.Count} filas consolidadas. Escribiendo CSV.");
+
+            // ── PASO 5: WriteFile → UploadFile → BulkData ─────────────────────────
+            string csvFinal = CapacidadAgendaToCSV(consolidado);
+
+            if (this.WriteFile(FNCEstadistica.Properties.Settings.Default.CapacidadAgendaFile, csvFinal))
+            {
+                if (this.UploadFile(FNCEstadistica.Properties.Settings.Default.CapacidadAgendaFile))
+                {
+                    LogError.WriteMessage("ServicioDescarga", "ServicioDescarga","Archivo cargado correctamente " + FNCEstadistica.Properties.Settings.Default.CapacidadAgendaFile);
+                    try
+                    {
+                        this.BulkData("SALESFORCE_CAPACIDAD_AGENDA");
+                    }
+                    catch (Exception ex)
+                    {
+                        LogError.WriteError("ServicioDescarga", "ServicioDescarga", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// MODO INCREMENTAL — ejecución del programador de tareas.
+        /// Descarga ayer → ayer + 60 días.
+        /// BulkData hace DELETE por rango de fechas antes de insertar.
+        /// </summary>
+        public void GenerateCapacidadAgendaIncremental()
+        {
+            DateTime ayer = DateTime.Today.AddDays(-1);
+            DateTime hasta = ayer.AddDays(60);
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[INCREMENTAL] Rango: {ayer:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
+            this.GenerateCapacidadAgenda(ayer, hasta);
+        }
+
+        /// <summary>
+        /// MODO INICIAL — solo la primera vez.
+        /// Descarga desde el 1 de enero de 2026 hasta ayer.
+        /// </summary>
+        public void GenerateCapacidadAgendaInicial()
+        {
+            DateTime desde = new DateTime(2026, 1, 1);
+            DateTime hasta = DateTime.Today.AddDays(-1);
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[INICIAL] Rango: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
+            this.GenerateCapacidadAgenda(desde, hasta);
+        }
+
+        /// <summary>
+        /// Consolida filas con la misma clave (idAgenda + fecha + categoria) que pueden
+        /// aparecer duplicadas en el límite entre ventanas de 7 días.
+        /// </summary>
+        private List<SalesforceViaRestApi.FilaCapacidad> ConsolidarFilasCapacidad(List<SalesforceViaRestApi.FilaCapacidad> filas)
+        {
+            var mapa = new Dictionary<string, SalesforceViaRestApi.FilaCapacidad>();
+            foreach (var f in filas)
+            {
+                string clave = $"{f.IdAgenda}|{f.Fecha}|{f.Categoria}";
+                if (mapa.ContainsKey(clave))
+                {
+                    var ex = mapa[clave];
+                    ex.CapacidadInstalada += f.CapacidadInstalada;
+                    ex.Programados += f.Programados;
+                    ex.Atendidos += f.Atendidos;
+                    ex.Bloqueos += f.Bloqueos;
+                    ex.Inasistencia = Math.Max(0, ex.Programados - ex.Atendidos - ex.Bloqueos);
+                }
+                else
+                {
+                    mapa[clave] = new SalesforceViaRestApi.FilaCapacidad
+                    {
+                        IdAgenda = f.IdAgenda,
+                        NombreAgenda = f.NombreAgenda,
+                        Especialidad = f.Especialidad,
+                        NombreCentroCosto = f.NombreCentroCosto,
+                        Fecha = f.Fecha,
+                        Dia = f.Dia,
+                        Categoria = f.Categoria,
+                        CapacidadInstalada = f.CapacidadInstalada,
+                        Programados = f.Programados,
+                        Atendidos = f.Atendidos,
+                        Bloqueos = f.Bloqueos,
+                        Inasistencia = f.Inasistencia
+                    };
+                }
+            }
+            return new List<SalesforceViaRestApi.FilaCapacidad>(mapa.Values);
+        }
+
+        /// <summary>
+        /// Convierte la lista de filas al CSV separado por ; para la carga en Oracle.
+        /// Columnas (coherentes con el LWC de Capacidad de Agenda):
+        ///   ID_AGENDA ; NOMBRE_AGENDA ; FECHA ; DIA ; CATEGORIA ;
+        ///   CAPACIDAD_INSTALADA ; PROGRAMADOS ; ATENDIDOS ; BLOQUEOS ; INASISTENCIA
+        /// </summary>
+        private string CapacidadAgendaToCSV(List<SalesforceViaRestApi.FilaCapacidad> filas)
+        {
+            var csv = new System.Text.StringBuilder();
+            foreach (var f in filas)
+            {
+                string[] columnas = new string[]
+                {
+                    f.IdAgenda ?? string.Empty,
+                    Tools.ReplaceChars(f.NombreAgenda ?? string.Empty),
+                    Tools.ReplaceChars(f.Especialidad      ?? string.Empty),
+                    Tools.ReplaceChars(f.NombreCentroCosto ?? string.Empty),
+                    f.Fecha ?? string.Empty,
+                    Tools.ReplaceChars(f.Dia ?? string.Empty),
+                    Tools.ReplaceChars(f.Categoria ?? string.Empty),
+                    Tools.ReplaceChars(f.CapacidadInstalada.ToString()),
+                    Tools.ReplaceChars(f.Programados.ToString()),
+                    Tools.ReplaceChars(f.Atendidos.ToString()),
+                    Tools.ReplaceChars(f.Bloqueos.ToString()),
+                    Tools.ReplaceChars(f.Inasistencia.ToString())
+                };
+                csv.AppendLine(string.Join(";", columnas));
+            }
+            return csv.ToString();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // NUEVOS MÉTODOS — agregar dentro de la clase SincronizaEstadistica
+        // junto a los métodos GenerateCapacidadAgenda* y GenerateEspaciosVaciosAgenda*
+        //
+        // Requiere en Properties.Settings.Default:
+        //   AgendaDetalleFile → ruta local del CSV (ej: C:\integracion\agendadetalle.csv)
+        //
+        // Solo se descargan las agendas configuradas en el Custom Label
+        // FNC_AgendaDetalleIds de Salesforce (AM, PM, RHB Ped, etc.)
+        // Para agregar/quitar agendas solo editar el label, sin tocar este código.
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        /// <summary>
+        /// Descarga el detalle de slots de las agendas configuradas en el Custom Label
+        /// FNC_AgendaDetalleIds para el rango de fechas indicado e inserta en Oracle.
+        ///
+        /// Flujo (mismo patrón que GenerateCapacidadAgenda):
+        ///   PASO 1 — Login OAuth una sola vez.
+        ///   PASO 2 — Catálogo de agendas del Custom Label vía GetCatalogoDetalleAgendas().
+        ///   PASO 3 — Por cada agenda, GetDetalleAgenda() en ventanas de 7 días.
+        ///   PASO 4 — WriteFile → UploadFile → BulkData.
+        ///
+        /// Se descargan TODOS los slots (con y sin cita).
+        /// Los slots vacíos quedan con los campos de paciente en blanco.
+        /// </summary>
+        public void GenerateAgendaDetalle(DateTime desde, DateTime hasta)
+        {
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                $"Iniciando GenerateAgendaDetalle: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
+           
+            // ── PASO 1: Login OAuth una sola vez ──────────────────────────────────
+            Generic oRestSession = null;
+            using (SalesforceViaRestApi restApiLogin = new SalesforceViaRestApi())
+            {
+                restApiLogin.sLogingEndPoint =
+                    FNCEstadistica.Properties.Settings.Default.SalesforceURL;
+                restApiLogin.DoLogin(FNCEstadistica.Properties.Settings.Default.SalesforceUser, FNCEstadistica.Properties.Settings.Default.SalesforcePassword + FNCEstadistica.Properties.Settings.Default.SalesforceToken, FNCEstadistica.Properties.Settings.Default.SalesforceClient, FNCEstadistica.Properties.Settings.Default.SalesforceSecret);
+                oRestSession = restApiLogin.salesforceSession;
+            }
+
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                $"Login OAuth REST exitoso. Instance URL: {oRestSession.sname}");
+
+            // ── PASO 2: Catálogo de agendas del Custom Label ──────────────────────
+            List<SalesforceViaRestApi.AgendaInfo> agendas =
+                new List<SalesforceViaRestApi.AgendaInfo>();
+
+            using (SalesforceViaRestApi restApi = new SalesforceViaRestApi())
+            {
+                restApi.salesforceSession = oRestSession;
+                agendas = restApi.GetCatalogoDetalleAgendas();
+            }
+
+            if (agendas == null || agendas.Count == 0)
+            {
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                    "GenerateAgendaDetalle: no se encontraron agendas en FNC_AgendaDetalleIds.");
+                return;
+            }
+
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                $"Catálogo obtenido: {agendas.Count} agendas. Iniciando descarga de detalle.");
+
+            // ── PASO 3: Por cada agenda, descargar en ventanas de 7 días ──────────
+            var acumulado = new List<SalesforceViaRestApi.SlotDetalle>();
+            int totalAgendas = agendas.Count;
+            int agendaNum = 0;
+
+            foreach (SalesforceViaRestApi.AgendaInfo agenda in agendas)
+            {
+                agendaNum++;
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                    $"[{agendaNum}/{totalAgendas}] Agenda: {agenda.NombreAgenda} ({agenda.IdAgenda})");
+
+                DateTime inicioVentana = desde;
+                while (inicioVentana <= hasta)
+                {
+                    DateTime finVentana = inicioVentana.AddDays(6);
+                    if (finVentana > hasta) finVentana = hasta;
+
+                    try
+                    {
+                        List<SalesforceViaRestApi.SlotDetalle> slotsVentana =
+                            new List<SalesforceViaRestApi.SlotDetalle>();
+
+                        using (SalesforceViaRestApi restApi = new SalesforceViaRestApi())
+                        {
+                            restApi.salesforceSession = oRestSession;
+                            slotsVentana = restApi.GetDetalleAgenda(
+                                agenda.IdAgenda, inicioVentana, finVentana);
+                        }
+
+                        // Acumular TODOS los slots (con y sin cita)
+                        if (slotsVentana.Count > 0)
+                        {
+                            acumulado.AddRange(slotsVentana);
+                            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                                $"  {inicioVentana:yyyy-MM-dd}→{finVentana:yyyy-MM-dd}: " +
+                                $"{slotsVentana.Count} slots (total: {acumulado.Count})");
+                        }
+                    }
+                    catch (Exception exVentana)
+                    {
+                        LogError.WriteError("ServicioDescarga", "ServicioDescarga", exVentana);
+                        LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                            $"  Error en ventana {inicioVentana:yyyy-MM-dd}→{finVentana:yyyy-MM-dd} " +
+                            $"para {agenda.NombreAgenda}. Se continúa.");
+                    }
+
+                    inicioVentana = finVentana.AddDays(1);
+                }
+            }
+
+            if (acumulado.Count == 0)
+            {
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                    "GenerateAgendaDetalle: ningún slot encontrado en el rango.");
+                return;
+            }
+
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                $"GenerateAgendaDetalle: {acumulado.Count} slots. Escribiendo CSV.");
+
+            // ── PASO 4: WriteFile → UploadFile → BulkData ─────────────────────────
+            string csvFinal = AgendaDetalleToCSV(acumulado);
+
+            if (this.WriteFile(
+                FNCEstadistica.Properties.Settings.Default.AgendaDetalleFile, csvFinal))
+            {
+                if (this.UploadFile(FNCEstadistica.Properties.Settings.Default.AgendaDetalleFile))
+                {
+                    LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                        "Archivo cargado correctamente " +
+                        FNCEstadistica.Properties.Settings.Default.AgendaDetalleFile);
+                    try
+                    {
+                        this.BulkData("SALESFORCE_AGENDA_DETALLE");
+                    }
+                    catch (Exception ex)
+                    {
+                        LogError.WriteError("ServicioDescarga", "ServicioDescarga", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// MODO INCREMENTAL — ejecución del programador de tareas.
+        /// Descarga hoy → hoy + 15 días.
+        /// BulkData hace DELETE por rango de fechas antes de insertar.
+        /// </summary>
+        public void GenerateAgendaDetalleIncremental()
+        {
+            DateTime desde = DateTime.Today;
+            DateTime hasta = DateTime.Today.AddDays(15);
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[INCREMENTAL] Rango: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
+            this.GenerateAgendaDetalle(desde, hasta);
+        }
+
+        /// <summary>
+        /// MODO INICIAL — solo la primera vez.
+        /// Descarga desde el 1 de enero de 2026 hasta hoy + 15 días.
+        /// </summary>
+        public void GenerateAgendaDetalleInicial()
+        {
+            DateTime desde = new DateTime(2026, 1, 1);
+            DateTime hasta = DateTime.Today.AddDays(15);
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", $"[INICIAL] Rango: {desde:yyyy-MM-dd} → {hasta:yyyy-MM-dd}");
+            this.GenerateAgendaDetalle(desde, hasta);
+        }
+
+        /// <summary>
+        /// Convierte la lista de slots al CSV separado por ; para la carga en Oracle.
+        /// Columnas:
+        ///   ID_AGENDA ; NOMBRE_AGENDA ; ESPECIALIDAD ; NOMBRE_CENTRO_COSTO ;
+        ///   FECHA ; HORA_INICIO ; HORA_FIN ; CATEGORIA ;
+        ///   NAME_CITA ; ID_CITA ; NOMBRE_PACIENTE ; DOCUMENTO_PACIENTE ;
+        ///   ESTADO ; PACIENTE_ASISTIO ; GRUPO ; PLAN
+        /// </summary>
+        private string AgendaDetalleToCSV(List<SalesforceViaRestApi.SlotDetalle> slots)
+        {
+            var csv = new System.Text.StringBuilder();
+            foreach (var s in slots)
+            {
+                string[] columnas = new string[]
+                {
+                    s.IdAgenda ?? string.Empty,
+                    Tools.ReplaceChars(s.NombreAgenda ?? string.Empty),
+                    Tools.ReplaceChars(s.Especialidad ?? string.Empty),
+                    Tools.ReplaceChars(s.NombreCentroCosto ?? string.Empty),
+                    s.Fecha ?? string.Empty,
+                    s.HoraInicioStr ?? string.Empty,
+                    s.HoraFinStr ?? string.Empty,
+                    Tools.ReplaceChars(s.Categoria ?? string.Empty),
+                    s.NameCita ?? string.Empty,
+                    s.IdCita ?? string.Empty,
+                    Tools.ReplaceChars(s.NombrePaciente ?? string.Empty),
+                    s.DocumentoPaciente ?? string.Empty,
+                    Tools.ReplaceChars(s.Estado ?? string.Empty),
+                    s.PacienteAsistio ?? string.Empty,
+                    Tools.ReplaceChars(s.Grupo ?? string.Empty),
+                    Tools.ReplaceChars(s.Plan ?? string.Empty)
+                };
+                csv.AppendLine(string.Join(";", columnas));
+            }
+            return csv.ToString();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // NUEVOS MÉTODOS — agregar dentro de la clase SincronizaEstadistica
+        // junto a los demás métodos Generate* del proyecto.
+        //
+        // Requiere en Properties.Settings.Default:
+        //   AppointmentHistoryFile → ruta local del CSV (ej: C:\integracion\appointmenthistory.csv)
+        //
+        // Usa SalesforceViaRestApi (OAuth REST) — no SalesforceIntegrator (SOAP).
+        // Oracle hace TRUNCATE completo antes de insertar (THIS_YEAR recarga todo el año).
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        /// <summary>
+        /// Descarga el historial de cambios del campo ServiceBilled__c de las citas
+        /// para el año en curso (THIS_YEAR) e inserta en Oracle con TRUNCATE previo.
+        ///
+        /// Flujo:
+        ///   PASO 1 — Login OAuth una sola vez.
+        ///   PASO 2 — GetAppointmentHistory() → CSV del año completo.
+        ///   PASO 3 — WriteFile → UploadFile → BulkData (TRUNCATE + INSERT).
+        ///
+        /// Ejecutar diariamente — descarga el año completo y reemplaza todo.
+        /// </summary>
+        public void GenerateAppointmentHistory()
+        {
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                "Iniciando GenerateAppointmentHistory (THIS_YEAR)");
+
+            if (string.IsNullOrEmpty(this.oSession?.scode))
+            {
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga",
+                    "GenerateAppointmentHistory: sesión no iniciada. Se cancela.");
+                return;
+            }
+
+            // ── PASO 1: Login OAuth ───────────────────────────────────────────────
+            Generic oRestSession = null;
+            using (SalesforceViaRestApi restApiLogin = new SalesforceViaRestApi())
+            {
+                restApiLogin.sLogingEndPoint = FNCEstadistica.Properties.Settings.Default.SalesforceURL;
+                restApiLogin.DoLogin(FNCEstadistica.Properties.Settings.Default.SalesforceUser, FNCEstadistica.Properties.Settings.Default.SalesforcePassword + FNCEstadistica.Properties.Settings.Default.SalesforceToken,
+                    FNCEstadistica.Properties.Settings.Default.SalesforceClient,
+                    FNCEstadistica.Properties.Settings.Default.SalesforceSecret);
+                oRestSession = restApiLogin.salesforceSession;
+            }
+            // ── PASO 2: Descargar historial del año en curso ───────────────────────
+            string sResult = string.Empty;
+            try
+            {
+                using (SalesforceViaRestApi restApi = new SalesforceViaRestApi())
+                {
+                    restApi.salesforceSession = oRestSession;
+                    restApi.sApiEndpoint = FNCEstadistica.Properties.Settings.Default.SalesforceEndPoint;
+                    sResult = restApi.GetAppointmentHistory();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("ServicioDescarga", "ServicioDescarga", ex);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(sResult))
+            {
+                LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", "GenerateAppointmentHistory: no se encontraron registros.");
+                return;
+            }
+            LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", "GenerateAppointmentHistory: datos obtenidos. Escribiendo CSV.");
+            // ── PASO 3: WriteFile → UploadFile → BulkData ─────────────────────────
+            if (this.WriteFile(FNCEstadistica.Properties.Settings.Default.AppointmentHistoryFile, sResult))
+            {
+                if (this.UploadFile(FNCEstadistica.Properties.Settings.Default.AppointmentHistoryFile))
+                {
+                    LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", "Archivo cargado correctamente " + FNCEstadistica.Properties.Settings.Default.AppointmentHistoryFile);
+                    try
+                    {
+                        this.BulkData("SALESFORCE_APPOINTMENT_HISTORY");
+                    }
+                    catch (Exception ex)
+                    {
+                        LogError.WriteError("ServicioDescarga", "ServicioDescarga", ex);
+                    }
+                }
+            }
         }
 
         public void Dispose()

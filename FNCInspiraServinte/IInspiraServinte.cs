@@ -35,6 +35,16 @@ namespace FNCInspiraServinte
         UriTemplate = "/UpdateEntry?sRequest={sRequest}&sToken={sToken}")]
         //[WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         InspiraServinteResponse UpdateEntry(string sRequest, string sToken);
+
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "/UpdateAuthorization?ientry={ientry}&sappointment={sappointment}")]
+        //[WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        string UpdateAuthorization(int ientry, string sappointment);
+
+
     }
 
 }

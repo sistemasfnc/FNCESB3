@@ -77,7 +77,7 @@ namespace FNCDAC
                             lParameters.Add(oracleParameter);
                             oracle.ExecuteNonQuery(sQuery.ToString(), lParameters, false, true);
                             entryResponses[i].iid = Convert.ToInt32((decimal)(OracleDecimal)(oracleParameter.Value));
-                            entryResponses[i].dvalue = 0;
+                            //entryResponses[i].dvalue = 0;
                         }
                         else
                         {
@@ -104,7 +104,7 @@ namespace FNCDAC
                             lParameters.Add(new OracleParameter("IS_PLAN", entryResponses[i].splan));
                             lParameters.Add(new OracleParameter("IS_ID", entryResponses[i].iid));
                             oracle.ExecuteNonQuery(sQuery.ToString(), lParameters, false, true);
-                            entryResponses[i].dvalue = 0;
+                            //entryResponses[i].dvalue = 0;
                         }
                         sQuery.Clear();
                     }

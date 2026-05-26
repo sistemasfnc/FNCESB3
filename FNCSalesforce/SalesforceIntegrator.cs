@@ -3854,8 +3854,8 @@ namespace FNCSalesforce
                     ", USERWHOCANCELED__C, CANCELEDDATE__C, CANCELLATIONREASON__C, CANCELLATIONSOURCE__C, PATIENTDATE__C, PATIENTATTENDED__C, SERVICEBILLED__C, BILLINGTIME__C, SERVICETIME__C, TOTALATTENTIONTIME__C" +
                     ", COMPLIANCETIME__C, ERP_ENTRYCODE__C,  MIPRES__C, TIPOAGENDAMIENTO__C, TURNNUMBER__C, LASTMODIFIEDDATE, NUMEROENTREGA__C" +
                     ", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c, AgendaId__r.GrupoEspecialidad__c" +
-                    " FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_DAYS:120" +
-                    //" FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2026-01-01 AND ACTIVITYDATE__C <= 2026-04-15" +
+                    //" FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_DAYS:120" +
+                    " FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2026-01-01 AND ACTIVITYDATE__C <= 2026-05-18" +
                     //" FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2025-01-01 AND ACTIVITYDATE__C <= 2025-04-30" +
                     //", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_MONTHS:2 " +                    
                     //", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2024-11-01 AND ACTIVITYDATE__C <= 2025-03-31 " +
@@ -4322,7 +4322,7 @@ namespace FNCSalesforce
             }
         }
 
-        public string GetAuthUsage()
+        public string   GetAuthUsage()
         {
             List<Use_autorization__c> lusageauth = new List<Use_autorization__c>();
             StringBuilder susage = new StringBuilder();

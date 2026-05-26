@@ -27,7 +27,7 @@ namespace FNCSincronizaEstadistica
         }
 
         static void doProcess(string[] args)
-        {   
+        {
             /*
             try
             {
@@ -57,8 +57,8 @@ namespace FNCSincronizaEstadistica
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los pacientes"));
             }
             */
-            
-            
+
+
             /*
             try
             {
@@ -70,7 +70,7 @@ namespace FNCSincronizaEstadistica
             }
             */
 
-            
+            /*
             try
             {
                 sincronizaEstadistica.GenerateUsage();
@@ -79,7 +79,16 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los usos de autorización"));
             }                        
-            
+            */
+
+            try
+            {
+                sincronizaEstadistica.GenerateAppointmentHistory();
+            }
+            catch (Exception)
+            {
+                LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los datos históricos de la cita"));
+            }        
 
             /*
             try

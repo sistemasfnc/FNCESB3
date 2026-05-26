@@ -97,12 +97,18 @@ namespace FNCSalesforce
         {
             List<string> results = new List<string>();
             string nextRecordsUrl = null;
+
             do
             {
-                string query = string.IsNullOrEmpty(nextRecordsUrl) ? queryMessage : $"{this.salesforceSession.sname}{this.sApiEndpoint}{nextRecordsUrl}";
+                // ✅ CORRECCIÓN: nextRecordsUrl ya trae la ruta completa, solo añadir el host
+                string query = string.IsNullOrEmpty(nextRecordsUrl)
+                    ? queryMessage
+                    : $"{this.salesforceSession.sname}{nextRecordsUrl}";  // <-- sin sApiEndpoint
+
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, query);
                 request.Headers.Add("Authorization", "Bearer " + this.salesforceSession.scode);
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
                 try
                 {
                     HttpResponseMessage response = client.SendAsync(request).Result;
@@ -110,12 +116,14 @@ namespace FNCSalesforce
                     {
                         string jsonResponse = response.Content.ReadAsStringAsync().Result;
                         results.Add(jsonResponse);
-                        // Verifica si hay una URL para la siguiente página en la respuesta
                         nextRecordsUrl = ParseNextRecordsUrlFromResponse(jsonResponse);
                     }
                     else
                     {
-                        throw new Exception($"Error en la solicitud HTTP: {response.StatusCode}");
+                        // ✅ MEJORA: incluir la URL problemática en el error para debug
+                        string errorBody = response.Content.ReadAsStringAsync().Result;
+                        throw new Exception(
+                            $"Error en la solicitud HTTP: {response.StatusCode} | URL: {query} | Body: {errorBody}");
                     }
                 }
                 catch (Exception ex)
@@ -125,10 +133,7 @@ namespace FNCSalesforce
 
             } while (!string.IsNullOrEmpty(nextRecordsUrl));
 
-            // Aquí puedes procesar y combinar los resultados de todas las páginas si es necesario
-            string combinedResult = CombineResults(results);
-
-            return combinedResult;
+            return CombineResults(results);
         }
 
         private string ParseNextRecordsUrlFromResponse(string jsonResponse)
@@ -152,17 +157,33 @@ namespace FNCSalesforce
 
         private string CombineResults(List<string> results)
         {
-            // Combina y procesa los resultados de todas las páginas si es necesario
-            // Esto dependerá de la estructura de los datos que estés recuperando
+            if (results.Count == 1)
+                return results[0];
 
-            // Aquí, simplemente concatenamos los resultados en una sola cadena
-            StringBuilder combinedResult = new StringBuilder();
+            var allRecords = new JArray();
+            int totalSize = 0;
+
             foreach (string result in results)
             {
-                combinedResult.Append(result);
+                JObject page = JObject.Parse(result);
+
+                // Tomar el totalSize solo de la primera página (es el total real)
+                if (totalSize == 0 && page["totalSize"] != null)
+                    totalSize = page["totalSize"].Value<int>();
+
+                if (page["records"] is JArray records)
+                    foreach (var record in records)
+                        allRecords.Add(record);
             }
 
-            return combinedResult.ToString();
+            var combined = new JObject
+            {
+                ["totalSize"] = totalSize,
+                ["done"] = true,
+                ["records"] = allRecords
+            };
+
+            return combined.ToString(Newtonsoft.Json.Formatting.None);
         }
 
         private bool UpdateObjectAsync(string objectName, string objectId, string updateMessage)
@@ -2165,5 +2186,472 @@ namespace FNCSalesforce
         }
 
         #endregion
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // NUEVOS MÉTODOS — agregar dentro de la clase SalesforceViaRestApi
+        // en la región existente o en una nueva región al final.
+        //
+        // CAMBIO RESPECTO A LA VERSIÓN ANTERIOR:
+        //   El endpoint ahora recibe ?agenda=ID igual que FNC_EspaciosVaciosAgenda_ws.
+        //   El proceso .NET itera el catálogo externamente — UNA llamada por agenda.
+        //   Esto evita el error "Too many SOQL queries: 101" que ocurre cuando el
+        //   servidor intenta procesar todas las agendas en una sola transacción Apex.
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        #region Capacidad de agenda
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // DTOs
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Respuesta del catálogo GET /services/apexrest/fnc/capacidadagenda/v1 (sin parámetros)
+        /// </summary>
+        public class RespuestaCatalogoCapacidad
+        {
+            [JsonProperty("exitoso")] public bool Exitoso { get; set; }
+            [JsonProperty("mensaje")] public string Mensaje { get; set; }
+            [JsonProperty("total")] public int Total { get; set; }
+            [JsonProperty("agendas")] public List<AgendaInfo> Agendas { get; set; }
+        }
+
+        /// <summary>
+        /// Respuesta de capacidad GET .../v1?agenda=ID&desde=...&hasta=...
+        /// </summary>
+        public class RespuestaCapacidadAgenda
+        {
+            [JsonProperty("exitoso")] public bool Exitoso { get; set; }
+            [JsonProperty("mensaje")] public string Mensaje { get; set; }
+            [JsonProperty("desde")] public string Desde { get; set; }
+            [JsonProperty("hasta")] public string Hasta { get; set; }
+            [JsonProperty("total")] public int Total { get; set; }
+            [JsonProperty("filas")] public List<FilaCapacidad> Filas { get; set; }
+        }
+
+        public class FilaCapacidad
+        {
+            [JsonProperty("idAgenda")] public string IdAgenda { get; set; }
+            [JsonProperty("nombreAgenda")] public string NombreAgenda { get; set; }
+            [JsonProperty("especialidad")] public string Especialidad { get; set; }
+            [JsonProperty("nombreCentroCosto")] public string NombreCentroCosto { get; set; }
+            [JsonProperty("fecha")] public string Fecha { get; set; }
+            [JsonProperty("dia")] public string Dia { get; set; }
+            [JsonProperty("categoria")] public string Categoria { get; set; }
+            [JsonProperty("capacidadInstalada")] public int CapacidadInstalada { get; set; }
+            [JsonProperty("programados")] public int Programados { get; set; }
+            [JsonProperty("atendidos")] public int Atendidos { get; set; }
+            [JsonProperty("bloqueos")] public int Bloqueos { get; set; }
+            [JsonProperty("inasistencia")] public int Inasistencia { get; set; }
+        }
+
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // PASO 1: Catálogo de agendas activas
+        // Reusar GetCatalogoAgendas() que ya existe en la región de Espacios vacíos.
+        // Si aún no existe, agregar este método:
+        // ─────────────────────────────────────────────────────────────────────────────
+        // public List<AgendaInfo> GetCatalogoAgendas() { ... }
+        // → Ya está en la región "Espacios vacíos de agenda". No duplicar.
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // PASO 2: Capacidad de UNA agenda para un rango de fechas
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// PASO 2 — Llama a GET .../v1?agenda=ID&desde=YYYY-MM-DD&hasta=YYYY-MM-DD
+        /// y devuelve las filas de capacidad de esa agenda para el rango indicado.
+        ///
+        /// Devuelve lista vacía (sin lanzar excepción) si:
+        ///   - La agenda no existe o está inactiva (HTTP 404)
+        ///   - Salesforce devuelve exitoso = false
+        ///
+        /// IMPORTANTE: usar rangos de máximo 7 días para evitar timeout de 120 seg.
+        /// SincronizaEstadistica divide el rango total en ventanas de 7 días.
+        /// </summary>
+        public List<FilaCapacidad> GetCapacidadPorAgenda(string idAgenda, DateTime desde, DateTime hasta)
+        {
+            string desdeStr = desde.ToString("yyyy-MM-dd");
+            string hastaStr = hasta.ToString("yyyy-MM-dd");
+            string url = $"{this.salesforceSession.sname}" +
+                         $"/services/apexrest/fnc/capacidadagenda/v1" +
+                         $"?agenda={idAgenda}&desde={desdeStr}&hasta={hastaStr}";
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Add("Authorization", "Bearer " + this.salesforceSession.scode);
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage httpResponse = this.httpClient.SendAsync(request).Result;
+                string json = httpResponse.Content.ReadAsStringAsync().Result;
+
+                if (httpResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi",
+                        $"Agenda no encontrada o inactiva en capacidad: {idAgenda}");
+                    return new List<FilaCapacidad>();
+                }
+
+                if (!httpResponse.IsSuccessStatusCode)
+                    throw new Exception(
+                        $"Error HTTP {(int)httpResponse.StatusCode} en capacidad " +
+                        $"agenda {idAgenda} ({desdeStr}→{hastaStr}): {json}");
+
+                RespuestaCapacidadAgenda respuesta =
+                    JsonConvert.DeserializeObject<RespuestaCapacidadAgenda>(json);
+
+                if (!respuesta.Exitoso)
+                {
+                    LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi",
+                        $"Salesforce error en capacidad agenda {idAgenda}: {respuesta.Mensaje}");
+                    return new List<FilaCapacidad>();
+                }
+
+                return respuesta.Filas ?? new List<FilaCapacidad>();
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("ServicioDescarga", "SalesforceViaRestApi", ex);
+                throw;
+            }
+        }
+
+        #endregion
+
+        // ═══════════════════════════════════════════════════════════════════════════════
+        // NUEVOS MÉTODOS — agregar dentro de la clase SalesforceViaRestApi
+        // en una nueva región al final, antes del cierre de la clase.
+        //
+        // Usings ya presentes en el archivo original:
+        //   using Newtonsoft.Json;
+        //   using System.Net.Http;
+        //   using System.Net.Http.Headers;
+        //   using EventLog;
+        //
+        // El endpoint FNC_AgendaDetalle_ws sigue el mismo patrón que los anteriores:
+        //   GET /v1              → catálogo de agendas del Custom Label
+        //   GET /v1?agenda=ID&desde=...&hasta=...  → slots de esa agenda
+        // ═══════════════════════════════════════════════════════════════════════════════
+
+        #region Detalle de agenda
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // DTOs — mapean exactamente el JSON que devuelve FNC_AgendaDetalle_ws
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Respuesta del catálogo GET /services/apexrest/fnc/agendadetalle/v1 (sin parámetros)
+        /// </summary>
+        public class RespuestaCatalogoDetalle
+        {
+            [JsonProperty("exitoso")] public bool Exitoso { get; set; }
+            [JsonProperty("mensaje")] public string Mensaje { get; set; }
+            [JsonProperty("total")] public int Total { get; set; }
+            [JsonProperty("agendas")] public List<AgendaInfo> Agendas { get; set; }
+        }
+
+        /// <summary>
+        /// Respuesta de detalle GET .../v1?agenda=ID&desde=...&hasta=...
+        /// </summary>
+        public class RespuestaAgendaDetalle
+        {
+            [JsonProperty("exitoso")] public bool Exitoso { get; set; }
+            [JsonProperty("mensaje")] public string Mensaje { get; set; }
+            [JsonProperty("idAgenda")] public string IdAgenda { get; set; }
+            [JsonProperty("desde")] public string Desde { get; set; }
+            [JsonProperty("hasta")] public string Hasta { get; set; }
+            [JsonProperty("total")] public int Total { get; set; }
+            [JsonProperty("slots")] public List<SlotDetalle> Slots { get; set; }
+        }
+
+        public class SlotDetalle
+        {
+            [JsonProperty("idAgenda")] public string IdAgenda { get; set; }
+            [JsonProperty("nombreAgenda")] public string NombreAgenda { get; set; }
+            [JsonProperty("especialidad")] public string Especialidad { get; set; }
+            [JsonProperty("nombreCentroCosto")] public string NombreCentroCosto { get; set; }
+            [JsonProperty("fecha")] public string Fecha { get; set; }
+            [JsonProperty("horaInicioStr")] public string HoraInicioStr { get; set; }
+            [JsonProperty("horaFinStr")] public string HoraFinStr { get; set; }
+            [JsonProperty("categoria")] public string Categoria { get; set; }
+            [JsonProperty("nameCita")] public string NameCita { get; set; }
+            [JsonProperty("idCita")] public string IdCita { get; set; }
+            [JsonProperty("nombrePaciente")] public string NombrePaciente { get; set; }
+            [JsonProperty("documentoPaciente")] public string DocumentoPaciente { get; set; }
+            [JsonProperty("estado")] public string Estado { get; set; }
+            [JsonProperty("pacienteAsistio")] public string PacienteAsistio { get; set; }
+            [JsonProperty("grupo")] public string Grupo { get; set; }
+            [JsonProperty("plan")] public string Plan { get; set; }
+        }
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // PASO 1: Catálogo de agendas del Custom Label FNC_AgendaDetalleIds
+        //
+        // NOTA: GetCatalogoAgendas() de la región "Espacios vacíos" devuelve TODAS
+        // las agendas activas. Este endpoint tiene su propio catálogo filtrado
+        // por el Custom Label — se implementa como método separado.
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// PASO 1 — Obtiene el catálogo de agendas configuradas en el Custom Label
+        /// FNC_AgendaDetalleIds de Salesforce.
+        /// </summary>
+        public List<AgendaInfo> GetCatalogoDetalleAgendas()
+        {
+            string url = $"{this.salesforceSession.sname}" +
+                         $"/services/apexrest/fnc/agendadetalle/v1";
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Add("Authorization", "Bearer " + this.salesforceSession.scode);
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage httpResponse = this.httpClient.SendAsync(request).Result;
+                string json = httpResponse.Content.ReadAsStringAsync().Result;
+
+                if (!httpResponse.IsSuccessStatusCode)
+                    throw new Exception(
+                        $"Error HTTP {(int)httpResponse.StatusCode} al obtener catálogo de detalle: {json}");
+
+                RespuestaCatalogoDetalle catalogo =
+                    JsonConvert.DeserializeObject<RespuestaCatalogoDetalle>(json);
+
+                if (!catalogo.Exitoso)
+                    throw new Exception($"Salesforce error en catálogo detalle: {catalogo.Mensaje}");
+
+                LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi",
+                    $"Catálogo detalle obtenido: {catalogo.Total} agendas");
+
+                return catalogo.Agendas ?? new List<AgendaInfo>();
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("ServicioDescarga", "SalesforceViaRestApi", ex);
+                throw;
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // PASO 2: Slots de UNA agenda para un rango de fechas
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// PASO 2 — Llama a GET .../v1?agenda=ID&desde=YYYY-MM-DD&hasta=YYYY-MM-DD
+        /// y devuelve los slots (con y sin cita) de esa agenda para el rango indicado.
+        ///
+        /// Devuelve lista vacía sin lanzar excepción si:
+        ///   - La agenda no está en el Custom Label (HTTP 403)
+        ///   - La agenda no existe o está inactiva (HTTP 404)
+        ///   - Salesforce devuelve exitoso = false
+        ///
+        /// IMPORTANTE: usar rangos de máximo 7 días para evitar timeout de 120 seg.
+        /// </summary>
+        public List<SlotDetalle> GetDetalleAgenda(string idAgenda, DateTime desde, DateTime hasta)
+        {
+            string desdeStr = desde.ToString("yyyy-MM-dd");
+            string hastaStr = hasta.ToString("yyyy-MM-dd");
+            string url = $"{this.salesforceSession.sname}" +
+                         $"/services/apexrest/fnc/agendadetalle/v1" +
+                         $"?agenda={idAgenda}&desde={desdeStr}&hasta={hastaStr}";
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Add("Authorization", "Bearer " + this.salesforceSession.scode);
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage httpResponse = this.httpClient.SendAsync(request).Result;
+                string json = httpResponse.Content.ReadAsStringAsync().Result;
+
+                if (httpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi",
+                        $"Agenda no permitida en FNC_AgendaDetalleIds: {idAgenda}");
+                    return new List<SlotDetalle>();
+                }
+
+                if (httpResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi",
+                        $"Agenda no encontrada o inactiva: {idAgenda}");
+                    return new List<SlotDetalle>();
+                }
+
+                if (!httpResponse.IsSuccessStatusCode)
+                    throw new Exception(
+                        $"Error HTTP {(int)httpResponse.StatusCode} en detalle " +
+                        $"agenda {idAgenda} ({desdeStr}→{hastaStr}): {json}");
+
+                RespuestaAgendaDetalle respuesta =
+                    JsonConvert.DeserializeObject<RespuestaAgendaDetalle>(json);
+
+                if (!respuesta.Exitoso)
+                {
+                    LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi",
+                        $"Salesforce error detalle agenda {idAgenda}: {respuesta.Mensaje}");
+                    return new List<SlotDetalle>();
+                }
+
+                return respuesta.Slots ?? new List<SlotDetalle>();
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("ServicioDescarga", "SalesforceViaRestApi", ex);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Historial de citas
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // DTO
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        public class AppointmentHistoryRecord
+        {
+            [JsonProperty("Id")] public string Id { get; set; }
+            [JsonProperty("CreatedDate")] public string CreatedDate { get; set; }
+            [JsonProperty("DataType")] public string DataType { get; set; }
+            [JsonProperty("Field")] public string Field { get; set; }
+            [JsonProperty("OldValue")] public string OldValue { get; set; }
+            [JsonProperty("NewValue")] public string NewValue { get; set; }
+            [JsonProperty("ParentId")] public string ParentId { get; set; }
+            [JsonProperty("CreatedBy")] public CreatedByInfo CreatedBy { get; set; }
+        }
+
+        public class CreatedByInfo
+        {
+            [JsonProperty("Name")] public string Name { get; set; }
+        }
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // Método de integración
+        // ─────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Descarga el historial de cambios del campo ServiceBilled__c de las citas
+        /// para el año en curso (THIS_YEAR) y devuelve el CSV separado por ;
+        ///
+        /// Columnas:
+        ///   ID ; CREATED_BY_NAME ; CREATED_DATE ; DATA_TYPE ;
+        ///   FIELD ; OLD_VALUE ; NEW_VALUE ; PARENT_ID
+        ///
+        /// Usa paginación via nextRecordsUrl para manejar grandes volúmenes.
+        /// </summary>
+        public string GetAppointmentHistory()
+        {
+            try
+            {
+                // Obtener el año en curso para el filtro THIS_YEAR equivalente
+                int anio = DateTime.Today.Year;
+                string desde = $"{anio}-01-01T00:00:00Z";
+                string hasta = $"{anio}-12-31T23:59:59Z";
+
+                string soql = Uri.EscapeDataString("SELECT CreatedBy.Name, CreatedDate, DataType, Field, Id, " +
+                    "IsDeleted, NewValue, OldValue, ParentId FROM Appointment__History " +
+                    $"WHERE CreatedDate >= {desde} AND CreatedDate <= {hasta} AND Field = 'ServiceBilled__c' AND IsDeleted = false");
+                string url = $"{this.salesforceSession.sname}{this.sApiEndpoint}query?q={soql}";
+
+                LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi", $"GetAppointmentHistory: consultando año {anio}");
+
+                // QueryRecordsWithPagination ya maneja nextRecordsUrl internamente
+                string jsonCombinado = this.QueryRecordsWithPagination(this.httpClient, url, 2000);
+
+                // El resultado combinado puede ser múltiples JSONs concatenados —
+                // extraemos los records de cada página y acumulamos
+                List<AppointmentHistoryRecord> todos = new List<AppointmentHistoryRecord>();
+                ExtractHistoryRecords(jsonCombinado, todos);
+                if (todos.Count == 0)
+                {
+                    LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi", "GetAppointmentHistory: no se encontraron registros.");
+                    return string.Empty;
+                }
+                LogError.WriteMessage("ServicioDescarga", "SalesforceViaRestApi", $"GetAppointmentHistory: {todos.Count} registros obtenidos.");
+                return AppointmentHistoryToCSV(todos);
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("ServicioDescarga", "SalesforceViaRestApi", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Extrae los registros de historial del JSON combinado de todas las páginas.
+        /// CombineResults concatena los JSON de cada página — hay que parsear cada uno.
+        /// </summary>
+        private static void ExtractHistoryRecords(string jsonCombinado, List<AppointmentHistoryRecord> acumulado)
+        {
+            // CombineResults concatena los JSON directamente — los separamos
+            // buscando cada objeto raíz que comience con {"totalSize"
+            // Usamos un enfoque simple: intentar parsear bloques delimitados por }{
+            // Alternativa más robusta: dividir por "done":true o "done":false
+            if (string.IsNullOrEmpty(jsonCombinado)) return;
+
+            // Dividir los JSON concatenados en bloques individuales
+            // Cada respuesta de Salesforce empieza con {"totalSize":
+            var bloques = System.Text.RegularExpressions.Regex.Split(jsonCombinado, @"(?<=\})\s*(?=\{""totalSize"")");
+            foreach (string bloque in bloques)
+            {
+                if (string.IsNullOrWhiteSpace(bloque)) continue;
+                try
+                {
+                    JObject obj = JObject.Parse(bloque);
+                    JArray records = obj["records"] as JArray;
+                    if (records == null) continue;
+
+                    foreach (JToken token in records)
+                    {
+                        AppointmentHistoryRecord rec = token.ToObject<AppointmentHistoryRecord>();
+                        if (rec != null) acumulado.Add(rec);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogError.WriteError("ServicioDescarga", "SalesforceViaRestApi", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Convierte la lista de registros al CSV separado por ;
+        /// CreatedDate viene en formato ISO 8601 UTC — se convierte a hora Colombia (UTC-5).
+        /// </summary>
+        private static string AppointmentHistoryToCSV(List<AppointmentHistoryRecord> records)
+        {
+            var csv = new System.Text.StringBuilder();
+            foreach (var r in records)
+            {
+                // Convertir CreatedDate de UTC a hora Colombia
+                string createdDate = string.Empty;
+                if (!string.IsNullOrEmpty(r.CreatedDate))
+                {
+                    if (DateTime.TryParse(r.CreatedDate, null, System.Globalization.DateTimeStyles.RoundtripKind, out DateTime dt))
+                    {
+                        createdDate = dt.AddHours(-5).ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                    else
+                    {
+                        createdDate = r.CreatedDate;
+                    }
+                }
+                string[] columnas = new string[]
+                {
+                    r.Id ?? string.Empty,
+                    Tools.ReplaceChars(r.CreatedBy?.Name ?? string.Empty),
+                    createdDate,
+                    r.DataType ?? string.Empty,
+                    r.Field ?? string.Empty,
+                    Tools.ReplaceChars(r.OldValue ?? string.Empty),
+                    Tools.ReplaceChars(r.NewValue ?? string.Empty),
+                    r.ParentId ?? string.Empty
+                };
+                csv.AppendLine(string.Join(";", columnas));
+            }
+            return csv.ToString();
+        }
+
+        #endregion
+
     }
 }

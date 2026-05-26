@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FNCEntity;
+﻿using EventLog;
 using FNCDAC;
-using System.Data;
-using EventLog;
+using FNCEntity;
 using FNCFacade.FNCESB;
 using FNCUtils;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Odbc;
+using System.Linq;
+using System.Net;
 using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FNCFacade
 {
@@ -1083,6 +1085,15 @@ namespace FNCFacade
                 Oracle oracle = new Oracle();
                 oracle.sConnection = this.sConnection;
                 return servinteOracle.SpecificAuthorizationExists(documentType, document, plan, authorization, serviceCode, oracle);
+            }
+        }
+
+        public string UpdateAppointment(int ientry, string sappointment)
+        {
+            using (ServinteOracle servinteOracle = new ServinteOracle(this.sConnection))
+            {
+                servinteOracle.UpdateAyorddet(ientry, sappointment);
+                return "Actualización exitosa";
             }
         }
         #endregion

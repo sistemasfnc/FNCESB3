@@ -406,5 +406,14 @@ namespace FNCInspiraServinte
             else
                 return oSerializer.Deserialize<InspiraRequest>(sJson);
         }
+
+        public string UpdateAuthorization(int ientry, string sappointment)
+        {
+            using (FacadeInspiraServinte facadeInspiraServinte = new FacadeInspiraServinte(ConfigurationManager.ConnectionStrings["ServinteFNC"].ConnectionString))
+            {
+                facadeInspiraServinte.sConnection2 = ConfigurationManager.ConnectionStrings["OracleFNC"].ConnectionString;                
+                return "El número de cita " + sappointment + " fue actualizado para el ingreso " + ientry.ToString() + " con resultado: " + facadeInspiraServinte.UpdateAppointment(ientry, sappointment).ToString();   
+            }
+        }
     }
 }

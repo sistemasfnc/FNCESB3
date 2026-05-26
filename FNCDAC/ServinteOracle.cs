@@ -91,6 +91,22 @@ namespace FNCDAC
 
         #region Métodos públicos
 
+        public void UpdateAyorddet(int ientry, string sappointment)
+        {
+            string query = "UPDATE AYORDDET SET ORDDETDE2 = :ORDDETDE2 WHERE ORDDETDOC = :ORDDETDOC AND ORDDETFUE = :ORDDETFUE";
+            List<OracleParameter> parameters = new List<OracleParameter>();
+            using (Oracle oracle = new Oracle())
+            {
+                oracle.sConnection = this.sconnection;
+                oracle.Connect();
+                parameters.Add(new OracleParameter("ORDDETDE2", sappointment));
+                parameters.Add(new OracleParameter("ORDDETDOC", ientry));
+                parameters.Add(new OracleParameter("ORDDETFUE", "03"));
+                oracle.ExecuteNonQuery(query, parameters);
+                parameters = null;
+            }
+        }
+
         /// <summary>
         /// Método para obtener la combinación correcta de tipo de usuario, teniendo en cuenta la empresa, el plan y el nivel del usuario, tabla INPAG
         /// </summary>
