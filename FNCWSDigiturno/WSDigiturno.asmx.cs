@@ -720,6 +720,7 @@ namespace FNCWSDigiturno
                     using (ConsInformado oDAC = new ConsInformado())
                     {
                         oDAC.sConnection = ConfigurationManager.ConnectionStrings["ConsentimientoInformado"].ConnectionString;
+                        oDAC.sOracleConnection = ConfigurationManager.ConnectionStrings["ConsentimientoOracle"].ConnectionString;
                         if (lconsentimientos.Count > 0)
                         {
                             foreach (var item in lconsentimientos)

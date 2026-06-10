@@ -1438,7 +1438,7 @@ namespace FNCSalesforce
                                 shabeasdata = (appointment.WhatId__r.HabeasData__c != null) ? appointment.WhatId__r.HabeasData__c : string.Empty,
                                 dappointmentdate = appointment.ActivityDate__c.Value,
                                 ssecondsurname = (appointment.WhatId__r.SecondSurname__pc != null) ? appointment.WhatId__r.SecondSurname__pc : string.Empty,
-                                ssurname = appointment.WhatId__r.SecondSurname__pc,
+                                ssurname = appointment.WhatId__r.FirstSurname__pc,
                                 iage = Convert.ToInt32(appointment.WhatId__r.Age2__pc),
                                 sid = appointment.Id,
                                 sservicename = productsByGroup__C.Tarifa_concepto_producto__r.ProductId__r.Name__c,
@@ -1447,6 +1447,25 @@ namespace FNCSalesforce
                             };
                             lconsentimientos.Add(consentimiento);
                         }
+                    } else
+                    {
+                        consentimiento = new Consentimiento()
+                        {
+                            sappointmemt = appointment.Name,
+                            sdocument = appointment.WhatId__r.DocumentNumber__c,
+                            sdocumenttype = appointment.WhatId__r.DocumentType__c,
+                            sfirstname = appointment.WhatId__r.FirstName_c__pc,
+                            shabeasdata = (appointment.WhatId__r.HabeasData__c != null) ? appointment.WhatId__r.HabeasData__c : string.Empty,
+                            dappointmentdate = appointment.ActivityDate__c.Value,
+                            ssecondsurname = (appointment.WhatId__r.SecondSurname__pc != null) ? appointment.WhatId__r.SecondSurname__pc : string.Empty,
+                            ssurname = appointment.WhatId__r.FirstSurname__pc,
+                            iage = Convert.ToInt32(appointment.WhatId__r.Age2__pc),
+                            sid = appointment.Id,
+                            sservicename = "TELECONSULTA",
+                            ssecondname = (appointment.WhatId__r.SecondName__pc != null) ? appointment.WhatId__r.SecondName__pc : string.Empty,
+                            scups = "000000",
+                        };
+                        lconsentimientos.Add(consentimiento);
                     }
                 }
                 return lconsentimientos;

@@ -17,6 +17,7 @@ using System.CodeDom;
 using System.Security.Cryptography;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading;
+using System.Configuration;
 
 namespace FNCDAC
 {
@@ -2857,7 +2858,10 @@ namespace FNCDAC
         {
             oracle.Connect();
             // Algunos servicios específicos no se validan, mantenemos esta lógica.
-            if (serviceRequest.sservice.EqualsAnyOf("991201", "991202", "939403", "860203", "860201"))
+            var excludedServices = ConfigurationManager
+            .AppSettings["ExcludedServices"]
+            .Split(',');
+            if (serviceRequest.sservice.EqualsAnyOf(excludedServices))
             {
                 return false;
             }
