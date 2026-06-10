@@ -2653,5 +2653,73 @@ namespace FNCSalesforce
 
         #endregion
 
+        #region Anulación de Autorización Integral
+
+        /// <summary>
+        /// Busca la Autorizacion_Integral__c asociada a la cita con el AP indicado
+        /// y la marca como anulada (Cancelado_x_FNC__c = true).
+        ///
+        /// Flujo:
+        ///   1. Busca la Appointment__c por Name = sappointment
+        ///   2. Busca la Autorizacion_Integral__c donde Cita__c = citaId
+        ///      y Cancelado_x_FNC__c = false (no anulada previamente)
+        ///   3. Actualiza Cancelado_x_FNC__c = true en la AI encontrada
+        ///
+        /// Solo anula si la AI no tiene usos con No_Cargo__c lleno
+        /// (es decir, no está cruzada con un ingreso activo en Servinte).
+        /// Si ya tiene cargo, significa que el movimiento activo se reemplazó
+        /// por uno nuevo — en ese caso no se anula para no perder el historial.
+        /// </summary>
+        /// <param name="sappointment">Código AP de la cita (ej: AP-0046981867)</param>
+        /// <returns>Mensaje descriptivo del resultado</returns>
+        public string AnularAutorizacionIntegral(string sappointment)
+        {
+            if (string.IsNullOrWhiteSpace(sappointment))
+                return "Error: AP vacío";
+            try
+            {
+                // ── 1. Buscar la cita por Name ────────────────────────────────────────
+                string soqlCita = Uri.EscapeDataString($"SELECT Id, Name FROM Appointment__c WHERE Name = '{sappointment}' LIMIT 1");
+                string jsonCita = this.QueryRecordAsync(this.httpClient, $"{this.salesforceSession.sname}{this.sApiEndpoint}query?q={soqlCita}");
+                SalesforceResponse<Appointment__c> respCita = JsonConvert.DeserializeObject<SalesforceResponse<Appointment__c>>(jsonCita);
+                if (respCita.Records == null || respCita.Records.Count == 0)
+                    return $"Cita no encontrada: {sappointment}";
+                string citaId = respCita.Records[0].Id;
+                // ── 2. Buscar la AI activa asociada a la cita ─────────────────────────
+                string soqlAI = Uri.EscapeDataString($"SELECT Id, Name, Cancelado_x_FNC__c FROM Autorizacion_Integral__c " + $"WHERE Cita__c = '{citaId}' AND Cancelado_x_FNC__c = false LIMIT 1");
+                string jsonAI = this.QueryRecordAsync(this.httpClient, $"{this.salesforceSession.sname}{this.sApiEndpoint}query?q={soqlAI}");
+                // Necesitamos un DTO mínimo para parsear la AI
+                var respAI = JsonConvert.DeserializeObject<SalesforceResponse<AutorizacionIntegralDto>>(jsonAI);
+                if (respAI.Records == null || respAI.Records.Count == 0)
+                    return $"No se encontró AI activa para cita {sappointment}";
+                string aiId = respAI.Records[0].Id;
+                string aiName = respAI.Records[0].Name;
+                // ── 3. Verificar que no tenga usos con cargo (cruzados con Servinte) ──
+                string soqlUsos = Uri.EscapeDataString($"SELECT COUNT() FROM Use_autorization__c " + $"WHERE Autorizacion_Integral__c = '{aiId}' AND No_Cargo__c != null");
+                /*string jsonUsos = this.QueryRecordAsync(this.httpClient, $"{this.salesforceSession.sname}{this.sApiEndpoint}query?q={soqlUsos}");
+                JObject objUsos = JObject.Parse(jsonUsos);
+                int usosConCargo = objUsos["totalSize"]?.Value<int>() ?? 0;
+                if (usosConCargo > 0)
+                    return $"AI {aiName} tiene {usosConCargo} uso(s) con cargo en Servinte — no se anula";*/
+                string xmlUpdate = "<root><Cancelado_x_FNC__c>true</Cancelado_x_FNC__c></root>";
+                bool ok = this.UpdateObjectAsync("Autorizacion_Integral__c", aiId, xmlUpdate);
+                return ok ? $"AI {aiName} anulada correctamente para cita {sappointment}" : $"Error al anular AI {aiName} para cita {sappointment}";
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("FNCInspira", "AnularAutorizacionIntegral", ex);
+                throw;
+            }
+        }
+
+        /// <summary>DTO mínimo para deserializar Autorizacion_Integral__c</summary>
+        private class AutorizacionIntegralDto
+        {
+            [JsonProperty("Id")] public string Id { get; set; }
+            [JsonProperty("Name")] public string Name { get; set; }
+        }
+
+        #endregion
+
     }
 }

@@ -2,6 +2,7 @@
 using FNCEntity;
 using FNCFacade;
 using FNCFacade.FNCESB;
+using FNCSalesforce;
 using FNCUtils;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Web.Configuration;
 using System.Web.Script.Serialization;
 
 namespace FNCInspiraServinte
@@ -413,6 +415,47 @@ namespace FNCInspiraServinte
             {
                 facadeInspiraServinte.sConnection2 = ConfigurationManager.ConnectionStrings["OracleFNC"].ConnectionString;                
                 return "El número de cita " + sappointment + " fue actualizado para el ingreso " + ientry.ToString() + " con resultado: " + facadeInspiraServinte.UpdateAppointment(ientry, sappointment).ToString();   
+            }
+        }
+
+        /// <summary>
+        /// Recibe el AP de una cita cuyo movimiento fue anulado en Servinte
+        /// y anula la Autorización Integral correspondiente en Salesforce.
+        /// Llamado desde el trigger TRG_AYMOV_ANULAR_AI de Oracle.
+        /// </summary>
+        /// <param name="sappointment">Código AP de la cita (ej: AP-0046981867)</param>
+        /// <returns>Mensaje con el resultado de la operación</returns>
+        public string AnularAutorizacion(string sappointment)
+        {
+            if (string.IsNullOrWhiteSpace(sappointment))
+                return "Error: sappointment es requerido";
+
+            try
+            {
+                using (var sfApi = new SalesforceViaRestApi())
+                {
+                    sfApi.sLogingEndPoint = WebConfigurationManager.AppSettings["SalesforceURL"].TrimEnd('/');
+                    sfApi.sApiEndpoint = WebConfigurationManager.AppSettings["SalesforceEndPoint"];
+                    sfApi.DoLogin(
+                        WebConfigurationManager.AppSettings["SalesforceUser"],
+                        WebConfigurationManager.AppSettings["SalesforcePassword"] +
+                            WebConfigurationManager.AppSettings["SalesforceToken"],
+                        WebConfigurationManager.AppSettings["SalesforceClient"],
+                        WebConfigurationManager.AppSettings["SalesforceSecret"]
+                    );
+
+                    string resultado = sfApi.AnularAutorizacionIntegral(sappointment.Trim());
+
+                    LogError.WriteMessage("InspiraServinte", "AnularAutorizacion",
+                        $"AP={sappointment} → {resultado}");
+
+                    return resultado;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("InspiraServinte", "AnularAutorizacion", ex);
+                return $"Error: {ex.Message}";
             }
         }
     }

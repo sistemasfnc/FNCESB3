@@ -5776,7 +5776,7 @@ namespace FNCSalesforce
             List<Assesment__c> lappointments = new List<Assesment__c>();
             stringBuilder.Append("SELECT Id, Status__c, AppointmentId__c, AppointmentId__r.Name, AppointmentId__r.GroupId__r.Name, CreatedDate, AppointmentId__r.CostcenterId__r.Name FROM Assesment__c WHERE AppointmentId__c IN (");
             stringBuilder.Append(sid);
-            stringBuilder.Append(")  ORDER BY ID");
+            stringBuilder.Append(") AND (NOT Name LIKE 'Informe de procedimiento Inmunoterapia%') ORDER BY ID");
             try
             {
                 soapClient.query(sessionHeader, queryOptions, mruHeader, packageVersions, stringBuilder.ToString(), out queryResult);
@@ -6057,7 +6057,7 @@ namespace FNCSalesforce
             List<Allergy__c> lappointments = new List<Allergy__c>();
             stringBuilder.Append("SELECT Id, Status__c, AppointmentId__c, ApprovalDate__c, FileName__c, AppointmentId__r.Name, AppointmentId__r.GroupId__r.Name, CreatedDate, AppointmentId__r.CostCenterId__r.Name FROM Allergy__c WHERE AppointmentId__c IN (");
             stringBuilder.Append(sid);
-            stringBuilder.Append(")  ORDER BY ID");
+            stringBuilder.Append(") AND FileName__c  ORDER BY ID");
             try
             {
                 soapClient.query(sessionHeader, queryOptions, mruHeader, packageVersions, stringBuilder.ToString(), out queryResult);

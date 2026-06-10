@@ -1214,7 +1214,7 @@ namespace FNCDAC
             stringBuilder.Append(", MOVOTRTEC, MOVOTRTAT, MOVOTRVAR, MOVOTRACO, MOVOTRPLA, MOVOTRCTR, MOVOTRVIA) VALUES");
             stringBuilder.Append(" (:MOVOTRFUE, :MOVOTRDOC, :MOVOTRTUS, :MOVOTRNIV, :MOVOTREST, :MOVOTRATE, :MOVOTRCIN, :MOVOTRSEC, :MOVOTRMUN");
             stringBuilder.Append(", :MOVOTREAD, :MOVOTRUFU, :MOVOTRTIA, :MOVOTRCEA, :MOVOTRN1A, :MOVOTRN2A, :MOVOTRA1A, :MOVOTRTRA, :MOVOTRPAA, :MOVOTRINE, :MOVOTRN1C, :MOVOTRA1C");
-            stringBuilder.Append(", :MOVOTRTEC, :MOVOTRTAT, :MOVOTRVAR, :MOVOTRACO, :MOVOTRPLA, :MOVOTRCTR, :MOVOTRVIA)");
+            stringBuilder.Append(", :MOVOTRTEC, :MOVOTRTAT, :MOVOTRVAR, :MOVOTRACO, :MOVOTRPLA, (SELECT CTRCIACCT FROM INCTRCIA INNER JOIN INEMP ON EMPNIT = CTRCIANIT WHERE EMPCOD = :MOVOTRCTR AND CTRCIAACT = 'S' ORDER BY CTRCIAFHF FETCH FIRST 1 ROWS ONLY), :MOVOTRVIA)");
             lParameters.Add(new OracleParameter("MOVOTRFUE", this.parametroRip.ssource)); //Fuente
             lParameters.Add(new OracleParameter("MOVOTRDOC", this.parametroRip.ientry)); //Número de ingreso
             lParameters.Add(new OracleParameter("MOVOTRTUS", servintePatient.safiliation)); //TODO: Tipo de afiliación 1 para afiliado
@@ -1241,7 +1241,7 @@ namespace FNCDAC
             lParameters.Add(new OracleParameter("MOVOTRVAR", this.GetEntryValue(inspiraRequest.lservices))); //TODO: Valor recaudado
             lParameters.Add(new OracleParameter("MOVOTRACO", "N")); //TODO: Tipo médico que atiende
             lParameters.Add(new OracleParameter("MOVOTRPLA", splan)); //Código del plan
-            lParameters.Add(new OracleParameter("MOVOTRCTR", inspiraRequest.scontract)); //Código del contrato
+            lParameters.Add(new OracleParameter("MOVOTRCTR", inspiraRequest.sagreement)); //Código del contrato
             lParameters.Add(new OracleParameter("MOVOTRVIA", "02")); // Codigo Via Ingreso
             oDAC.ExecuteNonQuery(stringBuilder.ToString(), lParameters, false, true);
             stringBuilder = null;
