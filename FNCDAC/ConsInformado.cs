@@ -73,12 +73,12 @@ namespace FNCDAC
             if (!this.AppointmentExistsOracle(oEntity))
             {
                 this.InsertOracleAppointment(oEntity);
-            }
+            }/*
             else
             {
                 this.DeleteAppointmentOracle(oEntity);
                 this.InsertOracleAppointment(oEntity);
-            }
+            }*/
         }
 
         private void InsertAppointment(Consentimiento oEntity)
