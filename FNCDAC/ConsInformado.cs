@@ -35,14 +35,14 @@ namespace FNCDAC
         /// <param name="oEntity">Objeto consentimiento informado</param>
         public void CreateAppointmentRecord(Consentimiento oEntity)
         {
-            try
+            /*try
             {
                 this.SQLTransactions(oEntity);
             }
             catch (Exception ex)
             {
                 LogError.WriteError("WSInspira", "Application", ex);
-            }
+            }*/
             try
             {
                 this.OracleTransactions(oEntity);
@@ -55,7 +55,7 @@ namespace FNCDAC
             }
         }
 
-        private void SQLTransactions(Consentimiento oEntity)
+        /*private void SQLTransactions(Consentimiento oEntity)
         {
             if (!this.AppointmentExists(oEntity))
             {
@@ -66,7 +66,7 @@ namespace FNCDAC
                 this.DeleteAppointment(oEntity);
                 this.InsertAppointment(oEntity);
             }
-        }
+        }*/
 
         private void OracleTransactions(Consentimiento oEntity)
         {
@@ -81,7 +81,7 @@ namespace FNCDAC
             }*/
         }
 
-        private void InsertAppointment(Consentimiento oEntity)
+        /*private void InsertAppointment(Consentimiento oEntity)
         {
             List<SqlParameter> lParameters = new List<SqlParameter>();
             using (SQLServer oDAC = new SQLServer(this.sConnection))
@@ -111,7 +111,7 @@ namespace FNCDAC
                 sQuery = null;
                 lParameters = null;
             }
-        }
+        }*/
 
         private void InsertOracleAppointment(Consentimiento oEntity)
         {
@@ -343,7 +343,7 @@ namespace FNCDAC
             return patients;
         }
 
-        public bool AppointmentExists(Consentimiento oEntity)
+        /*public bool AppointmentExists(Consentimiento oEntity)
         {
             string sQuery = "SELECT idCita FROM CI_Cita WITH (NOLOCK) WHERE NombreCita = @Cita AND CodServicio NOT IN ('FNC1', 'FNC1001', 'FNC1002') AND CodServicio = @Servicio AND NoIdent = @Documento AND TipoIdent = @TipoDocumento";
             object oResult = null;
@@ -358,7 +358,7 @@ namespace FNCDAC
                 lParameters = null;
                 return (oResult != null);
             }
-        }
+        }*/
 
         public bool AppointmentExistsOracle(Consentimiento oEntity)
         {
@@ -379,7 +379,7 @@ namespace FNCDAC
             }
         }
 
-        public void DeleteAppointment(Consentimiento oEntity)
+        /*public void DeleteAppointment(Consentimiento oEntity)
         {
             string sQuery = "DELETE FROM CI_Cita WHERE NombreCita = @Cita AND CodServicio NOT IN ('FNC1', 'FNC1001', 'FNC1002') AND NoIdent = @Documento AND TipoIdent = @TipoDocumento";
             List<SqlParameter> lParameters = new List<SqlParameter>();
@@ -391,7 +391,7 @@ namespace FNCDAC
                 lParameters.Add(new SqlParameter("@TipoDocumento", oEntity.sdocumenttype));
                 oDAC.ExecuteNonQuery(sQuery, lParameters);                
             }
-        }
+        }*/
 
         public void DeleteAppointmentOracle(Consentimiento oEntity)
         {
@@ -409,7 +409,7 @@ namespace FNCDAC
             }
         }
 
-        public void UpdateConsentUser(string sAppointment, string sUser)
+        /*public void UpdateConsentUser(string sAppointment, string sUser)
         {
             StringBuilder stringBuilder = new StringBuilder("UPDATE CI_Cita SET [DocProfesional] = @sUser WHERE NombreCita = @Cita AND CodServicio NOT IN ('FNC1', 'FNC1001', 'FNC1002')");
             List<SqlParameter> lParameters = new List<SqlParameter>();
@@ -419,7 +419,7 @@ namespace FNCDAC
                 lParameters.Add(new SqlParameter("@sUser", sUser));
                 oDAC.ExecuteNonQuery(stringBuilder.ToString(), lParameters);
             }
-        }
+        }*/
 
         public void UpdateConsentUserOracle(string sAppointment, string sUser)
         {

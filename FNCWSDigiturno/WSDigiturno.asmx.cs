@@ -719,7 +719,7 @@ namespace FNCWSDigiturno
                     lconsentimientos = salesforceViaRestApi.GetDataForConsent(this.oSession.scode, this.oSession.sname, sidappointment);
                     using (ConsInformado oDAC = new ConsInformado())
                     {
-                        oDAC.sConnection = ConfigurationManager.ConnectionStrings["ConsentimientoInformado"].ConnectionString;
+                        //oDAC.sConnection = ConfigurationManager.ConnectionStrings["ConsentimientoInformado"].ConnectionString;
                         oDAC.sOracleConnection = ConfigurationManager.ConnectionStrings["ConsentimientoOracle"].ConnectionString;
                         if (lconsentimientos.Count > 0)
                         {
@@ -949,7 +949,7 @@ namespace FNCWSDigiturno
             using (ConsInformado oDAC = new ConsInformado())
             {
                 oDAC.sConnection = ConfigurationManager.ConnectionStrings["ConsentimientoInformado"].ConnectionString;
-                oDAC.UpdateConsentUser(sappointment, sdocument);
+                oDAC.UpdateConsentUserOracle(sappointment, sdocument);
             }
         }
         
