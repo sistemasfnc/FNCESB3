@@ -61,6 +61,16 @@ namespace FNCSalesforce
         /// <returns>String con el session id</returns>
         public Generic Login(string sOrganization, string sUser, string sPassword, string sToken)
         {
+            /*SalesforceIntegratorOAuth soapcliente = new SalesforceIntegratorOAuth();
+            try
+            {
+                return soapcliente.Login(sUser, sPassword, sOrganization);
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("Application", "WSInspira", ex);
+                return null;
+            }*/
             SoapClient soapClient = new SoapClient();
             try
             {
@@ -685,7 +695,12 @@ namespace FNCSalesforce
                 return 21;
             }
             */
-            else if ((sSchedule.Contains("PFP") || sSchedule.ToUpper().Contains("VMAX")) && iAge >= 18)
+            /**
+             * @date: 18/06/2026
+             * @desc: se realiza modificación eliminando el filtro por edad iAge > 18 para que todos los pacientes de pruebas de función pulmonar sean enviados a la caja de pruebas de función pulmonar. La hora se controla desde el Digiturno
+             * @auth: Iván Darío Suárez Betancourth
+             */
+            else if ((sSchedule.Contains("PFP") || sSchedule.ToUpper().Contains("VMAX")))
             {
                 return 22;
             }
@@ -5479,6 +5494,7 @@ namespace FNCSalesforce
             bool bdone = false;
             List<Appointment__c> lappointments = new List<Appointment__c>();
             stringBuilder.Append("SELECT Id, Name, CostCenterId__r.Code__c, CostCenterId__c, GroupId__r.Name FROM Appointment__c WHERE Name IN (");
+            //stringBuilder.Append("'AP-0047332358'");
             stringBuilder.Append(snames);
             stringBuilder.Append(")  ORDER BY ID");
             try
@@ -5591,10 +5607,11 @@ namespace FNCSalesforce
                         {
                             lstrehabSessions.Add("'" + appointment.Id + "'");
                         }
-                        else if (appointment.CostCenterId__r.Code__c.EndsWith("00"))
+                        else if (appointment.CostCenterId__r.Code__c.EndsWith("00") || appointment.GroupId__r.Name.Contains("INMUNO"))
                         {
                             lstassesments.Add("'" + appointment.Id + "'");
                         }
+
                     }
                 }
             }
@@ -5776,7 +5793,8 @@ namespace FNCSalesforce
             List<Assesment__c> lappointments = new List<Assesment__c>();
             stringBuilder.Append("SELECT Id, Status__c, AppointmentId__c, AppointmentId__r.Name, AppointmentId__r.GroupId__r.Name, CreatedDate, AppointmentId__r.CostcenterId__r.Name FROM Assesment__c WHERE AppointmentId__c IN (");
             stringBuilder.Append(sid);
-            stringBuilder.Append(") AND (NOT Name LIKE 'Informe de procedimiento Inmunoterapia%') ORDER BY ID");
+            //stringBuilder.Append(") AND (NOT Name LIKE 'Informe de procedimiento Inmunoterapia%') AND (NOT Name LIKE 'Informe de procedimiento PCutánea%') ORDER BY ID");
+            stringBuilder.Append(") AND (NOT Name LIKE 'Informe de procedimiento PCutánea%') ORDER BY ID");
             try
             {
                 soapClient.query(sessionHeader, queryOptions, mruHeader, packageVersions, stringBuilder.ToString(), out queryResult);
@@ -6057,7 +6075,7 @@ namespace FNCSalesforce
             List<Allergy__c> lappointments = new List<Allergy__c>();
             stringBuilder.Append("SELECT Id, Status__c, AppointmentId__c, ApprovalDate__c, FileName__c, AppointmentId__r.Name, AppointmentId__r.GroupId__r.Name, CreatedDate, AppointmentId__r.CostCenterId__r.Name FROM Allergy__c WHERE AppointmentId__c IN (");
             stringBuilder.Append(sid);
-            stringBuilder.Append(") AND FileName__c  ORDER BY ID");
+            stringBuilder.Append(") AND (FileName__c LIKE '%_860201_%' OR FileName__c LIKE '%_860202_%' OR FileName__c LIKE '%_860203_%' OR FileName__c LIKE '%_891301_%' OR FileName__c LIKE '%_891302_%' OR FileName__c LIKE '%_893910_%') ORDER BY ID");
             try
             {
                 soapClient.query(sessionHeader, queryOptions, mruHeader, packageVersions, stringBuilder.ToString(), out queryResult);

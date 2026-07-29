@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Diagnostics;
 using System.Data.SqlTypes;
 using System.IO;
+using EventLog;
 
 namespace FNCUtils
 {
@@ -411,7 +412,7 @@ namespace FNCUtils
         public static Generic GetCompanyFromRate(string sagreement, string sagreementname, string sratename, string spatient, string sdocument)
         {
             Generic generic = new Generic();
-            if (sratename.EqualsAnyOf("P", "7", "9"))
+            if (sratename.EqualsAnyOf("P", "7"))
             {
                 generic.scode = sdocument;
                 generic.sname = spatient;
@@ -464,7 +465,7 @@ namespace FNCUtils
                 }
                 catch (Exception ex)
                 {
-                    EventLog.WriteEntry("InspiraServinte", ex.Message);
+                    LogError.WriteError("InspiraServinte", "InspiraServinte", ex);
                     return false;                    
                 }                                
             }
