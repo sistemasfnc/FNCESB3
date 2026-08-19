@@ -411,7 +411,7 @@ namespace FNCUtils
         public static Generic GetCompanyFromRate(string sagreement, string sagreementname, string sratename, string spatient, string sdocument)
         {
             Generic generic = new Generic();
-            if (sratename.EqualsAnyOf("P", "7", "9"))
+            if (sratename.EqualsAnyOf("P", "7"))
             {
                 generic.scode = sdocument;
                 generic.sname = spatient;

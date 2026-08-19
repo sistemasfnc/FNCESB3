@@ -67,7 +67,10 @@ namespace FNCUtils
                 };
 
                 var resp = s3Client.ListObjectsV2(req);
-                keys.AddRange(resp.S3Objects.Select(o => o.Key));
+                if (resp.S3Objects != null)
+                {
+                    keys.AddRange(resp.S3Objects.Select(o => o.Key));
+                }
                 if (resp.IsTruncated.HasValue && resp.IsTruncated.Value)
                 {
                     token = resp.NextContinuationToken;
