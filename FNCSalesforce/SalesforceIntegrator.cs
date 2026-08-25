@@ -90,16 +90,29 @@ namespace FNCSalesforce
             }
         }
 
+        public Generic Login(string client, string secrent, string url)
+        {
+            SalesforceIntegratorOAuth soapcliente = new SalesforceIntegratorOAuth();
+            try
+            {
+                return soapcliente.Login(client, secrent, url);
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("Application", "WSInspira", ex);
+                return null;
+            }
+        }
         #region Integracion con Digiturno 5
-        /// <summary>
-        /// Método para obtener el paciente y si tiene citas disponibles
-        /// </summary>
-        /// <param name="sSession">String session id del login</param>
-        /// <param name="sDocumentType">String tipo de documento del paciente</param>
-        /// <param name="sDocument">String documento del paciente</param>
-        /// <param name="sUrl">String url de salesforce</param>
-        /// <param name="sUrl">String cadena de conexión base de datos consentimiento informado</param>
-        /// <returns>Digiturno5 objeto definido para la integración</returns>
+            /// <summary>
+            /// Método para obtener el paciente y si tiene citas disponibles
+            /// </summary>
+            /// <param name="sSession">String session id del login</param>
+            /// <param name="sDocumentType">String tipo de documento del paciente</param>
+            /// <param name="sDocument">String documento del paciente</param>
+            /// <param name="sUrl">String url de salesforce</param>
+            /// <param name="sUrl">String cadena de conexión base de datos consentimiento informado</param>
+            /// <returns>Digiturno5 objeto definido para la integración</returns>
         public Digiturno5 GetPatient(string sSession, string sDocumentType, string sDocument, string sUrl, string sConnection)
         {
             SoapClient soapClient = new SoapClient();
@@ -3840,6 +3853,8 @@ namespace FNCSalesforce
                             item.FNC_RequierePreconsulta__c.Value.ToString(),
                             item.RescheduleCheck__c.Value.ToString(),
                             item.AgendaId__r.GrupoEspecialidad__c,
+                            Tools.ReplaceChars(item.GroupId__r.Tipo_de_consulta__c),
+                            Tools.ReplaceChars(item.GroupId__r.Tipo_de_subconsulta__c)
                     };
                     sappointments.AppendLine(string.Join(";", scolumns));
                 }               
@@ -3868,9 +3883,9 @@ namespace FNCSalesforce
                     ", AGENDAID__R.PROFESSIONALID__R.DOCUMENTNUMBER__C, CATEGORY__C, GROUPID__C, AGREEMENTID__R.NAME, AGREEMENTCODE__C, PLANNAME__C, PLANID__R.HEALTHCAREPLANID__R.CODE__C" +
                     ", USERWHOCANCELED__C, CANCELEDDATE__C, CANCELLATIONREASON__C, CANCELLATIONSOURCE__C, PATIENTDATE__C, PATIENTATTENDED__C, SERVICEBILLED__C, BILLINGTIME__C, SERVICETIME__C, TOTALATTENTIONTIME__C" +
                     ", COMPLIANCETIME__C, ERP_ENTRYCODE__C,  MIPRES__C, TIPOAGENDAMIENTO__C, TURNNUMBER__C, LASTMODIFIEDDATE, NUMEROENTREGA__C" +
-                    ", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c, AgendaId__r.GrupoEspecialidad__c" +
-                    //" FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_DAYS:120" +
-                    " FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2026-01-01 AND ACTIVITYDATE__C <= 2026-05-18" +
+                    ", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c, AgendaId__r.GrupoEspecialidad__c, GroupId__r.Tipo_de_consulta__c, GroupId__r.Tipo_de_subconsulta__c" +
+                    " FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_DAYS:120" +
+                    //" FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2026-08-01 AND ACTIVITYDATE__C <= 2026-08-10" +
                     //" FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2025-01-01 AND ACTIVITYDATE__C <= 2025-04-30" +
                     //", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_MONTHS:2 " +                    
                     //", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2024-11-01 AND ACTIVITYDATE__C <= 2025-03-31 " +
@@ -3891,7 +3906,7 @@ namespace FNCSalesforce
                     ", AGENDAID__R.PROFESSIONALID__R.DOCUMENTNUMBER__C, CATEGORY__C, GROUPID__C, AGREEMENTID__R.NAME, AGREEMENTCODE__C, PLANNAME__C, PLANID__R.HEALTHCAREPLANID__R.CODE__C" +
                     ", USERWHOCANCELED__C, CANCELEDDATE__C, CANCELLATIONREASON__C, CANCELLATIONSOURCE__C, PATIENTDATE__C, PATIENTATTENDED__C, SERVICEBILLED__C, BILLINGTIME__C, SERVICETIME__C, TOTALATTENTIONTIME__C" +
                     ", COMPLIANCETIME__C, ERP_ENTRYCODE__C,  MIPRES__C, TIPOAGENDAMIENTO__C, TURNNUMBER__C, LASTMODIFIEDDATE, NUMEROENTREGA__C" +
-                    ", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c, AgendaId__r.GrupoEspecialidad__c" +
+                    ", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c, RescheduleCheck__c, AgendaId__r.GrupoEspecialidad__c, GroupId__r.Tipo_de_consulta__c, GroupId__r.Tipo_de_subconsulta__c" +
                     " FROM APPOINTMENT__C WHERE ActivityDate__c > TODAY AND ActivityDate__c <= NEXT_N_DAYS:90" +
                     //", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c FROM APPOINTMENT__C WHERE ACTIVITYDATE__C = LAST_N_MONTHS:2 " +                    
                     //", ScheduleId__r.FNC_CentroCostos__r.Code__c, SCHEDULEID__C, COSTCENTERID__C, COSTCENTERID__R.CODE__C, USERS_WHO_BILLED__C, GROUPID__R.NAME, CASHIER__C, FNC_RequierePreconsulta__c FROM APPOINTMENT__C WHERE ACTIVITYDATE__C >= 2024-01-01 AND ACTIVITYDATE__C <= 2024-08-31 " +

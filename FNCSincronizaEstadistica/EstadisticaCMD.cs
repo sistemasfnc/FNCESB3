@@ -16,7 +16,7 @@ namespace FNCSincronizaEstadistica
             sincronizaEstadistica = new SincronizaEstadistica();
             try
             {
-                //sincronizaEstadistica.DoLogin();
+                sincronizaEstadistica.DoLogin();
                 doProcess(args);
             }
             catch (Exception ex)
@@ -28,7 +28,7 @@ namespace FNCSincronizaEstadistica
 
         static void doProcess(string[] args)
         {
-            /*
+            
             try
             {
                 sincronizaEstadistica.GenerateProductByGroup();
@@ -55,11 +55,9 @@ namespace FNCSincronizaEstadistica
             catch (Exception)
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los pacientes"));
-            }
-            */
+            }            
+            
 
-
-            /*
             try
             {
                 sincronizaEstadistica.GenerateAppointments();
@@ -68,9 +66,8 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las citas"));
             }
-            */
-
-            /*
+            
+            
             try
             {
                 sincronizaEstadistica.GenerateUsage();
@@ -79,8 +76,8 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los usos de autorización"));
             }                        
-            */
-
+            
+            /*
             try
             {
                 sincronizaEstadistica.GenerateAppointmentHistory();
@@ -89,8 +86,7 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los datos históricos de la cita"));
             }        
-
-            /*
+            */            
             try
             {
                 sincronizaEstadistica.GetAssesments();
@@ -99,7 +95,7 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las consultas"));
             }
-
+            /*
             try
             {
                 sincronizaEstadistica.GetPrescriptions();

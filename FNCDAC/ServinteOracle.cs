@@ -1112,6 +1112,7 @@ namespace FNCDAC
         /// <param name="oDAC">Objeto conexión a la base de datos</param>        
         private void CreateEntry(InspiraCita inspiraRequest, ServintePatient servintePatient, Oracle oDAC)
         {
+            //inspiraRequest.suser = "admon";
             decimal dTotal = (!this.stype.Contains("Plantilla Programas")) ? this.GetEntryValue(inspiraRequest.lservices) : inspiraRequest.ientry;
             List<OracleParameter> lParameters = new List<OracleParameter>();
             OracleParameter oracleParameter = new OracleParameter();
@@ -1120,7 +1121,12 @@ namespace FNCDAC
             oracleParameter.Value = generic.sfilter;
             string scompany = generic.scode;
             string scompanyname = generic.sname;
-            string spolicy = (string.IsNullOrEmpty(servintePatient.spolicy)) ? servintePatient.sdocument : servintePatient.spolicy;
+            /**
+             * @date: 05/08/2026
+             * @desc: Se deja vacío el valor de la póliza ya que desde facturación indican que no debe estar diligenciado
+             */
+            //string spolicy = (string.IsNullOrEmpty(servintePatient.spolicy)) ? servintePatient.sdocument : servintePatient.spolicy;
+            string spolicy = string.Empty;
             oracleParameter.Direction = ParameterDirection.Input;
             string sTemplate = (!this.stype.Contains("Plantilla Programas")) ? string.Empty : inspiraRequest.stemplate;
             string srate = string.Empty;

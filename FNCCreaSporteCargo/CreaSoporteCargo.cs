@@ -110,7 +110,8 @@ namespace FNCCreaSporteCargo
         {
             using (SalesforceIntegrator salesforceIntegrator = new SalesforceIntegrator())
             {
-                salesforcesession = salesforceIntegrator.Login(FNCCreaSporteCargo.Properties.Settings.Default.SalesforceCompany, FNCCreaSporteCargo.Properties.Settings.Default.SalesforceUser, FNCCreaSporteCargo.Properties.Settings.Default.SalesforcePassword, FNCCreaSporteCargo.Properties.Settings.Default.SalesforceToken);
+                //salesforcesession = salesforceIntegrator.Login(FNCCreaSporteCargo.Properties.Settings.Default.SalesforceCompany, FNCCreaSporteCargo.Properties.Settings.Default.SalesforceUser, FNCCreaSporteCargo.Properties.Settings.Default.SalesforcePassword, FNCCreaSporteCargo.Properties.Settings.Default.SalesforceToken);
+                salesforcesession = salesforceIntegrator.Login(FNCCreaSporteCargo.Properties.Settings.Default.SalesforceClient, FNCCreaSporteCargo.Properties.Settings.Default.SalesforceSecret, FNCCreaSporteCargo.Properties.Settings.Default.SalesforceURL);
                 salesforceIntegrator.sSession = salesforcesession.scode;
                 salesforceIntegrator.sUrl = salesforcesession.sname;
                 lcharges = salesforceIntegrator.GetAppointmentSupports(lcharges, sappointments);

@@ -47,7 +47,8 @@ namespace FNCEstadistica
         {
             using (SalesforceIntegrator salesforceIntegrator = new SalesforceIntegrator())
             {
-                this.oSession = salesforceIntegrator.Login(FNCEstadistica.Properties.Settings.Default.SalesforceCompany, FNCEstadistica.Properties.Settings.Default.SalesforceUser, FNCEstadistica.Properties.Settings.Default.SalesforcePassword, FNCEstadistica.Properties.Settings.Default.SalesforceToken);
+                //this.oSession = salesforceIntegrator.Login(FNCEstadistica.Properties.Settings.Default.SalesforceCompany, FNCEstadistica.Properties.Settings.Default.SalesforceUser, FNCEstadistica.Properties.Settings.Default.SalesforcePassword, FNCEstadistica.Properties.Settings.Default.SalesforceToken);
+                this.oSession = salesforceIntegrator.Login(FNCEstadistica.Properties.Settings.Default.SoapClient, FNCEstadistica.Properties.Settings.Default.SoapSecret, FNCEstadistica.Properties.Settings.Default.SalesforceURL);
             }
             LogError.WriteMessage("ServicioDescarga", "ServicioDescarga", "Sesion de Salesforce iniciada correctamente " + this.oSession.scode);
         }

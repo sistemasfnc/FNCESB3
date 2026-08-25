@@ -196,7 +196,7 @@ namespace FNCEnviarPlantillaServicios
                 sContentType = "text/plain",
                 sSubject = FNCEnviarPlantillaServicios.Properties.Settings.Default.mailsubject + " " + DateTime.Now.ToShortDateString(),
                 sMessage = FNCEnviarPlantillaServicios.Properties.Settings.Default.mailbody,
-                bisTLS = false,
+                bisTLS = true,
                 sFrom = FNCEnviarPlantillaServicios.Properties.Settings.Default.mailfrom,
             };
             try
