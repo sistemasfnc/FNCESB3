@@ -1127,7 +1127,7 @@ namespace FNCDAC
             string squerycomplement = string.Empty;
             string sthird = string.IsNullOrEmpty(inspiraRequest.sthird) ? "73135051" : inspiraRequest.sthird;
             string sdoctor = this.GetDoctorCode(sthird);
-            if (servintePatient.safiliation.EqualsAnyOf("P", "7", "9"))
+            if (servintePatient.safiliation.EqualsAnyOf("P", "7"))
             {
                 srate = inspiraRequest.srate;
                 squerycomplement = ":MOVTAR";
@@ -1208,7 +1208,7 @@ namespace FNCDAC
         /// <param name="oDAC">Objeto conexión a la base de datos</param>
         private void CreateEntryAdditional(InspiraCita inspiraRequest, ServintePatient servintePatient, Oracle oDAC)
         {
-            string splan = (servintePatient.safiliation.EqualsAnyOf("P", "7", "9")) ? string.Empty : inspiraRequest.splan;
+            string splan = (servintePatient.safiliation.EqualsAnyOf("P", "7")) ? string.Empty : inspiraRequest.splan;
             List<OracleParameter> lParameters = new List<OracleParameter>();
             StringBuilder stringBuilder = new StringBuilder("INSERT INTO AYMOVOTR (MOVOTRFUE, MOVOTRDOC, MOVOTRTUS, MOVOTRNIV, MOVOTREST, MOVOTRATE, MOVOTRCIN, MOVOTRSEC, MOVOTRMUN");
             stringBuilder.Append(", MOVOTREAD, MOVOTRUFU, MOVOTRTIA, MOVOTRCEA, MOVOTRN1A, MOVOTRN2A, MOVOTRA1A, MOVOTRTRA, MOVOTRPAA, MOVOTRINE, MOVOTRN1C, MOVOTRA1C");
@@ -2857,14 +2857,6 @@ namespace FNCDAC
         public bool SpecificEntryExists(ServintePatient servintePatient, InspiraCita inspiraCita, ServiceRequest serviceRequest, Oracle oracle)
         {
             oracle.Connect();
-            // Algunos servicios específicos no se validan, mantenemos esta lógica.
-            var excludedServices = ConfigurationManager
-            .AppSettings["ExcludedServices"]
-            .Split(',');
-            if (serviceRequest.sservice.EqualsAnyOf(excludedServices))
-            {
-                return false;
-            }
             StringBuilder squery = new StringBuilder("SELECT COUNT(1) FROM SERVINTE.AYMOV ");
             squery.Append("INNER JOIN SERVINTE.ABPAC ON PACHIS = MOVHIS ");
             squery.Append("INNER JOIN SERVINTE.AYCARDET ON CARDETFUE = MOVFUE AND CARDETDOC = MOVDOC ");
@@ -2878,7 +2870,7 @@ namespace FNCDAC
             squery.Append("AND ORDDETORD = :ORDDETORD "); // Autorización
             squery.Append("AND CARDETCON = :CARDETCON "); // Concepto
             squery.Append("AND MOVCER = :MOVCER ");       // Convenio
-            squery.Append("AND MOVUAD = :MOVUAD");         // Contrato (en el original usaba suser, lo mantengo)
+            squery.Append("AND MOVUAD = :MOVUAD AND CARDETCOD NOT IN ('RHB001', '991202', '860203', '939403', 'RHB005', '933501')");         // Contrato (en el original usaba suser, lo mantengo)
             List<OracleParameter> oracleParameters = new List<OracleParameter>
             {
                 new OracleParameter("PACIDE", servintePatient.sdocument),
@@ -3054,7 +3046,7 @@ namespace FNCDAC
             //stringBuilder.Append(" WHERE NOT EXISTS (SELECT ESCDOCNUM FROM HIESCDOC WHERE ESCDOCEPI = MOVHCEEPI AND ESCDOCCAT = 'Soporte Clinico') AND MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -1) AND SYSDATE");
             stringBuilder.Append(" WHERE MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -3) AND SYSDATE");
             //stringBuilder.Append(" WHERE MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -2) AND ADD_MONTHS(SYSDATE, -1)");
-            stringBuilder.Append(" AND MOVFUE = '03' AND MOVTIP = 'E' AND MOVOTRPLA NOT IN ('");
+            stringBuilder.Append(" AND MOVFUE IN ('03', 'R3') AND MOVTIP = 'E' AND MOVOTRPLA NOT IN ('");
             stringBuilder.Append(scompany);
             stringBuilder.Append("') AND ESCDOCCAT IS NULL AND MOVANU = 0");
             //stringBuilder.Append(" FETCH FIRST 1000 ROWS ONLY");
@@ -3067,7 +3059,7 @@ namespace FNCDAC
             stringBuilder.Append(" INNER JOIN HIESCDOC ON ESCDOCEPI = MOVHCEEPI");
             stringBuilder.Append(" WHERE MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -3) AND SYSDATE");
             //stringBuilder.Append(" WHERE MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -2) AND ADD_MONTHS(SYSDATE, -1)");
-            stringBuilder.Append(" AND MOVFUE = '03' AND MOVTIP = 'E' AND MOVOTRPLA NOT IN ('");
+            stringBuilder.Append(" AND MOVFUE IN ('03', 'R3') AND MOVTIP = 'E' AND MOVOTRPLA NOT IN ('");
             stringBuilder.Append(scompany);
             stringBuilder.Append("') AND ESCDOCCAT = 'Soporte Clinico' AND MOVANU = 0");
             //stringBuilder.Append(" FETCH FIRST 300 ROWS ONLY");*/
@@ -3140,7 +3132,7 @@ namespace FNCDAC
             stringBuilder.Append(" INNER JOIN COCCO ON CARDETCCO = CCOCOD");
             stringBuilder.Append(" WHERE MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -3) AND SYSDATE");
             //stringBuilder.Append(" WHERE MOVFEC BETWEEN ADD_MONTHS(SYSDATE, -2) AND ADD_MONTHS(SYSDATE, -1)");
-            stringBuilder.Append(" AND MOVFUE = '03' AND MOVTIP = 'E' AND MOVOTRPLA NOT IN ('");
+            stringBuilder.Append(" AND MOVFUE IN ('03', 'R3') AND MOVTIP = 'E' AND MOVOTRPLA NOT IN ('");
             stringBuilder.Append(scompany);
             stringBuilder.Append("') AND CARDETCCO <> '9190' AND MOVANU = 0");
             //stringBuilder.Append(" AND CARDETDOC = 1376278");            

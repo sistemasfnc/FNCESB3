@@ -179,7 +179,7 @@ namespace FNCInspiraServinte
                                     smessage = "El código del tipo de servicio no puede ser vacío",
                                 };
                             }
-                            else if (servintePatient.safiliation.EqualsAnyOf("P", "7", "9") && !servintePatient.slevel.EqualsAnyOf("7", "8"))
+                            else if (servintePatient.safiliation.EqualsAnyOf("P", "7") && !servintePatient.slevel.EqualsAnyOf("7", "8"))
                             {
                                 return new ErrorResponse()
                                 {
@@ -187,7 +187,7 @@ namespace FNCInspiraServinte
                                     smessage = "La combinación de tipo de afiliación y nivel del paciente no coinciden para la empresa y plan",
                                 };
                             }
-                            else if (servintePatient.safiliation.EqualsAnyOf("P", "7", "9") && !inspiraCita.sagreementname.Contains("NEUMOL"))
+                            else if (servintePatient.safiliation.EqualsAnyOf("P", "7") && !inspiraCita.sagreementname.Contains("NEUMOL"))
                             {
                                 return new ErrorResponse()
                                 {
@@ -195,7 +195,7 @@ namespace FNCInspiraServinte
                                     smessage = "La afiliación particular solo está habilitada para el convenio Fundación Neumológica",
                                 };
                             }
-                            else if (!servintePatient.safiliation.EqualsAnyOf("P", "7", "9") && inspiraTemporals.FirstOrDefault(x => x.scod == inspiraCita.sagreement && x.snombre == inspiraCita.splan && x.sparametro1 == servintePatient.safiliation && x.sparametro2 == servintePatient.slevel) == null)
+                            else if (!servintePatient.safiliation.EqualsAnyOf("P", "7") && inspiraTemporals.FirstOrDefault(x => x.scod == inspiraCita.sagreement && x.snombre == inspiraCita.splan && x.sparametro1 == servintePatient.safiliation && x.sparametro2 == servintePatient.slevel) == null)
                             {
                                 return new ErrorResponse()
                                 {

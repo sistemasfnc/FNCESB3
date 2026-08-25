@@ -155,7 +155,7 @@ namespace FNCCreaSporteCargo
                                 CreateSupportFile(lcharges[i], lcharges[i].ldetail[j].lsources);
                                 AppendRow(sresult, lcharges[i].inumber, lcharges[i].dcreateddate, lcharges[i].sagreementcode, lcharges[i].sappointment, lcharges[i].ldetail[j].sconcept, lcharges[i].ldetail[j].sservice, lcharges[i].ldetail[j].scostcenter, lcharges[i].ldetail[j].sgroupname, lcharges[i].splanname, lcharges[i].ldetail[j].snit, "admon");
                                 lcharges[i].ldetail[j].lsources.Clear();
-                            }
+                            }   
                             else
                             {
                                 AppendRow(sresult, lcharges[i].inumber, lcharges[i].dcreateddate, lcharges[i].sagreementcode, lcharges[i].sappointment, "Archivo de soporte no encontrado localmente", string.Empty, string.Empty, lcharges[i].ldetail[j].sgroupname, lcharges[i].splanname, lcharges[i].ldetail[j].snit, string.Empty);

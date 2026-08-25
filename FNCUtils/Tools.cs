@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Diagnostics;
 using System.Data.SqlTypes;
 using System.IO;
+using EventLog;
 
 namespace FNCUtils
 {
@@ -464,7 +465,7 @@ namespace FNCUtils
                 }
                 catch (Exception ex)
                 {
-                    EventLog.WriteEntry("InspiraServinte", ex.Message);
+                    LogError.WriteError("InspiraServinte", "InspiraServinte", ex);
                     return false;                    
                 }                                
             }

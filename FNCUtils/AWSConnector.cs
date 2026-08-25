@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Amazon;
+using Amazon.Runtime.Internal.Util;
 using Amazon.S3;
 using Amazon.S3.Model;
+using EventLog;
 
 namespace FNCUtils
 {    
@@ -46,8 +48,9 @@ namespace FNCUtils
                     return ms.ToArray();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogError.WriteError("Application", "Application", ex);
                 return null;
             }
         }
