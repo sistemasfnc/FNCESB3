@@ -166,7 +166,8 @@ namespace FNCDescargaSoportes
             var citas = new List<AppointmentData>();
             string planesOr = string.Join(" OR ", PLANES_SANITAS.Select(p => $"PlanId__r.Name LIKE '%{p}%'"));
             string today = DateTime.Now.ToString("yyyy-MM-dd");
-            string initialdate = new DateTime(DateTime.Now.Year, 7, 20).ToString("yyyy-MM-dd");
+            //string initialdate = new DateTime(DateTime.Now.Year, 7, 20).ToString("yyyy-MM-dd");
+            string initialdate = DateTime.Now.ToString("yyyy-MM-dd");
             string soql = $@"SELECT Id, WhatId__c, WhatId__r.DocumentNumber__c, GroupId__r.Name, CostCenterId__c, CostCenterId__r.Code__c, ActivityDate__c, Name FROM Appointment__c WHERE ({planesOr}) AND ActivityDate__c >= {initialdate} AND ActivityDate__c <= {today} AND PatientAttended__c = true";
             foreach (var rec in QueryAll(soql))
             {
