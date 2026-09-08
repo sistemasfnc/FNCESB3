@@ -120,8 +120,8 @@ namespace FNCDAC
             {
                 oDAC.sConnection = this.sOracleConnection;
                 oDAC.Connect();
-                StringBuilder sQuery = new StringBuilder("INSERT INTO TBL_CI_CITA (NombreCita, TipoIdent, NoIdent, PNombre, SNombre, PApellido, SApellido, Telefono, CodServicio, NomServicio, FechaCarga, Estado, Edad, idAccount, HData, DocProfesional)");
-                sQuery.Append(" VALUES (:Cita, :TipoDocumento, :Documento, :PNombre, :SNombre, :PApellido, :SApellido, :Telefono, :CodigoServicio, :Servicio, :Fecha, 1, :Edad, :IdCuenta, :Habeas, :DocProfesional)");
+                StringBuilder sQuery = new StringBuilder("INSERT INTO TBL_CI_CITA (NombreCita, TipoIdent, NoIdent, PNombre, SNombre, PApellido, SApellido, Telefono, CodServicio, NomServicio, FechaCarga, Estado, Edad, idAccount, HData, DocProfesional, personEmail)");
+                sQuery.Append(" VALUES (:Cita, :TipoDocumento, :Documento, :PNombre, :SNombre, :PApellido, :SApellido, :Telefono, :CodigoServicio, :Servicio, :Fecha, 1, :Edad, :IdCuenta, :Habeas, :DocProfesional, :PersonEmail)");
                 if (oEntity.iage < 18)
                 {
                     oEntity.scups += "001";
@@ -141,6 +141,7 @@ namespace FNCDAC
                 lParameters.Add(new OracleParameter("IdCuenta", oEntity.sid));
                 lParameters.Add(new OracleParameter("Habeas", oEntity.shabeasdata));
                 lParameters.Add(new OracleParameter("DocProfesional", string.Empty));
+                lParameters.Add(new OracleParameter("PersonEmail", oEntity.smail));
                 oDAC.ExecuteNonQuery(sQuery.ToString(), lParameters);
                 sQuery = null;
                 lParameters = null;
@@ -213,8 +214,8 @@ namespace FNCDAC
                 {
                     oDAC.sConnection = this.sOracleConnection;
                     oDAC.Connect();
-                    StringBuilder sQuery = new StringBuilder("INSERT INTO TBL_CI_CITA (NombreCita, TipoIdent, NoIdent, PNombre, SNombre, PApellido, SApellido, Telefono, CodServicio, NomServicio, FechaCarga, Estado, Edad, idAccount)");
-                    sQuery.Append(" VALUES (:Cita, :TipoDocumento, :Documento, :PNombre, :SNombre, :PApellido, :SApellido, :Telefono, :CodigoServicio, :Servicio, :Fecha, 1, :Edad, :IdCuenta)");
+                    StringBuilder sQuery = new StringBuilder("INSERT INTO TBL_CI_CITA (NombreCita, TipoIdent, NoIdent, PNombre, SNombre, PApellido, SApellido, Telefono, CodServicio, NomServicio, FechaCarga, Estado, Edad, idAccount, personEmail)");
+                    sQuery.Append(" VALUES (:Cita, :TipoDocumento, :Documento, :PNombre, :SNombre, :PApellido, :SApellido, :Telefono, :CodigoServicio, :Servicio, :Fecha, 1, :Edad, :IdCuenta, :PersonEmail)");
                     if (oEntity.iage < 18)
                     {
                         oEntity.scups = (!bYoungest) ? "FNC1001" : "FNC1002";
@@ -236,6 +237,7 @@ namespace FNCDAC
                     lParameters.Add(new OracleParameter("Fecha", oEntity.dappointmentdate));
                     lParameters.Add(new OracleParameter("Edad", oEntity.iage));
                     lParameters.Add(new OracleParameter("IdCuenta", oEntity.sid));
+                    lParameters.Add(new OracleParameter("PersonEmail", oEntity.smail));
                     oDAC.ExecuteNonQuery(sQuery.ToString(), lParameters);
                     sQuery = null;
                     lParameters = null;

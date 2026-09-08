@@ -36,5 +36,7 @@ namespace FNCEntity
         public string sid { get; set; }
 
         public string shabeasdata { get; set; }
+
+        public string smail { get; set; }
     }
 }

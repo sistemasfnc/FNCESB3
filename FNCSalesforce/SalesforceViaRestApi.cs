@@ -1444,6 +1444,7 @@ namespace FNCSalesforce
                                 sservicename = productsByGroup__C.Tarifa_concepto_producto__r.ProductId__r.Name__c,
                                 ssecondname = (appointment.WhatId__r.SecondName__pc != null) ? appointment.WhatId__r.SecondName__pc : string.Empty,
                                 scups = productsByGroup__C.Tarifa_concepto_producto__r.ProductId__r.Name,
+                                smail = (appointment.WhatId__r.PersonEmail != null) ? appointment.WhatId__r.PersonEmail : string.Empty,
                             };
                             lconsentimientos.Add(consentimiento);
                         }
@@ -1464,6 +1465,7 @@ namespace FNCSalesforce
                             sservicename = "TELECONSULTA",
                             ssecondname = (appointment.WhatId__r.SecondName__pc != null) ? appointment.WhatId__r.SecondName__pc : string.Empty,
                             scups = "000000",
+                            smail = (appointment.WhatId__r.PersonEmail != null) ? appointment.WhatId__r.PersonEmail : string.Empty,
                         };
                         lconsentimientos.Add(consentimiento);
                     }
