@@ -38,24 +38,24 @@ namespace FNCDescargaSoportes
 
         static readonly string[] PLANES_SANITAS =
         {
-            "FNC ALIANSALUD HTP RIESG INTER",
+            "FNC ALIANSALUD HTP RIESGO INTER",
             "FNC ALIANSALUD HTP RIESGO ALTO",
             "FNC ALIANSALUD HTP RIESGO BAJO",
             "FNC ALIANSALUD HTP VALORACION",
             "FNC ALIANSALUD VMI",
-            "FNC ALIANSALUD HTP RIESG INTER",
+            "FNC ALIANSALUD HTP RIESGO INTER",
             "FNC ALIANSALUD HTP RIESGO ALTO",
             "FNC ALIANSALUD HTP RIESGO BAJO",
             "FNC ALIANSALUD HTP VALORACION",
             "FNC ALIANSALUD VMI",
-            "FNC ECOPETROL AIREPOC LEVE-MOD",
+            "FNC ECOPETROL AIREPOC MODERADO",
             "FNC ECOPETROL AIREPOC SEVERO",
-            "FNC ECOPETROL AIREPOC VALORACI",
-            "FNC ECOPETROL ASMA SEVERO",
             "FNC ECOPETROL ASMAIRE LEVE-MOD",
-            "FNC ECOPETROL VALORA ASMAIRE",
-            "FNC ECOPETROL HTP VALORACION",
+            "FNC ECOPETROL ASMAIRE SEVERO",
             "FNC ECOPETROL HTP RIESGO BAJO",
+            "FNC ECOPETROL HTP VALORACION",
+            "FNC ECOPETROL VALORA ASMAIRE",
+            "FNC ECOPETROL AIREPOC VALORACI",
             "FNC SANITAS AIREPOC MODERADO",
             "FNC SANITAS AIREPOC SEVERO",
             "FNC SANITAS AIREPOC VALORACION",
@@ -80,10 +80,18 @@ namespace FNCDescargaSoportes
             "FNC SURA HTP RIESGO ALTO",
             "FNC SURA EPS VMI",
             "FNC SURA HTP RIESGO ALTO",
-            "FFNC SALUD TOTAL HTP RIESG BAJ",
+            "FNC SALUD TOTAL HTP RIESG BAJ",
             "FNC SALUD TOTAL HTP RIESG INTE",
             "FNC SALUD TOTAL HTP RIESGO ALT",
             "FNC SALUD TOTAL HTP VALORACION",
+            "FNC COOMEVA MP AIREPOC SEG MEN",
+            "FNC COOMEVA MP AIREPOC SEG ANU",
+            "FNC COOMEVA MP ASMAIRE ANUAL",
+            "FNC COOMEVA MP ASMAIRE MODERAD",
+            "FNC COOMEVA MP ASMAIRE PRIORIT",
+            "FNC COOMEVA MP ASMAIRE SEVERO",
+            "FNC COOMEVA MP ASMAIRE TAMIZAJ",
+            "FNC COOMEVA MP AIREPOC PRIORIT",
         };
 
         static readonly string[] EXCLUDE_GROUPS = { "BLOQUEO", "INVEST" };
@@ -166,8 +174,9 @@ namespace FNCDescargaSoportes
             var citas = new List<AppointmentData>();
             string planesOr = string.Join(" OR ", PLANES_SANITAS.Select(p => $"PlanId__r.Name LIKE '%{p}%'"));
             string today = DateTime.Now.ToString("yyyy-MM-dd");
-            //string initialdate = new DateTime(DateTime.Now.Year, 7, 20).ToString("yyyy-MM-dd");
+            //string today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28).ToString("yyyy-MM-dd");
             string initialdate = DateTime.Now.ToString("yyyy-MM-dd");
+            //string initialdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28).ToString("yyyy-MM-dd");
             string soql = $@"SELECT Id, WhatId__c, WhatId__r.DocumentNumber__c, GroupId__r.Name, CostCenterId__c, CostCenterId__r.Code__c, ActivityDate__c, Name FROM Appointment__c WHERE ({planesOr}) AND ActivityDate__c >= {initialdate} AND ActivityDate__c <= {today} AND PatientAttended__c = true";
             foreach (var rec in QueryAll(soql))
             {

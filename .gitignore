@@ -6,6 +6,7 @@
 # =====================================================================
 *.rsuser
 *.suo
+*.suo.old
 *.user
 *.userosscache
 *.sln.docstates
@@ -34,6 +35,7 @@ bld/
 # VISUAL STUDIO — CACHE Y TEMPORALES
 # =====================================================================
 .vs/
+.vs_old/
 Generated\ Files/
 mono_crash.*
 
