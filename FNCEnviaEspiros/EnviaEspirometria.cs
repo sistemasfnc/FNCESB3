@@ -44,6 +44,14 @@ namespace FNCEnviaEspiros
             sanitasPrfps = new List<SanitasPrfp>();
             GetEcopetrolPfp();
             GenerateExcel("Ecopetrol");
+
+            sanitasPrfps = new List<SanitasPrfp>();
+            GetAliansaludPfp();
+            GenerateExcel("Aliansalud");
+
+            sanitasPrfps = new List<SanitasPrfp>();
+            GetColmedicaPfp();
+            GenerateExcel("Colmedica");
         }
 
         /// <summary>
@@ -62,7 +70,7 @@ namespace FNCEnviaEspiros
                     ? DateTime.Now.ToString("yyyy-MM-dd")
                     : FNCEnviaEspiros.Properties.Settings.Default.FechaFinal;
 
-                sanitasPrfps = facadeEspirometria.GetEcopetrolPrfp();
+                sanitasPrfps = facadeEspirometria.GetPrfp("Ecopetrol");
             }
             catch (Exception ex)
             {
@@ -91,7 +99,7 @@ namespace FNCEnviaEspiros
                     ? DateTime.Now.ToString("yyyy-MM-dd")
                     : FNCEnviaEspiros.Properties.Settings.Default.FechaFinal;
 
-                sanitasPrfps = facadeEspirometria.GetSanitasPrfp(true);
+                sanitasPrfps = facadeEspirometria.GetPrfp("Sanitas");
             }
             catch (Exception ex)
             {
@@ -120,11 +128,62 @@ namespace FNCEnviaEspiros
                     ? DateTime.Now.ToString("yyyy-MM-dd")
                     : FNCEnviaEspiros.Properties.Settings.Default.FechaFinal;
 
-                sanitasPrfps = facadeEspirometria.GetSuraPrfp();
+                sanitasPrfps = facadeEspirometria.GetPrfp("Sura");
             }
             catch (Exception ex)
             {
                 LogError.WriteError("EnviaEspirometrias", "GetSuraPrfp", ex);
+                throw;
+            }
+            finally
+            {
+                facadeEspirometria = null;
+            }
+        }
+        static void GetAliansaludPfp()
+        {
+            FacadeEspirometria facadeEspirometria = new FacadeEspirometria();
+            try
+            {
+                facadeEspirometria.sconnection = FNCEnviaEspiros.Properties.Settings.Default.SQLConnection;
+                facadeEspirometria.sfechainicial = string.IsNullOrEmpty(FNCEnviaEspiros.Properties.Settings.Default.FechaInicial)
+                    ? DateTime.Now.ToString("yyyy-MM-dd")
+                    : FNCEnviaEspiros.Properties.Settings.Default.FechaInicial;
+                facadeEspirometria.sfechafinal = string.IsNullOrEmpty(FNCEnviaEspiros.Properties.Settings.Default.FechaFinal)
+                    ? DateTime.Now.ToString("yyyy-MM-dd")
+                    : FNCEnviaEspiros.Properties.Settings.Default.FechaFinal;
+
+                sanitasPrfps = facadeEspirometria.GetPrfp("Aliansalud");
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("EnviaEspirometrias", "GetEcopetrolPfp", ex);
+                throw;
+            }
+            finally
+            {
+                facadeEspirometria = null;
+            }
+        }
+
+        static void GetColmedicaPfp()
+        {
+            FacadeEspirometria facadeEspirometria = new FacadeEspirometria();
+            try
+            {
+                facadeEspirometria.sconnection = FNCEnviaEspiros.Properties.Settings.Default.SQLConnection;
+                facadeEspirometria.sfechainicial = string.IsNullOrEmpty(FNCEnviaEspiros.Properties.Settings.Default.FechaInicial)
+                    ? DateTime.Now.ToString("yyyy-MM-dd")
+                    : FNCEnviaEspiros.Properties.Settings.Default.FechaInicial;
+                facadeEspirometria.sfechafinal = string.IsNullOrEmpty(FNCEnviaEspiros.Properties.Settings.Default.FechaFinal)
+                    ? DateTime.Now.ToString("yyyy-MM-dd")
+                    : FNCEnviaEspiros.Properties.Settings.Default.FechaFinal;
+
+                sanitasPrfps = facadeEspirometria.GetPrfp("Colmedica");
+            }
+            catch (Exception ex)
+            {
+                LogError.WriteError("EnviaEspirometrias", "GetEcopetrolPfp", ex);
                 throw;
             }
             finally

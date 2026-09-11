@@ -18,14 +18,14 @@ namespace FNCFacade
 
         public string sconnection { get; set; }
 
-        public FacadeEspirometria() 
-        { 
+        public FacadeEspirometria()
+        {
         }
 
         public DataTable GetSanitasPrfp()
         {
             List<SanitasPrfp> sanitasPrfps = null;
-            using (Espirometria espirometria = new Espirometria()) 
+            using (Espirometria espirometria = new Espirometria())
             {
                 espirometria.sconnection = this.sconnection;
                 sanitasPrfps = espirometria.GetSanitasEspirometrias(this.sfechainicial, this.sfechafinal);
@@ -37,7 +37,7 @@ namespace FNCFacade
         {
             List<SanitasPrfp> sanitasPrfps = null;
             using (Espirometria espirometria = new Espirometria())
-            {                
+            {
                 espirometria.sconnection = this.sconnection;
                 sanitasPrfps = espirometria.GetSanitasEspirometrias(this.sfechainicial, this.sfechafinal);
                 return sanitasPrfps;
@@ -62,6 +62,34 @@ namespace FNCFacade
             {
                 espirometria.sconnection = this.sconnection;
                 sanitasPrfps = espirometria.GetEcopetrolEspirometrias(this.sfechainicial, this.sfechafinal);
+                return sanitasPrfps;
+            }
+        }
+
+        public List<SanitasPrfp> GetPrfp(string sidentificacion)
+        {
+            List<SanitasPrfp> sanitasPrfps = null;
+            using (Espirometria espirometria = new Espirometria())
+            {
+                espirometria.sconnection = this.sconnection;
+                switch (sidentificacion)
+                {
+                    case "Ecopetrol":
+                        sanitasPrfps = espirometria.GetEcopetrolEspirometrias(this.sfechainicial, this.sfechafinal);
+                        break;
+                    case "Sura":
+                        sanitasPrfps = espirometria.GetSuraEspirometrias(this.sfechainicial, this.sfechafinal);
+                        break;
+                    case "Aliansalud":
+                        sanitasPrfps = espirometria.GetAliansaludEspirometrias(this.sfechainicial, this.sfechafinal);
+                        break;
+                    case "Colmedica":
+                        sanitasPrfps = espirometria.GetColmedicaEspirometrias(this.sfechainicial, this.sfechafinal);
+                        break;
+                    default:
+                        sanitasPrfps = espirometria.GetSanitasEspirometrias(this.sfechainicial, this.sfechafinal);
+                        break;
+                }
                 return sanitasPrfps;
             }
         }

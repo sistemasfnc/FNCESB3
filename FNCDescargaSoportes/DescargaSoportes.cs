@@ -101,45 +101,51 @@ namespace FNCDescargaSoportes
         static void Main(string[] args)
         {
             Console.WriteLine($"=== FNCDescargaSoportes — {DateTime.Now:yyyy-MM-dd HH:mm:ss} ===");
-            Directory.CreateDirectory(OUTPUT_DIR);
-
-            // 1. Login Salesforce
-            Console.WriteLine("\n[1/3] Autenticando en Salesforce...");
-            sfRest = new SalesforceREST();
-            sfRest.sLogingEndPoint = SF_LOGIN_URL;
-            sfRest.sApiEndpoint = SF_ENDPOINT;
-            sfRest.DoLogin(SF_USER, SF_PASSWORD, SF_CLIENT, SF_SECRET);
-
-            if (sfRest.salesforceSession == null)
+            try
             {
-                Console.WriteLine("ERROR: No se pudo autenticar en Salesforce.");
-                return;
+                Directory.CreateDirectory(OUTPUT_DIR);
+                // 1. Login Salesforce
+                Console.WriteLine("\n[1/3] Autenticando en Salesforce...");
+                sfRest = new SalesforceREST();
+                sfRest.sLogingEndPoint = SF_LOGIN_URL;
+                sfRest.sApiEndpoint = SF_ENDPOINT;
+                sfRest.DoLogin(SF_USER, SF_PASSWORD, SF_CLIENT, SF_SECRET);
+                if (sfRest.salesforceSession == null)
+                {
+                    Console.WriteLine("ERROR: No se pudo autenticar en Salesforce.");
+                    return;
+                }
+                Console.WriteLine($"      OK — {sfRest.salesforceSession.InstanceUrl}");
+
+                // 2. Obtener DISTINCT WhatId__c de los planes Sanitas
+                //    y con esos IDs traer TODAS sus citas en el rango (cualquier plan)
+                Console.WriteLine("\n[2/3] Obteniendo pacientes Sanitas y sus citas...");
+                //List<string> pacienteIds = ObtenerPacientesSanitas();
+                //Console.WriteLine($"      {pacienteIds.Count} pacientes distintos en planes Sanitas.");
+                //if (pacienteIds.Count == 0) { Console.WriteLine("Sin pacientes. Fin."); return; }
+
+                // Traer TODAS las citas de esos pacientes en el rango,
+                // sin importar por qué plan fueron atendidos en cada cita
+                List<AppointmentData> citas = ObtenerCitasProgramas(new List<string>());
+                Console.WriteLine($"      {citas.Count} citas encontradas.");
+                if (citas.Count == 0) { Console.WriteLine("Sin citas. Fin."); return; }
+
+                // 3. Clasificar y descargar soportes
+                Console.WriteLine("\n[3/3] Clasificando citas y descargando soportes...");
+                awsConnector = new AWSConnector(AWS_ACCESS, AWS_SECRET_K);
+                awsConnector.Connect();
+                List<SupportResult> resultados = ProcesarCitas(citas);
+
+                Console.WriteLine("\nGuardando reporte...");
+                GuardarReporte(resultados);
+
+                Console.WriteLine($"\n=== Proceso completado. Archivos en: {OUTPUT_DIR} ===");
             }
-            Console.WriteLine($"      OK — {sfRest.salesforceSession.InstanceUrl}");
-
-            // 2. Obtener DISTINCT WhatId__c de los planes Sanitas
-            //    y con esos IDs traer TODAS sus citas en el rango (cualquier plan)
-            Console.WriteLine("\n[2/3] Obteniendo pacientes Sanitas y sus citas...");
-            //List<string> pacienteIds = ObtenerPacientesSanitas();
-            //Console.WriteLine($"      {pacienteIds.Count} pacientes distintos en planes Sanitas.");
-            //if (pacienteIds.Count == 0) { Console.WriteLine("Sin pacientes. Fin."); return; }
-
-            // Traer TODAS las citas de esos pacientes en el rango,
-            // sin importar por qué plan fueron atendidos en cada cita
-            List<AppointmentData> citas = ObtenerCitasProgramas(new List<string>());
-            Console.WriteLine($"      {citas.Count} citas encontradas.");
-            if (citas.Count == 0) { Console.WriteLine("Sin citas. Fin."); return; }
-
-            // 3. Clasificar y descargar soportes
-            Console.WriteLine("\n[3/3] Clasificando citas y descargando soportes...");
-            awsConnector = new AWSConnector(AWS_ACCESS, AWS_SECRET_K);
-            awsConnector.Connect();
-            List<SupportResult> resultados = ProcesarCitas(citas);
-
-            Console.WriteLine("\nGuardando reporte...");
-            GuardarReporte(resultados);
-
-            Console.WriteLine($"\n=== Proceso completado. Archivos en: {OUTPUT_DIR} ===");
+            catch (Exception ex)
+            {
+                LogError.WriteError("DescargaSoportes", "DescargaSoportes", ex);
+                Console.WriteLine($"\nHa ocurrido un error: {ex.Message}");
+            }            
         }
 
         // ────────────────────────────────────────────────────────────────────
@@ -172,9 +178,9 @@ namespace FNCDescargaSoportes
             var citas = new List<AppointmentData>();
             string planesOr = string.Join(" OR ", PLANES_SANITAS.Select(p => $"PlanId__r.Name LIKE '%{p}%'"));
             string today = DateTime.Now.ToString("yyyy-MM-dd");
-            //string today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28).ToString("yyyy-MM-dd");
+            //string today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 9).ToString("yyyy-MM-dd");
             string initialdate = DateTime.Now.ToString("yyyy-MM-dd");
-            //string initialdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 28).ToString("yyyy-MM-dd");
+            //string initialdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 9).ToString("yyyy-MM-dd");
             string soql = $@"SELECT Id, WhatId__c, WhatId__r.DocumentNumber__c, GroupId__r.Name, CostCenterId__c, CostCenterId__r.Code__c, ActivityDate__c, Name FROM Appointment__c WHERE ({planesOr}) AND ActivityDate__c >= {initialdate} AND ActivityDate__c <= {today} AND PatientAttended__c = true";
             foreach (var rec in QueryAll(soql))
             {
@@ -420,7 +426,7 @@ namespace FNCDescargaSoportes
                 catch (Exception ex)
                 {
                     result.Observacion = ex.Message;
-                    LogError.WriteError("FNCDescargaSoportes", "ProcesarConsultas", ex);
+                    LogError.WriteError("DescargaSoportes", "DescargaSoportes", ex);
                 }
 
                 resultados.Add(result);
@@ -496,7 +502,7 @@ namespace FNCDescargaSoportes
             catch (Exception ex)
             {
                 result.Observacion = ex.Message;
-                LogError.WriteError("FNCDescargaSoportes", $"AWS-{tipo}", ex);
+                LogError.WriteError("DescargaSoportes", "DescargaSoportes", ex);
             }
 
             return result;
