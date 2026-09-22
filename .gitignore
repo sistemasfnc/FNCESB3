@@ -252,3 +252,9 @@ Properties/Settings.*
 
 appsettings.Development.json
 appsettings.Local.json
+
+# =====================================================================
+# DOCUMENTACIÓN / ARCHIVOS DE AYUDA
+# =====================================================================
+
+docs/
