@@ -91,9 +91,9 @@ namespace FNCWSDigiturno
                         oResult.errordescription = ex.Message;
                         LogError.WriteError("Application", "WSInspira", ex);
                     }
-                    return this.GetResponse(oResult, false);
+                    return this.GetResponse(oResult, false, false);
                 }
-            }            
+            }
             if (this.ReadXmlValue(xElement, "APPOINTMENT", "SYNAPSE", false) != null)
             {
                 SalesforceViaRestApi salesforceViaRestApi = new SalesforceViaRestApi();
@@ -984,7 +984,8 @@ namespace FNCWSDigiturno
                         iage = iAge,
                         sid = this.ReadXmlValue(xElement, "PATIENT", "ID").ToUpper(),
                         shabeasdata = this.ReadXmlValue(xElement, "PATIENT", "HABEAS").ToUpper(),
-                    };                    
+                        smail = this.ReadXmlValue(xElement, "PATIENT", "EMAIL") ?? string.Empty,
+                    };
                     if (i == 0)
                     {
                         oDAC.CreateAppointmentRecord(consentimiento);
@@ -1075,16 +1076,20 @@ namespace FNCWSDigiturno
         /// <param name="oResult">Objeto resultado de la generación del turno o del cargo</param>
         /// <param name="bIsTurn">Boleano que indica si la respuesta corresponde a generación de turno o de cargo</param>
         /// <returns>String que contiene un XML con el resultado de la operación de generación del turno</returns>
-        private string GetResponse(TurnResult oResult, bool bIsTurn = true)
+        private string GetResponse(TurnResult oResult, bool bIsTurn = true, bool bIsCharge = true)
         {
             string success = string.Empty;
             if (bIsTurn)
             {
                 success = (string.IsNullOrEmpty(oResult.turncode)) ? "FALSE" : "TRUE";
             }
-            else
+            else if (bIsCharge)
             {
                 success = (oResult.chargenumber == 0) ? "FALSE" : "TRUE";
+            }
+            else
+            {
+                success = (oResult.errorcode == "00") ? "TRUE" : "FALSE";
             }
             StringBuilder sResponse = new StringBuilder(Tools.GetResponseHeader());
             sResponse.Append("<SUCCESS>");

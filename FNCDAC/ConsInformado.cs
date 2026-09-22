@@ -41,7 +41,7 @@ namespace FNCDAC
             }
             catch (Exception ex)
             {
-                LogError.WriteError("WSInspira", "Application", ex);
+                LogError.WriteError("Application", "WSInspira", ex);
             }*/
             try
             {
@@ -50,7 +50,7 @@ namespace FNCDAC
             }
             catch (Exception ex)
             {
-                LogError.WriteError("WSInspira", "Application", ex);
+                LogError.WriteError("Application", "WSInspira", ex);
 
             }
         }
@@ -156,7 +156,7 @@ namespace FNCDAC
             }
             catch (Exception ex)
             {
-                LogError.WriteError("WSInspira", "Application", ex);                
+                LogError.WriteError("Application", "WSInspira", ex);                
             }
             try
             {
@@ -164,7 +164,7 @@ namespace FNCDAC
             }
             catch (Exception ex)
             {
-                LogError.WriteError("WSInspira", "Application", ex);
+                LogError.WriteError("Application", "WSInspira", ex);
             }                        
         }
 
