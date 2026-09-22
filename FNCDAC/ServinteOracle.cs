@@ -2876,7 +2876,7 @@ namespace FNCDAC
             squery.Append("AND ORDDETORD = :ORDDETORD "); // Autorización
             squery.Append("AND CARDETCON = :CARDETCON "); // Concepto
             squery.Append("AND MOVCER = :MOVCER ");       // Convenio
-            squery.Append("AND MOVUAD = :MOVUAD AND CARDETCOD NOT IN ('RHB001', '991202', '860203', '939403', 'RHB005', '933501')");         // Contrato (en el original usaba suser, lo mantengo)
+            squery.Append("AND MOVUAD = :MOVUAD AND CARDETCOD NOT IN ('RHB001', '991202', '860203', '939403', 'RHB005', '933501', '860202')");         // Contrato (en el original usaba suser, lo mantengo)
             List<OracleParameter> oracleParameters = new List<OracleParameter>
             {
                 new OracleParameter("PACIDE", servintePatient.sdocument),
