@@ -95,14 +95,14 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las consultas"));
             }
-            /*
+
             try
             {
-                sincronizaEstadistica.GetPrescriptions();
+                sincronizaEstadistica.GetOrders();
             }
             catch (Exception)
             {
-                LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las prescripciones"));
+                LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las ordenes"));
             }
 
             try
@@ -113,16 +113,16 @@ namespace FNCSincronizaEstadistica
             {
                 LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar los diagnosticos"));
             }
-            
 
+            /*
             try
             {
-                sincronizaEstadistica.GetOrders();
+                sincronizaEstadistica.GetPrescriptions();
             }
             catch (Exception)
             {
-                LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las ordenes"));
-            }
+                LogError.WriteError("ServicioDescarga", "ServicioDescarga", new ApplicationException("Error al descargar las prescripciones"));
+            }                                   
 
             */
             /*try
