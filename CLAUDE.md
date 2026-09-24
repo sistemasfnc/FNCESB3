@@ -18,10 +18,28 @@ telemedicina, consentimiento informado, espirometrías y notificación a pacient
 - **Autenticación:** sin estándar único — usuario/clave por parámetro,
   `AuthenticationTokenService.svc` para token propio, o ninguna en varios
   endpoints internos.
-- **Sin ORM, sin DI, sin pruebas automatizadas** (ver [docs/pruebas.md](docs/pruebas.md)).
+- **Sin ORM, sin DI, sin pruebas automatizadas** (ver `pruebas.md` centralizado).
 
-## Arquitectura
-Ver [docs/arquitectura.md](docs/arquitectura.md)
+## Documentación completa
+
+Toda la documentación descriptiva de este repositorio vive en
+`Centralización_Documentación\Proyectos\BusDatos\docs\FNCESB\`, junto con la de
+`Reportes` (carpeta hermana `..\Reportes\` dentro de ese mismo `docs\`, ver
+"Proyectos compartidos con la solución Reportes" abajo). No crear `docs/` en
+este repositorio — agregar contenido nuevo allá y, si hace falta, enlazarlo
+desde este archivo.
+
+| Archivo (en `BusDatos\docs\FNCESB\`) | Qué contiene |
+|---|---|
+| `arquitectura.md` | Capas, reglas de dependencia, patrones, proyectos en desuso |
+| `dominio.md` | Entidades y reglas de negocio |
+| `endpoints.md` | Servicios WCF/ASMX/WebForms y puntos de entrada de cada ejecutable |
+| `flujos.md` | Flujos de negocio de punta a punta |
+| `decisiones.md` | Decisiones técnicas no obvias y riesgos identificados |
+| `pruebas.md` | Estado de testing (no hay pruebas automatizadas hoy) |
+| `historial.md` | Historial completo de requerimientos cerrados |
+| `externas.md` | Integraciones externas (Salesforce, Oracle, AWS, etc.) |
+| `proyectos-compartidos.md` | Proyectos que esta solución comparte con `Reportes` (quién es dueño de cuál y qué se rompe al tocarlos) |
 
 ## Mapa de carpetas
 Son **32 proyectos** independientes en la raíz (sin carpeta contenedora). Los más
@@ -34,24 +52,13 @@ relevantes:
 - `FNCEntity/` — POCOs de dominio compartidos, sin lógica.
 - `FNCUtils/` — correo, AWS S3, helpers.
 - `FNCCargoProgramas/` — ejecutable de carga de programas especiales (el más
-  operado; ver [docs/flujos.md](docs/flujos.md)).
+  operado; ver `flujos.md` centralizado).
 - `FNCServicioProgramas/` — misma lógica que el anterior, como servicio de
-  Windows (duplicación, ver [docs/decisiones.md](docs/decisiones.md)).
+  Windows (duplicación, ver `decisiones.md` centralizado).
 - `FNCInspiraServinte/`, `FNCWSDigiturno/`, `FNCESB/`, `ESBDigiturno/` —
-  servicios WCF/ASMX expuestos (ver [docs/endpoints.md](docs/endpoints.md)).
+  servicios WCF/ASMX expuestos (ver `endpoints.md` centralizado).
 - `FNCEnviaEspiros/`, `FNCJsonProcessor/`, `FNCSincroniza/`, `FNCETL/` y demás
   ejecutables de proceso batch — uno por tarea programada/servicio.
-- `docs/` — documentación detallada:
-  - `arquitectura.md` — capas, reglas de dependencia, patrones, proyectos en desuso.
-  - `dominio.md` — entidades y reglas de negocio.
-  - `endpoints.md` — servicios WCF/ASMX/WebForms y puntos de entrada de cada ejecutable.
-  - `flujos.md` — flujos de negocio de punta a punta.
-  - `decisiones.md` — decisiones técnicas no obvias y riesgos identificados.
-  - `pruebas.md` — estado de testing (no hay pruebas automatizadas hoy).
-  - `historial.md` — historial completo de requerimientos cerrados.
-  - `externas.md` — integraciones externas (Salesforce, Oracle, AWS, etc.).
-  - `proyectos-compartidos.md` — proyectos que esta solución comparte con
-    `Reportes` (quién es dueño de cuál y qué se rompe al tocarlos).
 
 ## Proyectos compartidos con la solución `Reportes`
 
@@ -59,23 +66,11 @@ relevantes:
 también los compila `Reportes`** (`Trazabilidad`, en producción). En sentido
 inverso, `EventLog` es de `Reportes` y lo usan 19 proyectos de aquí.
 
-Documentación única en [docs/proyectos-compartidos.md](docs/proyectos-compartidos.md)
-— no duplicarla en `Reportes`.
-
-## Flujos principales
-Ver [docs/flujos.md](docs/flujos.md)
-
-## Entidades del dominio
-Ver [docs/dominio.md](docs/dominio.md)
+Documentación única en `proyectos-compartidos.md` centralizado — no duplicarla
+en `Reportes`, y tampoco copiarla de vuelta a este repositorio.
 
 ## Endpoints o puntos de entrada
-Ver [docs/endpoints.md](docs/endpoints.md)
-
-## Dependencias externas
-Ver [docs/externas.md](docs/externas.md)
-
-## Decisiones técnicas no obvias
-Ver [docs/decisiones.md](docs/decisiones.md)
+Ver `endpoints.md` centralizado.
 
 ## Zonas de peligro
 - **`FNCDAC/ServinteOracle.cs`** (~3.900 líneas): núcleo de creación/actualización
@@ -92,19 +87,15 @@ Ver [docs/decisiones.md](docs/decisiones.md)
 - **`FNCDAC`, `FNCEntity`, `FNCFacade`, `FNCUtils`**: los compila también
   `Reportes\Trazabilidad`, que está **en producción** (UROR2, `E:\www\newcargos`).
   Un cambio de firma pública rompe el build de `Reportes` sin que aparezca error
-  alguno en `FNCESB.sln`. Ver
-  [docs/proyectos-compartidos.md](docs/proyectos-compartidos.md).
+  alguno en `FNCESB.sln`. Ver `proyectos-compartidos.md` centralizado.
 - **Transacciones de un solo `Commit()` al final** en `ServinteOracle` e
   `Integrador`: no hay forma de ver avance incremental en la base de datos
   mientras un proceso batch corre. No confundir "sin filas nuevas" con "no está
-  avanzando" — ver [docs/flujos.md](docs/flujos.md#carga-de-programas-especiales).
+  avanzando" — ver `flujos.md` centralizado → "Carga de programas especiales".
 - **`FNCCargoProgramas` vs `FNCServicioProgramas`**: lógica de negocio duplicada.
   Verificar cuál está activo en el servidor antes de aplicar un cambio de reglas.
 - **`FNCSalesforce.SalesforceIntegrator` vs `SalesforceViaRestApi`**: confirmar
   cuál usa el proyecto concreto antes de tocar la integración con Salesforce.
-
-## Pruebas
-Ver [docs/pruebas.md](docs/pruebas.md)
 
 ## Comandos del día a día
 No hay `.sln` único para toda la solución de forma consistente con build/test por
@@ -126,16 +117,16 @@ Get-EventLog -LogName FNCProgramas -Newest 20 | Format-List TimeGenerated, Entry
 SELECT username, status, last_call_et, program FROM v$session WHERE username IN ('SERVINTE','INTEGRABUS','FNCSISTEMAS');
 ```
 
-No hay comando de test — no existen pruebas automatizadas (ver
-[docs/pruebas.md](docs/pruebas.md)).
+No hay comando de test — no existen pruebas automatizadas (ver `pruebas.md`
+centralizado).
 
 ## Requerimiento en curso
 (vacío)
 
 ## Últimos cambios
-(máximo 3 entradas, el historial completo está en docs/historial.md)
+(máximo 3 entradas, el historial completo está en `historial.md` centralizado)
 
-- 2026-09-22: corregido error al crear consentimiento vía `WSDigiturno.asmx` (flag SUCCESS mal calculado, `smail` sin mapear, `LogError` con argumentos invertidos) — ver [docs/historial.md](docs/historial.md).
+- 2026-09-22: corregido error al crear consentimiento vía `WSDigiturno.asmx` (flag SUCCESS mal calculado, `smail` sin mapear, `LogError` con argumentos invertidos) — ver `historial.md` centralizado.
 
 ## INSTRUCCIONES DE MANTENIMIENTO — leer y respetar siempre
 
@@ -153,8 +144,11 @@ No hay comando de test — no existen pruebas automatizadas (ver
    y resume en 3 líneas dónde estamos y cuál es el siguiente paso.
 
 3. CIERRE DE REQUERIMIENTO (al terminar un requerimiento completo):
-   Cuando el usuario diga "cerrar requerimiento", haz esto en orden:
-   a. Agrega una entrada completa a docs/historial.md con:
+   Cuando el usuario diga "cerrar requerimiento", haz esto en orden. Los pasos
+   a/c/d/e son sobre archivos en
+   `Centralización_Documentación\Proyectos\BusDatos\docs\FNCESB\` (no en este
+   repositorio); el paso b es sobre este mismo `CLAUDE.md`:
+   a. Agrega una entrada completa a `historial.md` con:
       - Fecha de hoy
       - Título corto del requerimiento
       - Qué se implementó
@@ -165,14 +159,14 @@ No hay comando de test — no existen pruebas automatizadas (ver
    b. Actualiza "Últimos cambios" en el CLAUDE.md:
       - Agrega la entrada nueva resumida en 1 línea
       - Si ya hay 3 entradas, elimina la más antigua
-   c. Actualiza docs/pruebas.md:
+   c. Actualiza `pruebas.md`:
       - Agrega las clases o módulos nuevos a "Qué se prueba en este proyecto"
       - Agrega una entrada al "Historial de cobertura" con fecha,
         qué se cubrió y por qué
    d. Si el requerimiento implicó una decisión técnica no obvia,
-      agrega una entrada a docs/decisiones.md
+      agrega una entrada a `decisiones.md`
    e. Si el requerimiento afectó endpoints, dominio, flujos o integraciones,
-      actualiza el archivo docs/ correspondiente
+      actualiza el archivo correspondiente en ese mismo `docs\FNCESB\`
    f. Borra el contenido de "Requerimiento en curso" y déjalo como (vacío)
 
 4. ESCRIBIR PRUEBAS (comportamiento estándar siempre):
