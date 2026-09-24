@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -93,6 +94,16 @@ namespace FNCDescargaSoportes
         };
 
         static readonly string[] EXCLUDE_GROUPS = { "BLOQUEO", "INVEST" };
+
+        // Grupos cuyas citas sin Assesment pueden tomar una "Nota adicional TERAPEUTA" suelta
+        // del mismo paciente y día (se compara por inicio del nombre del grupo)
+        static readonly string[] GRUPOS_NOTA_SIN_CITA =
+        {
+            "SEGUIMIENTO ASMAIRE",      // incluye SEGUIMIENTO ASMAIRE PED
+            "SEGUIMIENTO AIREPOC",
+            "REHABILITACION VMNI",
+        };
+        const string NOTA_SIN_CITA = "Nota adicional TERAPEUTA";
 
         static SalesforceREST sfRest;
         static AWSConnector awsConnector;
@@ -376,6 +387,11 @@ namespace FNCDescargaSoportes
             }
             Console.WriteLine($"\r      {assesments.Count} assesments encontrados para {lstConsultas.Count} citas.");
 
+            // Citas sin Assesment ligado: tomar los Assesment del mismo paciente y día sin cita asociada
+            List<AssesmentData> sinCita = BuscarAssesmentsSinCita(lstConsultas, assesments);
+            assesments.AddRange(sinCita);
+            Console.WriteLine($"      {sinCita.Count} assesments sin cita asociada tomados por paciente y fecha.");
+
             // Descargar PDF por cada Assesment usando su Id
             int idx = 0;
             foreach (var assesment in assesments)
@@ -416,6 +432,8 @@ namespace FNCDescargaSoportes
                         File.WriteAllBytes(Path.Combine(OUTPUT_DIR, fileName), pdfBytes);
                         result.Exito = true;
                         result.Archivo = fileName;
+                        if (assesment.SinCita)
+                            result.Observacion = "Assesment sin cita asociada, tomado por paciente y fecha";
                         consecutivo++;
                     }
                     else
@@ -433,6 +451,102 @@ namespace FNCDescargaSoportes
             }
             Console.WriteLine();
             return consecutivo;
+        }
+
+        // ── Assesment sin cita asociada:
+        //    Algunos seguimientos se documentan como "Nota adicional TERAPEUTA" suelta, sin
+        //    AppointmentId__c. Para las citas de GRUPOS_NOTA_SIN_CITA que no tienen ningún
+        //    Assesment ligado se busca esa nota del mismo paciente y día, sin cita, y se asigna.
+        static List<AssesmentData> BuscarAssesmentsSinCita(List<AppointmentData> lstConsultas,
+            List<AssesmentData> assesments)
+        {
+            var conAssesment = new HashSet<string>(assesments.Select(a => a.AppointmentId));
+            var citasSinAssesment = lstConsultas
+                .Where(c => !conAssesment.Contains(c.Id)
+                         && AplicaNotaSinCita(c.GroupName)
+                         && !string.IsNullOrWhiteSpace(c.WhatId)
+                         && !string.IsNullOrWhiteSpace(c.ActivityDate))
+                .ToList();
+            if (citasSinAssesment.Count == 0) return new List<AssesmentData>();
+
+            string fechaMin = citasSinAssesment.Min(c => c.ActivityDate);
+            string fechaMax = citasSinAssesment.Max(c => c.ActivityDate);
+            var pacientes = citasSinAssesment.Select(c => c.WhatId).Distinct().ToList();
+
+            var candidatos = new List<AssesmentData>();
+            const int batchSize = 100;
+            for (int i = 0; i < pacientes.Count; i += batchSize)
+            {
+                string ids = string.Join(",", pacientes.Skip(i).Take(batchSize).Select(p => $"'{p}'"));
+
+                // AssesmentDate__c es datetime (UTC): el rango se expresa en hora de Colombia
+                string soql = $@"SELECT Id,
+                                        Status__c,
+                                        PatientId__c,
+                                        AssesmentDate__c,
+                                        CreatedDate
+                                 FROM Assesment__c
+                                 WHERE PatientId__c IN ({ids})
+                                 AND AppointmentId__c = null
+                                 AND AssesmentDate__c >= {fechaMin}T00:00:00-05:00
+                                 AND AssesmentDate__c <= {fechaMax}T23:59:59-05:00
+                                 AND Name LIKE '{NOTA_SIN_CITA}%'
+                                 ORDER BY Id";
+
+                foreach (var rec in QueryAll(soql))
+                {
+                    candidatos.Add(new AssesmentData
+                    {
+                        AssesmentId = rec["Id"]?.Value<string>(),
+                        PatientId = rec["PatientId__c"]?.Value<string>(),
+                        AssesmentDate = FechaColombia(rec["AssesmentDate__c"]),
+                        Status = rec["Status__c"]?.Value<string>() ?? "",
+                        CreatedDate = rec["CreatedDate"]?.Value<string>()
+                    });
+                }
+            }
+
+            return AsignarAssesmentsSinCita(citasSinAssesment, candidatos);
+        }
+
+        // Asigna cada Assesment sin cita a la cita sin Assesment del mismo paciente y día.
+        // Si el paciente tiene varias citas sin Assesment ese día, se asigna a la primera
+        // por número de cita, para no duplicar el mismo soporte en varias citas.
+        static List<AssesmentData> AsignarAssesmentsSinCita(List<AppointmentData> citasSinAssesment,
+            List<AssesmentData> candidatos)
+        {
+            var citaPorPacienteDia = citasSinAssesment
+                .GroupBy(c => c.WhatId + "|" + c.ActivityDate)
+                .ToDictionary(g => g.Key, g => g.OrderBy(c => c.Name).First());
+
+            var asignados = new List<AssesmentData>();
+            foreach (var a in candidatos)
+            {
+                AppointmentData cita;
+                if (!citaPorPacienteDia.TryGetValue(a.PatientId + "|" + a.AssesmentDate, out cita)) continue;
+
+                a.AppointmentId = cita.Id;
+                a.AppointmentName = cita.Name;
+                a.SinCita = true;
+                asignados.Add(a);
+            }
+            return asignados;
+        }
+
+        static bool AplicaNotaSinCita(string groupName)
+        {
+            string grupo = (groupName ?? "").Trim().ToUpperInvariant();
+            return GRUPOS_NOTA_SIN_CITA.Any(g => grupo.StartsWith(g));
+        }
+
+        // Convierte un datetime de Salesforce (UTC) a la fecha yyyy-MM-dd en hora de Colombia (UTC-5)
+        static string FechaColombia(JToken token)
+        {
+            if (token == null || token.Type == JTokenType.Null) return null;
+            DateTimeOffset dto = token.Type == JTokenType.Date
+                ? new DateTimeOffset(token.Value<DateTime>().ToUniversalTime())
+                : DateTimeOffset.Parse(token.Value<string>(), CultureInfo.InvariantCulture);
+            return dto.ToOffset(TimeSpan.FromHours(-5)).ToString("yyyy-MM-dd");
         }
 
         // ── Examen → AWS S3 (buscar por DocumentNumber_YYYYMMDD) ────────────
@@ -624,6 +738,9 @@ namespace FNCDescargaSoportes
         public string Status { get; set; }
         public string CreatedDate { get; set; }
         public string AppointmentName { get; set; }
+        public string PatientId { get; set; }       // Solo para Assesment sin cita asociada
+        public string AssesmentDate { get; set; }   // yyyy-MM-dd en hora de Colombia
+        public bool SinCita { get; set; }           // true si se asignó a la cita por paciente y fecha
     }
 
     class SalesforceServiceResponse
@@ -666,7 +783,9 @@ namespace FNCDescargaSoportes
             {
                 var resp = s3Client.ListObjectsV2(new ListObjectsV2Request
                 { BucketName = bucket, Prefix = prefix, ContinuationToken = token });
-                keys.AddRange(resp.S3Objects.Select(o => o.Key));
+                // AWSSDK v4 devuelve S3Objects = null (no lista vacía) cuando no hay coincidencias
+                if (resp.S3Objects != null)
+                    keys.AddRange(resp.S3Objects.Select(o => o.Key));
                 token = resp.IsTruncated == true ? resp.NextContinuationToken : null;
             } while (token != null);
             return keys;
