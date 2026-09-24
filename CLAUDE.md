@@ -126,6 +126,7 @@ centralizado).
 ## Últimos cambios
 (máximo 3 entradas, el historial completo está en `historial.md` centralizado)
 
+- 2026-09-24: `FNCDescargaSoportes` — tarea programada caída por .NET 4.8.1 (pasado a 4.8 con candado en el `.csproj`, no versionado), descarga de "Nota adicional TERAPEUTA" sin cita en seguimientos, corrección de `ListKeys` y recuperación de 763 notas y del 31/08 — ver `historial.md` centralizado.
 - 2026-09-22: corregido error al crear consentimiento vía `WSDigiturno.asmx` (flag SUCCESS mal calculado, `smail` sin mapear, `LogError` con argumentos invertidos) — ver `historial.md` centralizado.
 
 ## INSTRUCCIONES DE MANTENIMIENTO — leer y respetar siempre
